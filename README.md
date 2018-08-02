@@ -32,9 +32,9 @@ git push
 tar -xvvf MG5_aMC_v2.6.3.2.tar.gz
 `
    - Run MadGraph: 
-```
+`
     MG5_aMC_v2_6_3_2/bin/mg5_aMC 
-```
+`
    - Inside MadGrap install Pythia8, Delphes and ExRootAnalysis 
 (In principle tab helps to make a choice of available programs. If something is missing for installation, you will get help information; please, follow it.):
 ```
@@ -44,14 +44,11 @@ install ExRootAnalysis
 ```
 
 2. Generate Higgs --> GammaGamma in MadGraph:
-
    - Instructions are coming...
 
 3. Generate GammaGamma background in MadGraph:
-
    - Instructions are coming...
 
 4. Analyze MC with Delphes:
-
    - Instructions are coming...
    
