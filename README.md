@@ -26,10 +26,11 @@ git push
 # MadGraph
 
 1. Install MadGraph and all components outside of this repository:
+
    - Download **MadGraph5_aMC@NLO** from official site: [MadGraph site](http://madgraph.physics.illinois.edu/)
    - Unpack it: 
-```
-    tar -xvvf MG5_aMC_v2.6.3.2.tar.gz
+``` 
+tar -xvvf MG5_aMC_v2.6.3.2.tar.gz
 ```
    - Run MadGraph: 
 ```
@@ -44,11 +45,14 @@ install ExRootAnalysis
 ```
 
 2. Generate Higgs --> GammaGamma in MadGraph:
+
    - Instructions are coming...
 
 3. Generate GammaGamma background in MadGraph:
+
    - Instructions are coming...
 
 4. Analyze MC with Delphes:
+
    - Instructions are coming...
    
