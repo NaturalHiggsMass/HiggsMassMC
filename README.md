@@ -26,12 +26,11 @@ git push
 # MadGraph
 
 1. Install MadGraph and all components outside of this repository:
-
    - Download **MadGraph5_aMC@NLO** from official site: [MadGraph site](http://madgraph.physics.illinois.edu/)
    - Unpack it: 
-``` 
+` 
 tar -xvvf MG5_aMC_v2.6.3.2.tar.gz
-```
+`
    - Run MadGraph: 
 ```
     MG5_aMC_v2_6_3_2/bin/mg5_aMC 
