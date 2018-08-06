@@ -36,12 +36,13 @@ tar -xvvf MG5_aMC_v2.6.3.2.tar.gz
 ```
 MG5_aMC_v2_6_3_2/bin/mg5_aMC 
 ```
-* Inside MadGrap install Pythia8, Delphes and ExRootAnalysis 
+* Inside MadGrap install Pythia8, Delphes, ExRootAnalysis and lhapdf6 
 (In principle tab helps to make a choice of available programs. If something is missing for installation, you will get help information; please, follow it.):
 ```
 install pythia8
 install Delphes
 install ExRootAnalysis
+install lhapdf6
 ```
 ExRootAnalysis you need to generate root-file directyly (not lhc-file).
 
@@ -85,10 +86,14 @@ detector = Delphes
 ```
 1 = ickkw     ### by default it is 0, it turn on jet matching
 20.0 = xqcut  ### by default it is 0 
+lhapdf    = pdlabel     ! PDF set *isModified*
+263000    = lhaid     ! if pdlabel=lhapdf, this is the lhapdf number NNPDF30_lo_as_0130 *isModified*
 ```
 `xqcut` sets the minimum kt jet measure between partons. 
 Changing this value will cause you to keep more or
 fewer Higgs bosons. You can play with it if you want.
+
+Change pdflabel to `lhapdf` and use pdif `263000`, what corresponds to `NNPDF30_lo_as_0130`.
 
 You also could change number of generated events there (10K events by default).
 
