@@ -8,7 +8,7 @@ cmsenv
 ```
 return to your working directory and download MadGraph repository:
 ```
-git clone https://github.com/NaturalHiggsMass/MadGraph.git
+git clone https://github.com/NaturalHiggsMass/HiggsMassMC.git
 ```
 
 You have to setup environment each time, when you want run any git commands, like:
@@ -109,6 +109,26 @@ QCUT = 20.0
 
 * When you are done editing the card files, MadGraph will begin generating the processes by pressing `Enter`.
 Once it finishes you will have a root-file that is stored in /Events/run 01/ in the directory you created at the beginning.
+
+* How to get high pT Higgs only:
+
+Since we can only apply cut at parton level, the Higgs for the process
+p p > h > a a
+has ALWAYS  a zero pt.
+
+If you want to put a cut on the pt of the Higgs, you need to at least
+include one jet (probably more) at parton level. and therefore do
+
+p p > h j , h > a a 
+in that case, you can use either 
+XXX = ptheavy 
+or the 
+ {25: XXX} = pt_min_pdg
+
+Note that 
+1) You should want to have a softer pt cut that the one of your analysis (since the pt of the Higgs will be modified by the parton-shower
+2) You might want to (at least) use MLM to have the spectrum correct
+3) Note that heft is not valid when the Higgs pt is larger than the top mass. So you will need either a model with the full loop contracted or use the loop induced mode of MG5aMC
 
 
 ## Generate GammaGamma background in MadGraph:
