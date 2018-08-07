@@ -5,7 +5,8 @@
  - [ ] Generate Signal jH with different pT threshold
    - [ ] Generate 1 MEvent jH with pT(Higgs) > 50 GeV
    - [ ] Generate 1 MEvent jH with pT(Higgs) > 150 GeV
-
+ - [ ] Generate 1 MEvent background jGammaGamma (not sure that MadGraph, possibly Sherpa)
+ 
 Cards will be stored in `Cards` directory.
  
 
