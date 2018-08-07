@@ -1,5 +1,14 @@
 # MadGraph
 
+## Tasks
+
+ - [ ] Generate Signal jH with different pT threshold
+   - [ ] Generate 1 MEvent jH with pT(Higgs) > 50 GeV
+   - [ ] Generate 1 MEvent jH with pT(Higgs) > 150 GeV
+
+Cards will be stored in `Cards` directory.
+ 
+
 ## Install MadGraph and all components outside of this repository:
 
 * Download **MadGraph5_aMC@NLO** from official site: [MadGraph site](http://madgraph.physics.illinois.edu/)
