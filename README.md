@@ -22,4 +22,15 @@ git add fileName
 git commit -m"info text here"
 git push
 ```
+# Install root at MAC OS
 
+- Install root
+- Each time run a script to make root initiallisation:
+```
+source /Application/RootDir/bin/thisroot.sh
+```
+- When you start root 1st time you could get an error, related to `LC_ALL`
+- Run command, which will install missing parts:
+```
+echo | LC_ALL=C clang++ -D_DEBUG -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS -O3 -std=c++11 -fvisibility-inlines-hidden -fno-exceptions -fno-rtti -fno-common -Wcast-qual -fno-strict-aliasing -xc++ -E -v - 2>&1
+```
