@@ -1,6 +1,11 @@
-#Relevant analysis
+# Relevant analysis
 
 - [CADI SMP-13-001: Diphoton differential cross sections at 7 TeV](http://cms.cern.ch/iCMS/analysisadmin/cadilines?id=1071&ancode=SMP-13-001&tp=an&line=SMP-13-001)
+
+#Relevant data cards at CMS
+
+- [Card at github `GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8_UpPS/RunIISummer15wmLHEGS-MCRUN2_71_V1-v1/GEN-SIM`](https://github.com/cms-sw/genproductions/tree/7282e21844f34c9ce1c242356bd78443593d80a6/bin/MadGraph5_aMCatNLO/cards/production/13TeV/higgs/ggh012j_5f_NLO_FXFX_125)
+- [Card at github `/DiPhotonJetsBox_MGG-80toInf_14TeV-Sherpa/PhaseIISummer17GenOnly-93X_upgrade2023_realistic_v5-v1/GEN`](https://github.com/cms-sw/genproductions/blob/91a7e73b1ffb7bf16f9c68997e7200c2ab8b9849/bin/Sherpa/cards/production/2017/13TeV/higgs/Run.dat_13TeV_gamgam_3j_loop_Mgg80-13000)
 
 # Install git code at lxplus
 
