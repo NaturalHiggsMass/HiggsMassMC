@@ -10,7 +10,7 @@
 # Some relative links
 
 - [Ntuplized for Delphes at GitHub](https://github.com/fabio-mon/PhaseTwoAnalysis/tree/master/delphesInterface/ntupler)
-- [GammaGammaJets Delphes background `DiPhotonJetsBox_MGG-80toInf_14TeV-Sherpa_200PU`](/eos/uscms/store/user/snowmass/noreplica/YR_Delphes/Delphes342pre15_prod-Luca/DiPhotonJetsBox_MGG-80toInf_14TeV-Sherpa_200PU)
+- GammaGammaJets Delphes background at uscms: `/eos/uscms/store/user/snowmass/noreplica/YR_Delphes/Delphes342pre15_prod-Luca/DiPhotonJetsBox_MGG-80toInf_14TeV-Sherpa_200PU`
 # Install git code at lxplus
 
 This code is running outside of CMSSW, but if you want to install it at lxplus, you have to setup environment.
