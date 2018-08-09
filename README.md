@@ -51,3 +51,9 @@ echo | LC_ALL=C clang++ -D_DEBUG -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC
 # Install Gfortran
 
 - [Link to GFortran](http://www.lapk.org/gfortran/gfortran.php?OS=7)
+
+# Install GnuPlot
+
+- [Link to GnuPlot source to all systems](https://sourceforge.net/projects/gnuplot/files/gnuplot/5.2.4/)
+- For installation, please, look at ReleaseNotes.html
+- To run type: `gnuplot`

@@ -37,7 +37,7 @@ ExRootAnalysis you need to generate root-file directyly (not lhc-file).
 ```
 MG5_aMC_v2_6_3_2/bin/mg5_aMC
 ```
-* Load model:
+* Load model (**you have to load model each time if you generate/launch card**):
 ```
 import model heft-full
 ```
