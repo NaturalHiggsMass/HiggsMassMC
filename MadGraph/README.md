@@ -82,16 +82,16 @@ Change pdflabel to `lhapdf` and use pdif `263000`, what corresponds to `NNPDF30_
 
 You also could change number of generated events there (10K events by default).
 
-* Don't edit the param\_card.dat
+* Don't edit the `param_card.dat`
 
-* Edit pythia\_card.dat. 
+* Edit `pythia_card.dat`: 
 `qCut` must  be larger then `1.5 xqcut` in the run card.
 Add in the end of the file:
 ```
 JetMatching:qCut = 20.0
 JetMatching:nJetMax = 1 ! max number of jets
 ```
-* Don’t edit delphes\_card.dat
+* Don’t edit `delphes_card.dat`
 
 * When you are done editing the card files, MadGraph will begin generating the processes by pressing `Enter`.
 Once it finishes you will have a root-file that is stored in /Events/run 01/ in the directory you created at the beginning.
@@ -115,6 +115,13 @@ Note that
 1) You should want to have a softer pt cut that the one of your analysis (since the pt of the Higgs will be modified by the parton-shower
 2) You might want to (at least) use MLM to have the spectrum correct
 3) Note that heft is not valid when the Higgs pt is larger than the top mass. So you will need either a model with the full loop contracted or use the loop induced mode of MG5aMC
+
+* CMS recommedation for PDF and MadGraph you could find here [QuickGuideMadGraph5aMCatNLO](https://twiki.cern.ch/twiki/bin/viewauth/CMS/QuickGuideMadGraph5aMCatNLO)
+  * it is [LHAPDF ID 306000](https://lhapdf.hepforge.org/pdfsets.html)
+  * it is not present at 6.1 version, but you could add it index pdf-file at 
+```
+MG5_aMC_v2_6_3_2/HEPTools/lhapdf6/share/LHAPDF/pdfsets.index
+```
 
 
 ## Generate GammaGamma background in MadGraph:
