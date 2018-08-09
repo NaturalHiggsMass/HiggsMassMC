@@ -85,10 +85,11 @@ You also could change number of generated events there (10K events by default).
 * Don't edit the param\_card.dat
 
 * Edit pythia\_card.dat. 
-This must match the value for xqcut in the run card.
+`qCut` must  be larger then `1.5 xqcut` in the run card.
 Add in the end of the file:
 ```
-QCUT = 20.0
+JetMatching:qCut = 20.0
+JetMatching:nJetMax = 1 ! max number of jets
 ```
 * Don’t edit delphes\_card.dat
 
