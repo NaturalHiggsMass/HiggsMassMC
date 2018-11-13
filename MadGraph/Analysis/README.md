@@ -1,6 +1,7 @@
-*Higgs signal generated in pT bins:
+# Higgs signal generated in pT bins:
 
       /eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files
 
-*Gamma-Gamma background generated in pT bins:
+# Gamma-Gamma background generated in pT bins:
+
       /eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files
