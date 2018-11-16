@@ -16,7 +16,8 @@
 This code is running outside of CMSSW, but if you want to install it at lxplus, you have to setup environment.
 The trick solution is to go to any CSMSW and set up environment there, for example:
 ```
-cd CMSSW_10_6_0/src
+cmsrel CMSSW_10_2_1
+cd cmsrel CMSSW_10_2_1/src
 cmsenv
 ```
 return to your working directory and download MadGraph repository:
