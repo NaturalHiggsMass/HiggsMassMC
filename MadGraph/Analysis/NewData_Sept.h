@@ -748,9 +748,11 @@ NewData_Sept::NewData_Sept(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    //TString fileName = "tag_1_delphes_events_Anna.root";
-   TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco_0_80GeV.root";
+   TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run06_Higgs0or1Jet_PtGen_300_500_forPtReco_350_450GeV.root";
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("fileName");
+     cout << fileName.Data() << endl; 
+     TFile *f = TFile::Open(fileName.Data());
+//(TFile*)gROOT->GetListOfFiles()->FindObject(fileName.Data());
       if (!f || !f->IsOpen()) {
          f = new TFile("fileName");
       }
