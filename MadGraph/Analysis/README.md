@@ -20,10 +20,8 @@ To check proper simulation of the size of pT gen and reco bin:
 ```
 .L NewData_Sept.C
 NewData_Sept t
-t.GetEntry(12); // Fill t data members with entry number 12
-t.Show();       // Show values of entry 12
-t.Show(16);     // Read and show values of entry 16
-t.Loop();       // Loop on all entries
+t.GetEntry(-1); 
+t.Loop();
 ```
 # Higgs signal generated in pT bins:
 
