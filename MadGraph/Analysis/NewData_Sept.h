@@ -748,7 +748,25 @@ NewData_Sept::NewData_Sept(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    //TString fileName = "tag_1_delphes_events_Anna.root";
-   TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run06_Higgs0or1Jet_PtGen_300_500_forPtReco_350_450GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco_0_80GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run02_Higgs0or1Jet_PtGen_50_150_forPtReco_80_120GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run03_Higgs0or1Jet_PtGen_90_250_forPtReco_120_200GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run04_Higgs0or1Jet_PtGen_150_320_forPtReco_200_270GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run05_Higgs0or1Jet_PtGen_220_400_forPtReco_270_350GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run06_Higgs0or1Jet_PtGen_300_500_forPtReco_350_450GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run07_Higgs0or1Jet_PtGen_400_600_forPtReco_450_550GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run08_Higgs0or1Jet_PtGen_500_800_forPtReco_550_750GeV.root";  
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run09_Higgs0or1Jet_PtGen_700_inf_forPtReco_750_infGeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run01_GG0or1Jet_PtGen_0_inf_forPtReco_0_80GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run02_GG0or1Jet_PtGen_40_170_forPtReco_80_120GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run03_GG0or1Jet_PtGen_70_250_forPtReco_120_200GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run04_GG0or1Jet_PtGen_150_320_forPtReco_200_270GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run05_GG0or1Jet_PtGen_220_400_forPtReco_270_350GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run06_GG0or1Jet_PtGen_300_500_forPtReco_350_450GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run07_GG0or1Jet_PtGen_400_600_forPtReco_450_550GeV.root";
+ //  TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run08_GG0or1Jet_PtGen_500_800_forPtReco_550_750GeV.root";
+   TString fileName = "/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run09_GG0or1Jet_PtGen_700_inf_forPtReco_750_infGeV.root";
+   
    if (tree == 0) {
      cout << fileName.Data() << endl; 
      TFile *f = TFile::Open(fileName.Data());

@@ -3,6 +3,24 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <cstdlib>
+#include <iostream>
+#include <map>
+#include <string>
+#include <stdbool.h>
+#include <fstream>
+
+#include "TChain.h"
+#include "TFile.h"
+#include "TTree.h"
+#include "TString.h"
+#include "TObjString.h"
+#include "TSystem.h"
+#include "TROOT.h"
+
+
+
+
 
 void NewData_Sept::Loop()
 {
@@ -33,18 +51,12 @@ void NewData_Sept::Loop()
 
    Long64_t nentries = fChain->GetEntriesFast();
 
-/*   Long64_t nbytes = 0, nb = 0;
-   for (Long64_t jentry=0; jentry<nentries;jentry++) {
-      Long64_t ientry = LoadTree(jentry);
-      if (ientry < 0) break;
-      nb = fChain->GetEntry(jentry);   nbytes += nb;
-      // if (Cut(ientry) < 0) continue;
-   }
-*/   
 
 	TLorentzVector test(0.,0.,0.,0.);
 	TLorentzVector p1(0.,0.,0.,0.);
 	TLorentzVector p2(0.,0.,0.,0.);
+	TLorentzVector sp1(0.,0.,0.,0.);
+	TLorentzVector sp2(0.,0.,0.,0.);
 	TLorentzVector s(0.,0.,0.,0.);	
 	
 // initialize histograms
@@ -58,42 +70,88 @@ void NewData_Sept::Loop()
 		
 	for (int i = 0; i < 5; i++)
 	{		
-		work = "Histogram of Invariant Mass, both Photons Eta < 1.44, Higgs " + title[i];
+//		work = "Histogram of Invariant Mass, both Photons Eta < 1.44, Higgs " + title[i];
 	 	bothBarrel[i] = new TH1D(work.c_str(),work.c_str(), 100,110, 140);
 		bothBarrel[i]-> GetXaxis()->SetTitle("Invariant Mass (GeV)");
 		bothBarrel[i]-> GetYaxis()->SetTitle("Number of Events");
 		
 //		work = "Histogram of Invariant Mass, one Photon Eta < 1.44, other Photon > 1.57, Higgs " + title[i];
-		work = "Histogram of Invariant Mass, at least one Photon Eta > 1.57, Higgs " + title[i];
+//		work = "Histogram of Invariant Mass, at least one Photon Eta > 1.57, Higgs " + title[i];
+		work = "Historgam of Photon" + title[i];
 		barrelAndEndCaps[i] = new TH1D(work.c_str(),work.c_str(), 100,110,140);
 		barrelAndEndCaps[i]-> GetXaxis()->SetTitle("Invariant Mass (GeV)");
 		barrelAndEndCaps[i]-> GetYaxis()->SetTitle("Number of Events");			
 	}
 	
-	TH1D * HiggsPT;
-	TH1D * HiggsEta;
-	TH1D * HiggsGenEta;
+//	TH1D * HiggsPT;
+//	TH1D * HiggsEta;
+//	TH1D * HiggsGenEta;
 	TH1D * GammaEta;
+	TH1D * DoubleGamma1;
+	TH1D * DoubleGamma2;
+	TH1D * DoubleGamma3;
+	TH1D * DoubleGamma4;
+
+	TH1D * DoubleGamma_f2;
+	TH1D * DoubleGamma_f3;
+	TH1D * DoubleGamma_f4;
+	TH1D * DoubleGamma_f5;
+	TH1D * DoubleGamma_f6;
+	TH1D * DoubleGamma_f7;
+	TH1D * DoubleGamma_f8;
+	TH1D * DoubleGamma_f9;
+
+	TH1D * DoubleGamma_r2_pt1;
+	TH1D * DoubleGamma_r2_pt3;
+	TH1D * DoubleGamma_r2_eta1;
 	
-	HiggsPT = new TH1D("HiggsPT","Higgs pT", 100,0,500);
-	HiggsPT-> GetXaxis()->SetTitle("Higgs pT (GeV)");
-	HiggsPT-> GetYaxis()->SetTitle("Number of Events");	
-		
-	HiggsEta = new TH1D("HiggsEta","Higgs eta", 100,-8,8);
-	HiggsEta-> GetXaxis()->SetTitle("Higgs eta");
-	HiggsEta-> GetYaxis()->SetTitle("Number of Events");	
+
+	TH1D * Background_pt;
+
+	TH1D * Background_eta;
+
+
+	DoubleGamma1 = new TH1D("DoubleGamma_BG","DiGammas pT", 550,0,1100);
+	DoubleGamma1-> GetXaxis()->SetTitle("DiGammas pT (GeV)");
+	DoubleGamma1-> GetYaxis()->SetTitle("Number of Events");
+
 	
-	HiggsGenEta = new TH1D("HiggsGenEta","Higgs reconstructed Eta", 100,-8,8);
-	HiggsGenEta-> GetXaxis()->SetTitle("Higgs reconstructed Eta");
-	HiggsGenEta-> GetYaxis()->SetTitle("Number of Events");	
-		
-	GammaEta = new TH1D("GammaEta","Gamma eta", 100,-8,8);
-	GammaEta-> GetXaxis()->SetTitle("Gamma eta");
+	DoubleGamma2 = new TH1D("SingleGamma_BG","Gamma pT", 150,0,150);
+	DoubleGamma2-> GetXaxis()->SetTitle("Gammas pT (GeV)");
+	DoubleGamma2-> GetYaxis()->SetTitle("Number of Events");
+
+	DoubleGamma3 = new TH1D("DoubleGamma_mass_BG","DiGammas mass", 100,100,150);
+	DoubleGamma3-> GetXaxis()->SetTitle("DiGammas mass (GeV)");
+	DoubleGamma3-> GetYaxis()->SetTitle("Number of Events");
+
+	
+	GammaEta = new TH1D("Background_eta","Background Gamma eta", 100,-5,5);
+	GammaEta-> GetXaxis()->SetTitle("Gamma eta  (GeV)");
 	GammaEta-> GetYaxis()->SetTitle("Number of Events");
+
+
+
+//	DoubleGamma_for_eta2 = new TH1D("DoubleGamma_s6","DiGammas pT", 225,200,650);
+//	DoubleGamma_for_eta2-> GetXaxis()->SetTitle("DiGammas pT (GeV)");
+//	DoubleGamma_for_eta2-> GetYaxis()->SetTitle("Number of Events");
+
+
+//	HiggsPT = new TH1D("HiggsPT","Higgs pT", 100,0,500);
+//	HiggsPT-> GetXaxis()->SetTitle("Higgs pT (GeV)");
+//	HiggsPT-> GetYaxis()->SetTitle("Number of Events");	
+		
+//	HiggsEta = new TH1D("HiggsEta","Higgs eta", 100,-8,8);
+//	HiggsEta-> GetXaxis()->SetTitle("Higgs eta");
+//	HiggsEta-> GetYaxis()->SetTitle("Number of Events");	
 	
-	TH2D *h2d = new TH2D("h2d","Jet vs. Higgs pT",400,0, 400,400,0,400);
-	h2d-> GetXaxis()->SetTitle("Higgs pT (GeV)");
-	h2d-> GetYaxis()->SetTitle("Jet pT (GeV)");	
+//	HiggsGenEta = new TH1D("HiggsGenEta","Higgs reconstructed Eta", 100,-8,8);
+//	HiggsGenEta-> GetXaxis()->SetTitle("Higgs reconstructed Eta");
+//	HiggsGenEta-> GetYaxis()->SetTitle("Number of Events");	
+		
+
+//	TH2D *h2d = new TH2D("h2d","Jet vs. Higgs pT",400,0, 400,400,0,400);
+//	h2d-> GetXaxis()->SetTitle("Higgs pT (GeV)");
+//	h2d-> GetYaxis()->SetTitle("Jet pT (GeV)");	
 
 	int indicator = 0;
 	int count = 0;
@@ -113,6 +171,19 @@ void NewData_Sept::Loop()
 	double dEta = 0;
 	double jEta = 0;
 	double hEta = 0;
+	double gamma = 0;
+	double Digamma = 0;
+	double gammas_Pt = 0;
+	double gamma1_Pt = 0;
+	double gamma2_Pt = 0;
+	double gammas_mass = 0;
+
+//____________________
+	double BG_gamma1_Pt = 0;
+	double BG_gamma2_Pt = 0;
+	double BG_gamma1_eta = 0;
+	double BG_gamma2_eta = 0;
+
 
    	Long64_t nbytes = 0, nb = 0;
    	for (Long64_t jentry=0; jentry<nentries;jentry++) 
@@ -129,51 +200,13 @@ void NewData_Sept::Loop()
 		
 		std::vector<double> v_hpt;
 		std::vector<double> v_jpt;
-// checking higgs situation
-		if (Particle_size > 0)
-		{
-		for ( int i = 0; i < Particle_size; i++) // loop through all particles to find Higgs
-		{
-			if ( Particle_PID[i] == 25 )	//set indicator depending on Pt
-			{
-				count++;
-				if (y==0)
-				{
-					count1++;
-					y=1;
-				}
-				else if (y == 1) 
-				{
-					count2++;
-					y=2;
-				}
-				else if (y==2)
-				{
-					count3++;
-					y=3;
-				}
-				else if (y == 3) 
-				{
-					count4++;
-					y=4;
-				}
-				else if (y==4)
-				{
-					count5++;
-					y=5;
-				}
-				else if (y==5)
-				{
-					count6++;
-				}
+
+//____________fill_background_________________			
 		
-				HiggsPT-> Fill(abs(Particle_PT[i]));
-				HiggsEta-> Fill(Particle_Eta[i]);
-				hEta = Particle_Eta[i];
-//				v_hpt.push_back(abs(Particle_PT[i]));
-			}
-		}
-		}
+
+
+
+// checking higgs situation
 		y = 0;
 		
 		if (Jet_size > 0)
@@ -223,80 +256,45 @@ void NewData_Sept::Loop()
 						p2.SetPtEtaPhiE(Photon_PT[i], Photon_Eta[i], Photon_Phi[i], Photon_E[i]);
 					}
 				}
+
 			}
 		}	// End of looping through photons
 		}
 		
-		if (Particle_size >0)
-		{
-		for ( int i = 0; i < Particle_size; i++) // now loop through all particles to find Higgs
-		{
-			if ( Particle_PID[i] == 25)	//set indicator depending on Pt
-			{
-				if (abs(Particle_PT[i]) <= 50)
-				{
-					indicator = 1;
-				}				
-				else if (abs(Particle_PT[i]) <= 100)
-				{
-					indicator = 2;
-				}
-				else if (abs(Particle_PT[i]) <= 150)
-				{
-					indicator = 3;
-				}
-				else if (abs(Particle_PT[i]) <= 200)
-				{
-					indicator = 4;
-				}				
-				else if (abs(Particle_PT[i]) > 250)
-				{
-					indicator = 5;
-				}
-			}
-		}
-		}
+	//	BG_gamma1_eta = p1.Eta();
+	//	BG_gamma2_eta = p2.Eta();
 		
-		if (p2 != test)			// if both photons filled
+	//	BG_gamma1_Pt = p1.Pt();
+	//	BG_gamma2_Pt = p2.Pt();
+
+	//	Background_pt-> Fill (BG_gamma1_Pt);
+	//	Background_pt-> Fill (BG_gamma2_Pt);
+
+	//	Background_eta ->Fill(BG_gamma1_eta);
+	//	Background_eta ->Fill(BG_gamma2_eta);
+
+
+		if (p2 != test)			// if both photons filled 
 		{
 			s = p1+p2;
 			mass = s.M();
+			if (mass > 100)
 			reconstructedEta = s.Eta();
 			gamma1_eta = p1.Eta();
 			gamma2_eta = p2.Eta();
-			
-			if ( (p1.Pt() > mass/3) && (p2.Pt() > mass/4) )
-			{
-				check = 1;
-				if ( abs(p1.Eta()) < 1.44 && abs(p2.Eta()) < 1.44 )
-				{
-					flag = 1;
-				}
-				else if (abs(p1.Eta()) > 1.57 && abs(p2.Eta()) > 1.57)
-				{
-					flag = 3;
-				}
-				else
-				{
-					flag = 2;
-				}
-			}
-		}
+			gammas_Pt = s.Pt();
+			gamma1_Pt = p1.Pt();
+			gamma2_Pt = p2.Pt();
+			gammas_mass = s.M();
 
-		if (check == 1)		//fill the right histograms if the mass was recorded
-		{
-			if (flag == 1)
-			{
-				bothBarrel[indicator - 1] -> Fill(mass);
-			}
-			else if (flag == 2 || flag == 3)
-			{
-				barrelAndEndCaps[indicator - 1] -> Fill(mass);
-			}
-
-			HiggsGenEta -> Fill(reconstructedEta);
+			//Fill_histo
+			//_______________________________
+			DoubleGamma1 -> Fill(gammas_Pt);
+			DoubleGamma2 -> Fill(gamma1_Pt);
+			DoubleGamma2 -> Fill(gamma2_Pt);
+			DoubleGamma3 -> Fill(gammas_mass);
 			GammaEta -> Fill(gamma1_eta);
-			GammaEta -> Fill(gamma2_eta);
+			GammaEta -> Fill(gamma2_eta);			
 		}
 	}
 	
@@ -329,18 +327,103 @@ void NewData_Sept::Loop()
 		TCanvas *d;
 		TCanvas *ReEta;
 		TCanvas *gammaEta;
-		
-		pT = new TCanvas();
-		HiggsPT->Draw();
+		TCanvas *DoubleGamma_pt;
+		TCanvas *Gammas_pt;
+		TCanvas *Digamma_mass;
+//		TCanvas *Diga;
 
-		eta = new TCanvas();
-		HiggsEta->Draw();
+	//	TCanvas *DG2;
+	//	TCanvas *DG3;
+	//	TCanvas *DG4;
+	//	TCanvas *DG5;
+	//	TCanvas *DG6;
+	//	TCanvas *DG7;
+	//	TCanvas *DG8;
+	//	TCanvas *DG9;
+		TCanvas *DG_for_pt1; //for preselection
+		TCanvas *DG_for_pt3;
+		TCanvas *DG_for_eta1;
+		//__________________
+		TCanvas *BG_for_pt;    //for background
+		TCanvas *BG_for_eta;
+
+
+
+
+
+
+
+//		TString outfileName = "NewData300_500.root";
+//		TFile *outFile = TFile::Open( "NewData300_500.root", "RECREATE" );
+		TFile *outFile = new TFile ( "BackGround_run09_test.root", "RECREATE");
 		
-		ReEta = new TCanvas();
-		HiggsGenEta->Draw();
+
+
+//___________________________________________________________________________________		
+		DoubleGamma_pt = new TCanvas();
+		DoubleGamma1->Draw();
+		DoubleGamma1->Write();
+
+		Gammas_pt = new TCanvas();
+		DoubleGamma2->Draw();
+		DoubleGamma2->Write();
+
+		Digamma_mass = new TCanvas();
+		DoubleGamma3->Draw();
+		DoubleGamma3->Write();
 
 		gammaEta = new TCanvas();
 		GammaEta->Draw();
+		GammaEta->Write();
+
+	//	DoubleGamma = new TCanvas();
+	//	DoubleGamma1->SetLineColor(2);
+	//	DoubleGamma1->Draw("same");
+	//	DoubleGamma1->Write();
+	//	DG2 = new TCanvas();
+	//	DoubleGamma_f2 -> Draw();
+	//	DoubleGamma_f2 -> Write ();
+
+	//	DG3 = new TCanvas();
+	//	DoubleGamma_f3 -> Draw();
+	//	DoubleGamma_f3 -> Write ();
+	//	DG4 = new TCanvas();
+	//	DoubleGamma_f4 -> Draw();
+	//	DoubleGamma_f4 -> Write ();
+	//	DG5 = new TCanvas();
+	//	DoubleGamma_f5 -> Draw();
+	//	DoubleGamma_f5 -> Write ();
+	//	DG6 = new TCanvas();
+	//	DoubleGamma_f6 -> Draw();
+	//	DoubleGamma_f6 -> Write ();
+	//	DG7 = new TCanvas();
+	//	DoubleGamma_f7 -> Draw();
+	//	DoubleGamma_f7 -> Write ();
+	//	DG8 = new TCanvas();
+	//	DoubleGamma_f8 -> Draw();
+	//	DoubleGamma_f8 -> Write ();
+	//	DG9 = new TCanvas();
+	//	DoubleGamma_f9 -> Draw();
+	//	DoubleGamma_f9 -> Write ();
+
+
+
+//		outputFile <<DoubleGamma1->Draw()<< std::end1;
+		outFile->Close();
+//___________________________________________________________________________________
+
+
+//		pT = new TCanvas();
+//		HiggsPT->Draw();
+
+//		eta = new TCanvas();
+//		HiggsEta->Draw();
+		
+//		ReEta = new TCanvas();
+//		HiggsGenEta->Draw();
+
+//		gammaEta = new TCanvas();
+//		GammaEta->Draw();
 		
 /*		d = new TCanvas();
 		h2d->Draw();*/
