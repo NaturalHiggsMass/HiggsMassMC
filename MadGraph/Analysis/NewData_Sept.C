@@ -70,14 +70,14 @@ void NewData_Sept::Loop()
 		
 	for (int i = 0; i < 5; i++)
 	{		
-//		work = "Histogram of Invariant Mass, both Photons Eta < 1.44, Higgs " + title[i];
+		work = "Both photons Eta < 1.44, Higgs " + title[i];
 	 	bothBarrel[i] = new TH1D(work.c_str(),work.c_str(), 100,110, 140);
 		bothBarrel[i]-> GetXaxis()->SetTitle("Invariant Mass (GeV)");
 		bothBarrel[i]-> GetYaxis()->SetTitle("Number of Events");
 		
 //		work = "Histogram of Invariant Mass, one Photon Eta < 1.44, other Photon > 1.57, Higgs " + title[i];
 //		work = "Histogram of Invariant Mass, at least one Photon Eta > 1.57, Higgs " + title[i];
-		work = "Historgam of Photon" + title[i];
+		work = "Barrel and Endcaps Photon" + title[i];
 		barrelAndEndCaps[i] = new TH1D(work.c_str(),work.c_str(), 100,110,140);
 		barrelAndEndCaps[i]-> GetXaxis()->SetTitle("Invariant Mass (GeV)");
 		barrelAndEndCaps[i]-> GetYaxis()->SetTitle("Number of Events");			
@@ -154,7 +154,7 @@ void NewData_Sept::Loop()
 //	h2d-> GetYaxis()->SetTitle("Jet pT (GeV)");	
 
 	int indicator = 0;
-	int count = 0;
+	int countHiggsCandidate = 0;
 	int count1 = 0;
 	int count2 = 0;
 	int count3 = 0;
@@ -223,7 +223,8 @@ void NewData_Sept::Loop()
 		{
 			h2d->Fill(v_hpt[i],v_jpt[i]);
 		}
-*/		
+*/
+                //if (Photon_size < 2) cout << "small: Photon_size = " << Photon_size << endl;		
 		if (Photon_size > 0)
 		{
 		for (int i = 0; i < Photon_size; i++)
@@ -290,6 +291,7 @@ void NewData_Sept::Loop()
 			//Fill_histo
 			//_______________________________
 			DoubleGamma1 -> Fill(gammas_Pt);
+                        countHiggsCandidate++;
 			DoubleGamma2 -> Fill(gamma1_Pt);
 			DoubleGamma2 -> Fill(gamma2_Pt);
 			DoubleGamma3 -> Fill(gammas_mass);
@@ -298,7 +300,7 @@ void NewData_Sept::Loop()
 		}
 	}
 	
-	std:: cout << "total number of higgs " << count << std::endl;
+	std:: cout << "total number of higgs " << countHiggsCandidate << std::endl;
 	std:: cout << "Events with one higgs: " << count1 << std::endl;
 	std:: cout << "Events with two higgs: " << count2 << std::endl;
 	std:: cout << "Events with three higgs: " << count3 << std::endl;

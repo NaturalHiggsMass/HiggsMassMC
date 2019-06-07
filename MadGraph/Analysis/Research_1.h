@@ -733,17 +733,17 @@ Research_1::Research_1(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      //TString RootFile = "/Users/Anna/work/HiggsMass/Higgs_1Jet_PtCut/Events/run_01/tag_1_delphes_events.root";
-      TString RootFile = "/Users/Anna/work/HiggsMass/Higgs_0or1Jet_PtCut/Events/run_02/tag_1_delphes_events.root";
+      TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco_0_80_120GeV.root";
+      //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run02_Higgs0or1Jet_PtGen_50_250_forPtReco120_200GeV.root";
+      //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run03_Higgs0or1Jet_PtGen_130_330_forPtReco200_270GeV.root";
+      //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run04_Higgs0or1Jet_PtGen_200_410_forPtReco270_350GeV.root";
+      //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run05_Higgs0or1Jet_PtGen_270_510_forPtReco350_450GeV.root";
+      //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run06_Higgs0or1Jet_PtGen_370_620_forPtReco450_550GeV.root";
+      //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run07_Higgs0or1Jet_PtGen_450_820_forPtReco550_750GeV.root";
+      //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run08_Higgs0or1Jet_PtGen_650_inf_forPtReco750_infGeV.root";
       TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(RootFile);
-      //TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/Users/Anna/work/HiggsMass/HiggsGammaGammaPt50GeVJet1/Events/run_07/tag_3_delphes_events.root");
-      //TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/Users/Anna/work/HiggsMass/HiggsGammaGammaPt50GeVJet1/Events/run_08/tag_2_delphes_events.root");
-      //TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/Users/Anna/work/HiggsMass/haa/Events/run_01/tag_1_delphes_events.root");
       if (!f || !f->IsOpen()) {
          f = new TFile(RootFile);
-         //f = new TFile("/Users/Anna/work/HiggsMass/HiggsGammaGammaPt50GeVJet1/Events/run_07/tag_3_delphes_events.root");
-         //f = new TFile("/Users/Anna/work/HiggsMass/HiggsGammaGammaPt50GeVJet1/Events/run_08/tag_2_delphes_events.root");
-         //f = new TFile("/Users/Anna/work/HiggsMass//haa/Events/run_01/tag_1_delphes_events.root");
       }
       f->GetObject("Delphes",tree);
 

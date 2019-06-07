@@ -40,34 +40,47 @@ void Research_1::Loop()
 	TLorentzVector s(0.,0.,0.,0.);	
 	
 // initialize histograms
+        int pTbin[] = {0, 80, 120, 200, 270, 350, 450, 550, 750};	
+        int NpTbins = int(sizeof(pTbin)/sizeof(pTbin[0]));
+        cout << "# of pT bins = " << NpTbins << endl; 
+	//std::string title[5] = {"pT(0,50 GeV)", "pT(50,100 GeV)", "pT(100,150 GeV)", "pT(150,200 GeV)", "pT(200+ GeV)"};
+	std::string title[NpTbins];
+        for (int i = 0; i < NpTbins; i++)
+        {
+           if (i < (NpTbins-1) )title[i] = Form("p_{T}: %d-%d GeV", pTbin[i], pTbin[i+1]);
+           else title[i] = Form("p_{T}: %d-inf GeV", pTbin[i]);
+           cout << "title " << i << " = " << title[i] << endl;   
+        }
 
-	TH1D * bothBarrel[5];
-	TH1D * barrelAndEndCaps[5];
-	TH1D * bothEndCaps[5];
+	TH1D * bothBarrel[NpTbins];
+	TH1D * barrelAndEndCaps[NpTbins];
+	TH1D * bothEndCaps[NpTbins];
 	TH1D * hHiggsPt;
         hHiggsPt = new TH1D("hHiggsPt","hHiggsPt", 100, 0., 500.);
 	TH1D * hHiggsMass;
         hHiggsMass = new TH1D("hHiggsMass","hHiggsMass", 400, 0., 150.);
-	
-	std::string title[5] = {"pT(0,50 GeV)", "pT(50,100 GeV)", "pT(100,150 GeV)", "pT(150,200 GeV)", "pT(200+ GeV)"};
+
 	std::string work;	
 		
-	for (int i = 0; i < 5; i++)
-	{		
-		work = "Histogram of Invariant Mass, both Photons Eta < 1.44, Higgs " + title[i];
+	for (int i = 0; i < NpTbins; i++)
+	{	
+                TString TitleX = "M(#gamma#gamma) (GeV)";
+                TString TitleY = "# events";
+                	
+		work = "M(#gamma#gamma), both barrel (|#eta_{#gamma}| < 1.44)" + title[i];     
 	 	bothBarrel[i] = new TH1D(work.c_str(),work.c_str(), 100,110, 140);
-		bothBarrel[i]-> GetXaxis()->SetTitle("Invariant Mass (GeV)");
-		bothBarrel[i]-> GetYaxis()->SetTitle("Number of Events");
+		bothBarrel[i]-> GetXaxis()->SetTitle(TitleX);
+		bothBarrel[i]-> GetYaxis()->SetTitle(TitleY);
 		
-		work = "Histogram of Invariant Mass, one Photon Eta < 1.44, other Photon > 1.57, Higgs " + title[i];
+		work = "M(#gamma#gamma), barrel (|#eta_{#gamma}| < 1.44) - endcap (1.57 < |#eta_{#gamma}| > 2.5) " + title[i];
 		barrelAndEndCaps[i] = new TH1D(work.c_str(),work.c_str(), 100,110,140);
-		barrelAndEndCaps[i]-> GetXaxis()->SetTitle("Invariant Mass (GeV)");
-		barrelAndEndCaps[i]-> GetYaxis()->SetTitle("Number of Events");		
+		barrelAndEndCaps[i]-> GetXaxis()->SetTitle(TitleX);
+		barrelAndEndCaps[i]-> GetYaxis()->SetTitle(TitleY);		
 		
-		work = "Histogram of Invariant Mass, both Photons Eta > 1.57, Higgs " + title[i];
+		work = "M(#gamma#gamma), both endcap (1.57 < |#eta_{#gamma}| > 2.5)" + title[i];
 		bothEndCaps[i] = new TH1D(work.c_str(),work.c_str(), 100,110,140);
-		bothEndCaps[i]-> GetXaxis()->SetTitle("Invariant Mass (GeV)");
-		bothEndCaps[i]-> GetYaxis()->SetTitle("Number of Events");		
+		bothEndCaps[i]-> GetXaxis()->SetTitle(TitleX);
+		bothEndCaps[i]-> GetYaxis()->SetTitle(TitleY);		
 	}
 
 
@@ -77,42 +90,44 @@ void Research_1::Loop()
 		Long64_t ientry = LoadTree(jentry);
 		if (ientry < 0) break;
 		nb = fChain->GetEntry(jentry);   nbytes += nb;
+                cout << "File name = " << fChain -> GetCurrentFile()->GetName() << endl;
 
 // if (Cut(ientry) < 0) continue;
-	   	int indicator = 0;
+	   	int indicator = -1;
+	   	int indicatorReco = -1;
 		int flag = 0;
 		bool check = 0;
 		double mass = 0;
 		
 		p1 = test;
 		p2 = test;
-		check = 0;
 
                 if (Photon_size < 2) continue; //select at least 2 photons:
+                // p1 - leading (max pT) photon, p2 - subleading
 		for (int i = 0; i < Photon_size; i++)
 		{
+                        if (Photon_PT[i] < 0) cout << "Error: Photon_PT[i] = " << Photon_PT[i] << endl;
 			if ( abs(Photon_Eta[i]) <= 2.5 && (abs(Photon_Eta[i]) > 1.57 || abs(Photon_Eta[i]) < 1.44))
 			{
 				if (p1 == test) 	// if this is the first photon in the event
 				{
 					p1.SetPtEtaPhiE(Photon_PT[i], Photon_Eta[i], Photon_Phi[i], Photon_E[i]);
 				}
-				else if ( (p1 != test) && (p2 == test) ) // if this is the second photon in the event
+				else if ( (p1 != test) && (p2 == test) ) // if this is the second photon in the event p1 is with max pT
 				{
-					p2.SetPtEtaPhiE(Photon_PT[i], Photon_Eta[i], Photon_Phi[i], Photon_E[i]);
+                                        if(p1.Pt() >= Photon_PT[i])p2.SetPtEtaPhiE(Photon_PT[i], Photon_Eta[i], Photon_Phi[i], Photon_E[i]);
+                                        else
+                                        { 
+                                             p2 = p1;
+                                             p1.SetPtEtaPhiE(Photon_PT[i], Photon_Eta[i], Photon_Phi[i], Photon_E[i]);
+					}
 				}
 				else if ( (p1 != test) && (p2 != test) )	// maybe another photon, trying to get max pTs
 				{
 					if ( Photon_PT[i] > p1.Pt() )
 					{
-						if (p1.Pt() >= p2.Pt())
-						{
-							p2.SetPtEtaPhiE(Photon_PT[i], Photon_Eta[i], Photon_Phi[i], Photon_E[i]);
-						}
-						else
-						{
+							p2 = p1;
 							p1.SetPtEtaPhiE(Photon_PT[i], Photon_Eta[i], Photon_Phi[i], Photon_E[i]);
-						}
 					}
 					else if ( Photon_PT[i] > p2.Pt() )
 					{
@@ -122,39 +137,35 @@ void Research_1::Loop()
 			}
 		}	// End of looping through photons
 
+
                 if(Particle_size > 0){		
 		for ( int i = 0; i < Particle_size; i++) // now loop through all particles to find Higgs
 		{
 			if ( Particle_PID[i] == 25)	//set indicator depending on Pt
 			{
-				if (abs(Particle_PT[i]) <= 50)
-				{
-					indicator = 1;
-				}				
-				else if (abs(Particle_PT[i]) <= 100)
-				{
-					indicator = 2;
-				}
-				else if (abs(Particle_PT[i]) <= 150)
-				{
-					indicator = 3;
-				}
-				else if (abs(Particle_PT[i]) <= 200)
-				{
-					indicator = 4;
-				}				
-				else if (abs(Particle_PT[i]) > 250)
-				{
-					indicator = 5;
+                                if (Particle_PT[i] < 0) cout << "Error: Particle_PT[" << i << "] = " << Particle_PT[i] << " Particle_Status = " << Particle_Status[i] << endl;
+                                for ( int j = 0; j < NpTbins; j++) 
+			        {
+              				if (j < (NpTbins -1)){if (Particle_PT[i] >= pTbin[j] && Particle_PT[i] < pTbin[j+1]) indicator = j;}
+              				else {if (Particle_PT[i] >= pTbin[j]) indicator = j;}
+               
 				}
 			}
 		}
                 }
-	        if (indicator == 0)std::cout <<"ERROR: no gen Higgs found" << std::endl;	
-	        if (indicator == 0)continue;
+                //cout << "indicator = " << indicator << endl;
+	        if (indicator < 0 )std::cout <<"ERROR: no gen Higgs found" << std::endl;	
+	        if (indicator < 0)continue; // reject events without good generated Higgs
 
-                if (p2 == test) continue;                       // if both photons filled
+			// set indicatorReco:
+        	        //if (p1 == test || p2 == test) cout << "Error: one both photons are not exist -> check the code: pT1 = " << p1.Pt() << " pT2 = " << p2.Pt() << endl;   // if both photons filled
+                	if (p1 == test || p2 == test) continue;
 			s = p1+p2;
+        	        for ( int j = 0; j < NpTbins; j++)
+			{
+				if (j < (NpTbins -1)){if (s.Pt()>= pTbin[j] && s.Pt() < pTbin[j+1]) indicatorReco = j;}
+          	              else {if (s.Pt() >= pTbin[j]) indicatorReco = j;}
+                	}	
 			mass = s.M();
                         float pTHiggs = s.Pt();
                         hHiggsPt -> Fill (pTHiggs);
@@ -187,38 +198,48 @@ void Research_1::Loop()
 		{
 			if (flag == 1)
 			{
-				bothBarrel[indicator - 1] -> Fill(mass);
+				//bothBarrel[indicator] -> Fill(mass);
+				bothBarrel[indicatorReco] -> Fill(mass);
 			}
 			else if (flag == 2)
 			{
-				barrelAndEndCaps[indicator - 1] -> Fill(mass);
+				//barrelAndEndCaps[indicator] -> Fill(mass);
+				barrelAndEndCaps[indicatorReco] -> Fill(mass);
 			}
 			else if (flag == 3)
 			{
-				bothEndCaps[indicator - 1] -> Fill(mass);			
+				//bothEndCaps[indicator] -> Fill(mass);			
+				bothEndCaps[indicatorReco] -> Fill(mass);			
 			}	
 		}
-	}
+	} // end cycle by root-file
 
-	TCanvas *first[5];
-	TCanvas *second[5];	
-	TCanvas *third[5];
+        TFile *outFile = new TFile ( "SignalSummary.root", "RECREATE");
+	TCanvas *first[NpTbins];
 
-	for (int i = 0; i < 5; i++) // draw and fit histograms
+	for (int i = 0; i < NpTbins; i++) // draw and fit histograms
 	{
 		first[i] = new TCanvas();
+                first[i] -> Divide(2,2);
+	        gStyle->SetOptFit(1); 
+	        //gStyle->SetOptStat(1); 
+
+                first[i] -> cd(1);
 		bothBarrel[i]->Draw();
 		bothBarrel[i]->Fit("gaus","","",118,132);
-	    gStyle->SetOptFit(1); 
 	
-		second[i] = new TCanvas();
+                first[i] -> cd(2);
 		barrelAndEndCaps[i]->Draw();
 		barrelAndEndCaps[i]->Fit("gaus","","",118,132);	
-	    gStyle->SetOptFit(1); 
 	    
-	    third[i] = new TCanvas();
+                first[i] -> cd(3);
 		bothEndCaps[i]->Draw();
 		bothEndCaps[i]->Fit("gaus","","",118,132);
-	    gStyle->SetOptFit(1); 	    	
+
+   
+		bothBarrel[i]->Write();
+		barrelAndEndCaps[i]->Write();
+		bothEndCaps[i]->Write();
 	}
+        outFile->Close();
 }
