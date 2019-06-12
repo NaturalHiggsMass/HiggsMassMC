@@ -84,14 +84,16 @@ void Research_1::Loop()
 	}
 
 
+        TString FileName = "";
    	Long64_t nbytes = 0, nb = 0;
    	for (Long64_t jentry=0; jentry<nentries;jentry++) 
   	{
 		Long64_t ientry = LoadTree(jentry);
 		if (ientry < 0) break;
 		nb = fChain->GetEntry(jentry);   nbytes += nb;
-                cout << "File name = " << fChain -> GetCurrentFile()->GetName() << endl;
-
+                TString FileNameCheck = fChain -> GetCurrentFile()->GetName();
+                if (FileName != FileNameCheck)cout << "File name = " << FileNameCheck << endl;
+                FileNameCheck = FileName;
 // if (Cut(ientry) < 0) continue;
 	   	int indicator = -1;
 	   	int indicatorReco = -1;

@@ -734,7 +734,7 @@ Research_1::Research_1(TTree *tree) : fChain(0)
 // used to generate this class and read the Tree.
    if (tree == 0) {
       TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco_0_80_120GeV.root";
-      //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run02_Higgs0or1Jet_PtGen_50_250_forPtReco120_200GeV.root";
+     // TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run02_Higgs0or1Jet_PtGen_50_250_forPtReco120_200GeV.root";
       //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run03_Higgs0or1Jet_PtGen_130_330_forPtReco200_270GeV.root";
       //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run04_Higgs0or1Jet_PtGen_200_410_forPtReco270_350GeV.root";
       //TString RootFile = "/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run05_Higgs0or1Jet_PtGen_270_510_forPtReco350_450GeV.root";
@@ -746,7 +746,6 @@ Research_1::Research_1(TTree *tree) : fChain(0)
          f = new TFile(RootFile);
       }
       f->GetObject("Delphes",tree);
-
    }
    Init(tree);
 }
