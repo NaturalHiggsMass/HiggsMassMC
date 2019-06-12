@@ -54,12 +54,13 @@ void HiggsAnalysis::Loop()
         TH1D * bothBarrel[NpTbins];
         TH1D * barrelAndEndCaps[NpTbins];
         TH1D * bothEndCaps[NpTbins];
-        TH1D * hHiggsPt;
-        hHiggsPt = new TH1D("hHiggsPt","hHiggsPt", 100, 0., 500.);
+        TH1D * hHiggsPt[NpTbins];
+        TH1D * hHiggsPtCut[NpTbins];
         TH1D * hHiggsMass;
         hHiggsMass = new TH1D("hHiggsMass","hHiggsMass", 400, 0., 150.);
 
         std::string work;
+        std::string workName;
 
         for (int i = 0; i < NpTbins; i++)
         {
@@ -67,24 +68,50 @@ void HiggsAnalysis::Loop()
                 TString TitleY = "# events";
 
                 work = "M(#gamma#gamma), both barrel (|#eta_{#gamma}| < 1.44)" + title[i];
-                bothBarrel[i] = new TH1D(work.c_str(),work.c_str(), 100,110, 140);
+                workName = "hMgg_bothBarrel " + title[i];
+                bothBarrel[i] = new TH1D(workName.c_str(),work.c_str(), 100,110, 140);
                 bothBarrel[i]-> GetXaxis()->SetTitle(TitleX);
                 bothBarrel[i]-> GetYaxis()->SetTitle(TitleY);
+                bothBarrel[i]-> Sumw2();
 
                 work = "M(#gamma#gamma), barrel (|#eta_{#gamma}| < 1.44) - endcap (1.57 < |#eta_{#gamma}| > 2.5) " + title[i];
-                barrelAndEndCaps[i] = new TH1D(work.c_str(),work.c_str(), 100,110,140);
+                workName = "hMgg_BarrelEndcap " + title[i];
+                barrelAndEndCaps[i] = new TH1D(workName.c_str(),work.c_str(), 100,110,140);
                 barrelAndEndCaps[i]-> GetXaxis()->SetTitle(TitleX);
                 barrelAndEndCaps[i]-> GetYaxis()->SetTitle(TitleY);
+                barrelAndEndCaps[i]-> Sumw2(); 
 
                 work = "M(#gamma#gamma), both endcap (1.57 < |#eta_{#gamma}| > 2.5)" + title[i];
-                bothEndCaps[i] = new TH1D(work.c_str(),work.c_str(), 100,110,140);
+                workName = "hMgg_bothEndcap " + title[i];
+                bothEndCaps[i] = new TH1D(workName.c_str(),work.c_str(), 100,110,140);
                 bothEndCaps[i]-> GetXaxis()->SetTitle(TitleX);
                 bothEndCaps[i]-> GetYaxis()->SetTitle(TitleY);
+                bothEndCaps[i]-> Sumw2();
+
+                work = "p_{T}(#gamma#gamma)" + title[i];
+                workName = "hpTgg " + title[i];
+                hHiggsPt[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 1000.);
+                hHiggsPt[i]-> GetXaxis()->SetTitle("p_{T}(#gamma#gamma) (GeV)");
+                hHiggsPt[i]-> GetYaxis()->SetTitle(TitleY);
+                hHiggsPt[i]-> Sumw2();
+
+                work = "p_{T}(#gamma#gamma) Cut" + title[i];
+                workName = "hpTggCut " + title[i];
+                hHiggsPtCut[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 1000.);
+                hHiggsPtCut[i]-> GetXaxis()->SetTitle("p_{T}(#gamma#gamma) (GeV)");
+                hHiggsPtCut[i]-> GetYaxis()->SetTitle(TitleY);
+                hHiggsPtCut[i]-> Sumw2();
         }
 
 
         string FileName = "";
         int FileNumber = 1;
+        //for reco pT (GeV):  0-120   120-200  200-270  270-350  350-450   450-550   550-750    750-inf 
+        //double Lumi[] =      {1477.,  12760.,  73820.,  222100., 530400.,  1526000., 2882000.,  11703000.}; // Luminosity pb-1 
+        double Lumi[] =      {1.477,  12.760,  73.820,  222.100, 530.400,  1526.000, 2882.000,  11703.000}; // Luminosity fb-1 
+        double Xsec[] =      {40.63,  4.700,   0.8124,  0.2670,  0.11302,  0.03927,  0.02079,   0.005114}; // xsec pb 
+        double dXsec[] =     { 0.03,  0.005,   0.0008,  0.0003,  0.00014,  0.00004,  0.00002,   0.000006}; // xsec pb 
+        int NLumi = int(sizeof(Lumi)/sizeof(Lumi[0]));
 
         Long64_t nbytes = 0, nb = 0;
         for (Long64_t jentry=0; jentry<nentries;jentry++) {
@@ -186,8 +213,8 @@ void HiggsAnalysis::Loop()
                 }
                 }
                 //cout << "indicator = " << indicator << endl;
-                if (indicator < 0 )std::cout <<"ERROR: no gen Higgs found" << std::endl;
-                if (indicator < 0)continue; // reject events without good generated Higgs
+                //if (indicator < 0 )std::cout <<"ERROR: no gen Higgs found" << std::endl;
+                //if (indicator < 0)continue; // reject events without good generated Higgs
 
                         // set indicatorReco:
                         //if (p1 == test || p2 == test) cout << "Error: one both photons are not exist -> check the code: pT1 = " << p1.Pt() << " pT2 = " << p2.Pt() << endl;   // if both photons filled
@@ -200,7 +227,6 @@ void HiggsAnalysis::Loop()
                         }
                         mass = s.M();
                         float pTHiggs = s.Pt();
-                        hHiggsPt -> Fill (pTHiggs);
                         hHiggsMass -> Fill (mass);
 
                         if ( (p1.Pt() > mass/3) && (p2.Pt() > mass/4) )
@@ -226,23 +252,44 @@ void HiggsAnalysis::Loop()
                 //hHiggsPt->Draw("e");
                 //cQuality->SaveAs("pic_HiggsPt.png");
 
+                if (FileNumber > NLumi) cout << "Error: FileNumber > NLumi check code: FileNumber = " << FileNumber << " NLumi = " << NLumi << endl;
+                if (FileNumber > NLumi) continue;
                 if (check == 1)         //fill the right histograms if the mass was recorded
                 {
+                        double weight_In = 1./Lumi[0];
+                        if (indicatorReco > 1) weight_In = 1./Lumi[indicatorReco-1];
+                        double weight_F = 1./Lumi[FileNumber-1];
+                        //cout << " indicatorReco = " << indicatorReco << " FileNumber = " << FileNumber << "weight_In = " << weight_In << " weight_F = " << weight_F << endl;
                         if (flag == 1)
                         {
                                 //bothBarrel[indicator] -> Fill(mass);
-                                bothBarrel[indicatorReco] -> Fill(mass);
+                                if(FileNumber == 1 && (indicatorReco == 0 || indicatorReco==1))bothBarrel[indicatorReco] -> Fill(mass,weight_In);
+                                if(FileNumber > 1 && FileNumber == indicatorReco)bothBarrel[indicatorReco] -> Fill(mass,weight_In);
                         }
                         else if (flag == 2)
                         {
                                 //barrelAndEndCaps[indicator] -> Fill(mass);
-                                barrelAndEndCaps[indicatorReco] -> Fill(mass);
+                                if(FileNumber == 1 && (indicatorReco == 0 || indicatorReco==1))barrelAndEndCaps[indicatorReco] -> Fill(mass,weight_In);
+                                if(FileNumber > 1 && FileNumber == indicatorReco)barrelAndEndCaps[indicatorReco] -> Fill(mass,weight_In);
                         }
                         else if (flag == 3)
                         {
                                 //bothEndCaps[indicator] -> Fill(mass);                 
-                                bothEndCaps[indicatorReco] -> Fill(mass);
+                                if(FileNumber == 1 && (indicatorReco == 0 || indicatorReco==1))bothEndCaps[indicatorReco] -> Fill(mass,weight_In);
+                                if(FileNumber > 1 && FileNumber == indicatorReco)bothEndCaps[indicatorReco] -> Fill(mass,weight_In);
                         }
+                        if(FileNumber == 1 && (indicatorReco == 0 || indicatorReco==1))
+			{
+				if (pTHiggs < 1000.)hHiggsPtCut[indicatorReco] -> Fill (pTHiggs,weight_In);
+				else hHiggsPtCut[indicatorReco] -> Fill (1000.,weight_In);
+			}
+                        if(FileNumber > 1 && FileNumber == indicatorReco)
+			{
+				if (pTHiggs < 1000.)hHiggsPtCut[indicatorReco] -> Fill (pTHiggs,weight_In);
+                                else hHiggsPtCut[indicatorReco] -> Fill (1000.,weight_In);
+			}
+                        if (pTHiggs < 1000.)hHiggsPt[FileNumber] -> Fill (pTHiggs,weight_F);
+			else hHiggsPt[FileNumber] -> Fill (1000.,weight_F);
                 }
 
         } // end cyclbe by nentries
@@ -273,6 +320,8 @@ void HiggsAnalysis::Loop()
                 bothBarrel[i]->Write();
                 barrelAndEndCaps[i]->Write();
                 bothEndCaps[i]->Write();
+                hHiggsPt[i]->Write();
+                hHiggsPtCut[i]->Write();
         }
         outFile->Close();
 }//end Loop()
