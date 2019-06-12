@@ -83,7 +83,8 @@ void HiggsAnalysis::Loop()
         }
 
 
-        TString FileName = "";
+        string FileName = "";
+        int FileNumber = 1;
 
         Long64_t nbytes = 0, nb = 0;
         for (Long64_t jentry=0; jentry<nentries;jentry++) {
@@ -91,9 +92,38 @@ void HiggsAnalysis::Loop()
                 if (ientry < 0) break;
                 nb = fChain->GetEntry(jentry);   nbytes += nb;
                 // if (Cut(ientry) < 0) continue;
-                TString FileNameCheck = fChain -> GetCurrentFile()->GetName();
-                if (FileName != FileNameCheck)cout << "File name = " << FileNameCheck << endl;
-                FileName = FileNameCheck;
+                string FileNameCheck = fChain -> GetCurrentFile()->GetName();
+                size_t posStart = FileNameCheck.find("forPtReco");      // position of "forPtReco" in str
+                size_t posEnd = FileNameCheck.find("GeV.root");      // position of "GeV.root" in str
+                string FileNameCut = FileNameCheck.substr (posStart+9,posEnd-posStart-9);
+                string FileNameCut_pTbin = "";
+                if (FileNumber == 1)FileNameCut_pTbin = Form("%d_%d_%d", pTbin[0],pTbin[1],pTbin[2]);
+                if (FileNumber > 1 && FileNumber < (NpTbins-1))FileNameCut_pTbin = Form("%d_%d", pTbin[FileNumber],pTbin[FileNumber+1]);
+		if (FileNumber == (NpTbins-1))FileNameCut_pTbin = Form("%d_inf", pTbin[FileNumber]);
+		if (FileNumber > (NpTbins-1))
+		{
+			cout <<"Error: more Files then pTbins, please check and correct code. Task is terminated: no more Files connecting." << endl;
+			continue;
+		}
+                if (FileNameCut != FileNameCut_pTbin)
+		{
+			FileNumber++;
+                	if (FileNumber > 1 && FileNumber < (NpTbins-1))FileNameCut_pTbin = Form("%d_%d", pTbin[FileNumber],pTbin[FileNumber+1]);
+			if (FileNumber == (NpTbins-1))FileNameCut_pTbin = Form("%d_inf", pTbin[FileNumber]);
+                	if (FileNumber > (NpTbins-1))
+        	        {
+      	                  cout <<"Error: more Files then pTbins, please check and correct code. Task is terminated: no more Files connecting." << endl;
+                        	continue;
+                	}
+                }
+                if (FileName != FileNameCheck)
+		{
+			cout << "File name = " << FileNameCheck << endl;
+                	cout << "File name Cut = " << FileNameCut << endl;
+                	cout << "File name Cut pTbin = " << FileNameCut_pTbin << endl;
+                }
+		FileName = FileNameCheck;
+                 
 
                 int indicator = -1;
                 int indicatorReco = -1;
