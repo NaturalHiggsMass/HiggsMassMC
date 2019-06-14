@@ -213,6 +213,7 @@ void HiggsAnalysis::Loop()
         	// make weight for 300 fb-1 and Br(H->gg) = 2.27e-03
                 //                              pb -> fb   #fb  #events BR(H->gg)                 
         	double weight_F = Xsec[FileNumber-1]*1000.*300./50000.*2.27e-03;
+        	if(DataSample == "BG") weight_F = Xsec[FileNumber-1]*1000.*300./50000.; // no Br correction
 
                 // find leading jet in |eta| < 2.4:
                 double JetLeading_pT = 0.;
@@ -365,7 +366,7 @@ void HiggsAnalysis::Loop()
                         	if (pTHiggs < 1000.)hHiggsPt[FileNumber] -> Fill (pTHiggs,weight_F);
 				else hHiggsPt[FileNumber] -> Fill (1000.,weight_F);
                         }
-			if( Ncheck%1000 == 0 ){
+			if( Ncheck%3000 == 0 ){
 				std::cout << "Selected events = " << Ncheck << " #File = " << FileNumber << " weight_F = " << weight_F << " indicatorReco = " << indicatorReco << " pT(gg) = " << pTHiggs << std::endl;
 			}
                 } //end check
@@ -415,8 +416,17 @@ void HiggsAnalysis::Loop()
         Dist_pTgg -> cd(1);
         gPad -> SetLogx(1);
         gPad -> SetLogy(1);
-	TH2F *hEmpty = new TH2F("hEmpty","",40,80,1000.,40,0.001,200.);//x vs y
-	if(DataSample == "BG")hEmpty = new TH2F("hEmpty","",40,50,1000.,40,0.00001,200.);//x vs y
+        Int_t nbin_Empty = 40;
+        Double_t xmin_Empty = 80.; 
+        Double_t xmax_Empty = 1000.; 
+        Double_t ymin_Empty = 0.001; 
+        Double_t ymax_Empty = 200.; 
+        if(DataSample == "BG"){
+		xmin_Empty = 50.;
+		ymin_Empty = 0.01;
+		ymax_Empty = 100000.;
+	}
+	TH2F *hEmpty = new TH2F("hEmpty","",nbin_Empty, xmin_Empty, xmax_Empty, nbin_Empty, ymin_Empty, ymax_Empty);//x vs y
         hEmpty -> GetXaxis()->SetTitle("p_{T}(#gamma#gamma) (GeV)");
         hEmpty -> GetYaxis()->SetTitle(Form("Events/(%3.0f GeV)", hHiggsPt[0]->GetXaxis()->GetBinWidth(1)));
         hEmpty ->Draw();
