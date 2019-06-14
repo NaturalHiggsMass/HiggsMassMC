@@ -22,12 +22,12 @@ public :
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
    static constexpr Int_t kMaxEvent = 1;
-   static constexpr Int_t kMaxParticle = 4231;
+   static constexpr Int_t kMaxParticle = 4346;//4231;
    static constexpr Int_t kMaxTrack = 257;
    static constexpr Int_t kMaxTower = 349;
    static constexpr Int_t kMaxEFlowTrack = 257;
    static constexpr Int_t kMaxEFlowPhoton = 147;
-   static constexpr Int_t kMaxEFlowNeutralHadron = 173;
+   static constexpr Int_t kMaxEFlowNeutralHadron = 182;//173;
    static constexpr Int_t kMaxGenJet = 16;
    static constexpr Int_t kMaxGenMissingET = 1;
    static constexpr Int_t kMaxJet = 16;
@@ -762,14 +762,25 @@ HiggsAnalysis::HiggsAnalysis(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("Delphes","");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run02_Higgs0or1Jet_PtGen_50_250_forPtReco120_200GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run03_Higgs0or1Jet_PtGen_130_330_forPtReco200_270GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run04_Higgs0or1Jet_PtGen_200_410_forPtReco270_350GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run05_Higgs0or1Jet_PtGen_270_510_forPtReco350_450GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run06_Higgs0or1Jet_PtGen_370_620_forPtReco450_550GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run07_Higgs0or1Jet_PtGen_450_820_forPtReco550_750GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run08_Higgs0or1Jet_PtGen_650_inf_forPtReco750_infGeV.root/Delphes");
+//      // for Singal:
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run02_Higgs0or1Jet_PtGen_50_250_forPtReco120_200GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run03_Higgs0or1Jet_PtGen_130_330_forPtReco200_270GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run04_Higgs0or1Jet_PtGen_200_410_forPtReco270_350GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run05_Higgs0or1Jet_PtGen_270_510_forPtReco350_450GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run06_Higgs0or1Jet_PtGen_370_620_forPtReco450_550GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run07_Higgs0or1Jet_PtGen_450_820_forPtReco550_750GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run08_Higgs0or1Jet_PtGen_650_inf_forPtReco750_infGeV.root/Delphes");
+      // for Background:
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run01_pp2aa_01j_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run02_pp2aa_01j_PtGen_50_250_forPtReco120_200GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run03_pp2aa_01j_PtGen_130_330_forPtReco200_270GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run04_pp2aa_01j_PtGen_200_410_forPtReco270_350GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run05_pp2aa_01j_PtGen_270_510_forPtReco350_450GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run06_pp2aa_01j_PtGen_370_620_forPtReco450_550GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run07_pp2aa_01j_PtGen_450_820_forPtReco550_750GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run08_pp2aa_01j_PtGen_650_inf_forPtReco750_infGeV.root/Delphes");
+
       tree = chain;
 #endif // SINGLE_TREE
 
