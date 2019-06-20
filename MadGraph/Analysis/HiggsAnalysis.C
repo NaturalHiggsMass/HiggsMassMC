@@ -42,9 +42,10 @@ void HiggsAnalysis::Loop()
         TString DataSample = "Signal";
         //TString DataSample = "BG";
         // initialize histograms
+        // for Singal
         int pTbin[]      = {0, 80, 120, 200, 270, 350, 450, 550, 750};// keep only for file definition
         int pTbinCor[]   = {0, 80, 120, 200, 270, 350, 450, 550, 750};// keep the same like definition
-        //int pTbinCor[]   = {0, 80, 120, 200, 300, 400, 500, 600, 750};//Corrected values due to generation
+        // for Background 
 	int pTbinCorBG[] = {0, 80, 120, 200, 270, 350, 450, 550, 750};//Corrected values due to generation
         int NpTbins = int(sizeof(pTbin)/sizeof(pTbin[0]));
         if(DataSample == "BG"){
@@ -108,10 +109,12 @@ void HiggsAnalysis::Loop()
                 bothEndCaps[i]-> Sumw2();
 
 
-                work = "p_{T}(#gamma#gamma)" + title[i];
+                work = "p_{T}(#gamma#gamma), " + title[i];
                 workName = "hpTgg " + title[i];
                 //Int_t nbin_pT = 200;
                 Int_t nbin_pT = 100;
+                Double_t xmin_pT = -0.5;
+                Double_t xmax_pT = 999.5;
                 hHiggsPt[i] = new TH1D(workName.c_str(),work.c_str(), nbin_pT, 0., 1000.);
                 TitleX = "p_{T}(#gamma#gamma) (GeV)";
                 TitleY = Form("Events/(%3.0f GeV)", hHiggsPt[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -150,22 +153,27 @@ void HiggsAnalysis::Loop()
         string FileName = "";
         int FileNumber = 1;
 	//CMS 2015 config
-        //for reco pT (GeV):  0-120   120-200  200-270  270-350  350-450   450-550   550-750    750-inf 
-                                               //updated
-        double XsecD[] =     {14.443, 4.9921,  1.1349,  0.58424, 0.28451, 0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 15 
-        double Xsec[]  =     {14.706, 4.989,  1.1349,  0.58424, 0.28451, 0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 22.5 
-        double XsecU[] =     {14.852, 4.9621,  1.1349,  0.58424, 0.2845,  0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 30
-        double dXsec[] =     {0.0068, 0.0016,  0.00033, 0.00017, 8.1e-05, 2.4e-05,   1.1e-05,   2.3e-06}; // xsec pb: merge scale 22.5 
+        //for reco pT (GeV):  0-120           120-200  200-270  270-350  350-450   450-550   550-750    750-inf 
+        double XsecD[] =     {14.443, 14.443, 4.9921,  1.1349,  0.58424, 0.28451, 0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 15 
+        double Xsec[]  =     {14.706, 14.706, 4.989,  1.1349,  0.58424, 0.28451, 0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 22.5 
+        double XsecU[] =     {14.852, 14.852, 4.9621,  1.1349,  0.58424, 0.2845,  0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 30
+        double dXsec[] =     {0.0068, 0.0068, 0.0016,  0.00033, 0.00017, 8.1e-05, 2.4e-05,   1.1e-05,   2.3e-06}; // xsec pb: merge scale 22.5 
 	// CMS old config: 
         //double XsecD[] =     {14.307, 3.9088,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 15 
         //double Xsec[]  =     {14.557, 3.9086,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 22.5 
         //double XsecU[] =     {14.582, 3.9047,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 30
         //double dXsec[] =     {0.0068, 0.0012,  0.00022, 7.4e-05, 3.1e-05, 1.1e-05,   5.8e-06,   1.4e-06}; // xsec pb: merge scale 22.5 
 
-        double XsecD_BG[] =  {15.562, 2.8415,  0.25233, 0.045449, 0.0113, 0.0023344, 0.00086844, 0.00010066};
-	double Xsec_BG[]  =  {15.715, 2.8415,  0.25233, 0.045449, 0.0113, 0.0023344, 0.00086844, 0.00010066};
-	double XsecU_BG[] =  {15.637, 2.841,   0.25233, 0.045449, 0.0113, 0.0023344, 0.00086844, 0.00010066};
-        double dXsec_BG[] =  {0.005,  0.0008,  7.1e-05, 1.3e-05,  3.2e-06, 6.5e-07,  2.4e-07,    2.8e-08};
+        double XsecD_BG[] =  {15.569, 3.9041,  1.4883,  0.19437, 0.073139, 0.016648, 0.0058665, 0.0021491, 0.00020585};
+	double Xsec_BG[]  =  {15.73,  3.9037,  1.4883,  0.19437, 0.073137, 0.016647, 0.0058665, 0.0021491, 0.00020585};
+	double XsecU_BG[] =  {15.603, 3.8987,  1.4883,  0.19437, 0.073137, 0.016647, 0.0058665, 0.0021491, 0.00020585};
+        double dXsec_BG[] =  {0.005,  0.0011,  0.00042, 5.4e-05, 2.1e-05,  4.7e-06,  1.6e-06,   6e-07,     5.8e-08};
+        //CMS old config:
+        //double XsecD_BG[] =  {15.562, 2.8415,  0.25233, 0.045449, 0.0113, 0.0023344, 0.00086844, 0.00010066};
+	//double Xsec_BG[]  =  {15.715, 2.8415,  0.25233, 0.045449, 0.0113, 0.0023344, 0.00086844, 0.00010066};
+	//double XsecU_BG[] =  {15.637, 2.841,   0.25233, 0.045449, 0.0113, 0.0023344, 0.00086844, 0.00010066};
+        //double dXsec_BG[] =  {0.005,  0.0008,  7.1e-05, 1.3e-05,  3.2e-06, 6.5e-07,  2.4e-07,    2.8e-08};
+
         int NLumi = int(sizeof(Xsec)/sizeof(Xsec[0]));
         if(DataSample == "BG"){
                 for (int i = 0; i < NLumi; i++)
@@ -190,19 +198,23 @@ void HiggsAnalysis::Loop()
                 string FileNameCut = FileNameCheck.substr (posStart+9,posEnd-posStart-9); 
                 string FileNameCut_pTbin = "";
                 if (FileNumber == 1)FileNameCut_pTbin = Form("%d_%d_%d", pTbin[0],pTbin[1],pTbin[2]);
-                if (FileNumber > 1 && FileNumber < (NpTbins-1))FileNameCut_pTbin = Form("%d_%d", pTbin[FileNumber],pTbin[FileNumber+1]);
-		if (FileNumber == (NpTbins-1))FileNameCut_pTbin = Form("%d_inf", pTbin[FileNumber]);
-		if (FileNumber > (NpTbins-1))
+                if (FileNumber == 1 && DataSample == "BG")FileNameCut_pTbin = Form("%d_%d", pTbin[0],pTbin[1]);
+                Int_t ID_pT = FileNumber;
+                if(DataSample == "BG") ID_pT = FileNumber-1;
+                if (FileNumber > 1 && ID_pT < (NpTbins-1))FileNameCut_pTbin = Form("%d_%d", pTbin[ID_pT],pTbin[ID_pT+1]);
+		if (ID_pT == (NpTbins-1))FileNameCut_pTbin = Form("%d_inf", pTbin[ID_pT]);
+		if (ID_pT > (NpTbins-1))
 		{
 			cout <<"Error: more Files then pTbins, please check and correct code. Task is terminated: no more Files connecting." << endl;
 			continue;
 		}
                 if (FileNameCut != FileNameCut_pTbin)
 		{
+                        //cout << "Test: FileNameCut= X" << FileNameCut << "X FileNameCut_pTbin = X" << FileNameCut_pTbin << "X "<< endl;
 			FileNumber++;
-                	if (FileNumber > 1 && FileNumber < (NpTbins-1))FileNameCut_pTbin = Form("%d_%d", pTbin[FileNumber],pTbin[FileNumber+1]);
-			if (FileNumber == (NpTbins-1))FileNameCut_pTbin = Form("%d_inf", pTbin[FileNumber]);
-                	if (FileNumber > (NpTbins-1))
+                	if (FileNumber > 1 && ID_pT < (NpTbins-1))FileNameCut_pTbin = Form("%d_%d", pTbin[ID_pT],pTbin[ID_pT+1]);
+			if (ID_pT == (NpTbins-1))FileNameCut_pTbin = Form("%d_inf", pTbin[ID_pT]);
+                	if (ID_pT > (NpTbins-1))
         	        {
       	                  cout <<"Error: more Files then pTbins, please check and correct code. Task is terminated: no more Files connecting." << endl;
                         	continue;
@@ -213,6 +225,7 @@ void HiggsAnalysis::Loop()
 			cout << "File name = " << FileNameCheck << endl;
                 	cout << "File name Cut = " << FileNameCut << endl;
                 	cout << "File name Cut pTbin = " << FileNameCut_pTbin << endl;
+                	cout << "File number = " << FileNumber << endl;
                 }
 		FileName = FileNameCheck;
                  
@@ -222,8 +235,8 @@ void HiggsAnalysis::Loop()
                 if (FileNumber > NLumi) continue;
         	// make weight for 300 fb-1 and Br(H->gg) = 2.27e-03
                 //                              pb -> fb   #fb  #events BR(H->gg)                 
-        	double weight_F = Xsec[FileNumber-1]*1000.*300./50000.*2.27e-03;
-        	if(DataSample == "BG") weight_F = Xsec[FileNumber-1]*1000.*300./50000.; // no Br correction
+        	double weight_F = Xsec[ID_pT]*1000.*300./50000.*2.27e-03;
+        	if(DataSample == "BG") weight_F = Xsec[ID_pT]*1000.*300./50000.; // no Br correction
 
                 // find leading jet in |eta| < 2.4:
                 double JetLeading_pT = 0.;
@@ -238,8 +251,8 @@ void HiggsAnalysis::Loop()
                 }
                 if (JetLeading_pT > 0.)
 		{
-			hLeadingJet_pT[FileNumber] -> Fill(JetLeading_pT, weight_F);
-			hLeadingJet_eta[FileNumber] -> Fill(JetLeading_eta, weight_F);
+			hLeadingJet_pT[ID_pT] -> Fill(JetLeading_pT, weight_F);
+			hLeadingJet_eta[ID_pT] -> Fill(JetLeading_eta, weight_F);
 		}
                 int indicator = -1;
                 int indicatorReco = -1;
@@ -338,47 +351,59 @@ void HiggsAnalysis::Loop()
                 {
                         if (flag == 1)
                         {
-                                //bothBarrel[indicator] -> Fill(mass);
-                                if(FileNumber == 1 && (indicatorReco == 0 || indicatorReco==1))bothBarrel[indicatorReco] -> Fill(mass,weight_F);
-                                if(FileNumber > 1 && FileNumber == indicatorReco)bothBarrel[indicatorReco] -> Fill(mass,weight_F);
+                                if(DataSample == "Signal"){
+                    	                if(ID_pT == 1 && (indicatorReco == 0 || indicatorReco==1))bothBarrel[indicatorReco] -> Fill(mass,weight_F);
+                        	        if(ID_pT > 1 && ID_pT == indicatorReco)bothBarrel[indicatorReco] -> Fill(mass,weight_F);
+
+				}
+				else if(ID_pT == indicatorReco)bothBarrel[indicatorReco] -> Fill(mass,weight_F);
                         }
                         else if (flag == 2)
                         {
-                                //barrelAndEndCaps[indicator] -> Fill(mass);
-                                if(FileNumber == 1 && (indicatorReco == 0 || indicatorReco==1))barrelAndEndCaps[indicatorReco] -> Fill(mass,weight_F);
-                                if(FileNumber > 1 && FileNumber == indicatorReco)barrelAndEndCaps[indicatorReco] -> Fill(mass,weight_F);
+                                if(DataSample == "Signal"){
+                           	        if(ID_pT == 1 && (indicatorReco == 0 || indicatorReco==1))barrelAndEndCaps[indicatorReco] -> Fill(mass,weight_F);
+                                	if(ID_pT > 1 && ID_pT == indicatorReco)barrelAndEndCaps[indicatorReco] -> Fill(mass,weight_F);
+				}
+				else if(ID_pT == indicatorReco)barrelAndEndCaps[indicatorReco] -> Fill(mass,weight_F);
                         }
                         else if (flag == 3)
                         {
-                                //bothEndCaps[indicator] -> Fill(mass);                 
-                                if(FileNumber == 1 && (indicatorReco == 0 || indicatorReco==1))bothEndCaps[indicatorReco] -> Fill(mass,weight_F);
-                                if(FileNumber > 1 && FileNumber == indicatorReco)bothEndCaps[indicatorReco] -> Fill(mass,weight_F);
+                                if(DataSample == "Signal"){
+                         		  if(ID_pT == 1 && (indicatorReco == 0 || indicatorReco==1))bothEndCaps[indicatorReco] -> Fill(mass,weight_F);
+                               		 if(ID_pT > 1 && ID_pT == indicatorReco)bothEndCaps[indicatorReco] -> Fill(mass,weight_F);
+				}
+				else if(ID_pT == indicatorReco)bothEndCaps[indicatorReco] -> Fill(mass,weight_F);
                         }
 			// fill pT gamma-gamma bins:
                         Ncheck ++;
-                        if(FileNumber == 1 && (indicatorReco == 0 || indicatorReco==1))
-			{
-				if (pTHiggs < 1000.)hHiggsPtCut[indicatorReco] -> Fill (pTHiggs,weight_F);
-				else hHiggsPtCut[indicatorReco] -> Fill (1000.,weight_F);
+			if(DataSample == "Signal"){
+	                        if(ID_pT == 1 && (indicatorReco == 0 || indicatorReco==1))
+				{
+					if (pTHiggs < 1000.)hHiggsPtCut[indicatorReco] -> Fill (pTHiggs,weight_F);
+					else hHiggsPtCut[indicatorReco] -> Fill (1000.,weight_F);
+				}
+        	                if(ID_pT > 1 && ID_pT == indicatorReco)
+				{
+					if (pTHiggs < 1000.)hHiggsPtCut[indicatorReco] -> Fill (pTHiggs,weight_F);
+                                	else hHiggsPtCut[indicatorReco] -> Fill (1000.,weight_F);
+				}
 			}
-                        if(FileNumber > 1 && FileNumber == indicatorReco)
-			{
-				if (pTHiggs < 1000.)hHiggsPtCut[indicatorReco] -> Fill (pTHiggs,weight_F);
-                                else hHiggsPtCut[indicatorReco] -> Fill (1000.,weight_F);
+                        else if (ID_pT == indicatorReco){
+					if (pTHiggs < 1000.)hHiggsPtCut[indicatorReco] -> Fill (pTHiggs,weight_F);
+                                	else hHiggsPtCut[indicatorReco] -> Fill (1000.,weight_F);
+			
 			}
-                        //if (FileNumber < (NpTbins-3) && pTHiggs < pTbinCor[FileNumber+3])
-                        if (FileNumber < (NpTbins-2) && pTHiggs < pTbinCor[FileNumber+2])
+                        if (ID_pT < (NpTbins-2) && pTHiggs < pTbinCor[ID_pT+2])
 			{
-                        	if (pTHiggs < 1000.)hHiggsPt[FileNumber] -> Fill (pTHiggs,weight_F);
-				else hHiggsPt[FileNumber] -> Fill (1000.,weight_F);
+                        	if (pTHiggs < 1000.)hHiggsPt[ID_pT] -> Fill (pTHiggs,weight_F);
+				else hHiggsPt[ID_pT] -> Fill (1000.,weight_F);
                         }
-                        //if (FileNumber >= (NpTbins-3))
-                        if (FileNumber >= (NpTbins-2))
+                        if (ID_pT >= (NpTbins-2))
 			{
-                        	if (pTHiggs < 1000.)hHiggsPt[FileNumber] -> Fill (pTHiggs,weight_F);
-				else hHiggsPt[FileNumber] -> Fill (1000.,weight_F);
+                        	if (pTHiggs < 1000.)hHiggsPt[ID_pT] -> Fill (pTHiggs,weight_F);
+				else hHiggsPt[ID_pT] -> Fill (1000.,weight_F);
                         }
-			if( Ncheck%3000 == 0 ){
+			if( Ncheck%1000 == 0 ){
 				std::cout << "Selected events = " << Ncheck << " #File = " << FileNumber << " weight_F = " << weight_F << " indicatorReco = " << indicatorReco << " pT(gg) = " << pTHiggs << std::endl;
 			}
                 } //end check
@@ -389,6 +414,7 @@ void HiggsAnalysis::Loop()
         if(DataSample == "BG")outFile = new TFile ( "BackgroundSummary.root", "RECREATE");
 	gStyle->SetCanvasDefW(2000);
 	gStyle->SetCanvasDefH(2000);
+        gStyle->SetPadLeftMargin(0.12);
         TCanvas *first[NpTbins];
 
         for (int i = 0; i < NpTbins; i++) // draw and fit histograms
@@ -399,6 +425,7 @@ void HiggsAnalysis::Loop()
                 //gStyle->SetOptStat(1); 
 
                 first[i] -> cd(1);
+                //first[i] -> SetLeftMargin(0.15);
                 bothBarrel[i]->Draw();
                 if(DataSample == "Signal")bothBarrel[i]->Fit("gaus","","",120,130);
 
@@ -426,9 +453,9 @@ void HiggsAnalysis::Loop()
         Dist_pTgg = new TCanvas();
         Dist_pTgg -> Divide(1,1);
         Dist_pTgg -> cd(1);
+        //Dist_pTgg -> SetLeftMargin(0.15);
         gPad -> SetLogx(1);
         gPad -> SetLogy(1);
-        Int_t nbin_Empty = 40;
         Double_t xmin_Empty = 80.; 
         Double_t xmax_Empty = 1000.; 
         Double_t ymin_Empty = 0.001; 
@@ -438,28 +465,56 @@ void HiggsAnalysis::Loop()
 		ymin_Empty = 0.01;
 		ymax_Empty = 100000.;
 	}
-	TH2F *hEmpty = new TH2F("hEmpty","",nbin_Empty, xmin_Empty, xmax_Empty, nbin_Empty, ymin_Empty, ymax_Empty);//x vs y
-        hEmpty -> GetXaxis()->SetTitle("p_{T}(#gamma#gamma) (GeV)");
-        hEmpty -> GetYaxis()->SetTitle(Form("Events/(%3.0f GeV)", hHiggsPt[0]->GetXaxis()->GetBinWidth(1)));
-        hEmpty ->Draw();
-        for (int i = 0; i < NLumi; i++) // draw and fit histograms
+        int i_min = 2;
+        if(DataSample == "BG"){
+           i_min = 1;
+           hHiggsPt[0] -> SetLineColor(9);    
+           hHiggsPt[0] -> SetLineStyle(1);    
+           hHiggsPt[0] -> SetLineWidth(3);  
+	   hHiggsPt[0] -> GetXaxis()->SetRangeUser(xmin_Empty,xmax_Empty);
+	   hHiggsPt[0] -> GetYaxis()->SetRangeUser(ymin_Empty,ymax_Empty);
+           hHiggsPt[0] -> SetTitle("p_{T}(#gamma#gamma) for Background");  
+           hHiggsPt[0] -> GetXaxis() -> SetTitleOffset(1.25);  
+           hHiggsPt[0] -> Draw();  
+           hHiggsPtCut[0] -> SetLineColor(9);    
+           hHiggsPtCut[0] -> SetLineStyle(1);  
+           hHiggsPtCut[0] -> SetLineWidth(3);  
+	   hHiggsPtCut[0] -> GetXaxis()->SetRangeUser(xmin_Empty,xmax_Empty);
+	   hHiggsPtCut[0] -> GetYaxis()->SetRangeUser(ymin_Empty,ymax_Empty);
+           hHiggsPtCut[0] -> Draw("samehisto");
+	}
+        else{
+           hHiggsPt[1] -> SetLineColor(1);
+           hHiggsPt[1] -> SetLineStyle(1);
+           hHiggsPt[1] -> SetLineWidth(3);
+	   hHiggsPt[1] -> GetXaxis()->SetRangeUser(xmin_Empty,xmax_Empty);
+	   hHiggsPt[1] -> GetYaxis()->SetRangeUser(ymin_Empty,ymax_Empty);
+           hHiggsPt[1] -> SetTitle("p_{T}(#gamma#gamma) for Signal");  
+           hHiggsPt[1] -> GetXaxis() -> SetTitleOffset(1.25);  
+           hHiggsPt[1] -> Draw();  
+           hHiggsPtCut[1] -> SetLineColor(1);    
+           hHiggsPtCut[1] -> SetLineStyle(1);  
+           hHiggsPtCut[1] -> SetLineWidth(3);  
+	   hHiggsPtCut[1] -> GetXaxis()->SetRangeUser(xmin_Empty,xmax_Empty);
+	   hHiggsPtCut[1] -> GetYaxis()->SetRangeUser(ymin_Empty,ymax_Empty);
+           hHiggsPtCut[1] -> Draw("samehisto");
+	}
+        for (int i = i_min; i < NLumi; i++) // draw and fit histograms
         {
-           hHiggsPt[i+1] -> SetLineColor(i+1);   
-           hHiggsPt[i+1] -> SetLineStyle(i+1);   
-           hHiggsPt[i+1] -> SetLineWidth(3);   
-           hHiggsPt[i+1] -> Draw("same");   
-           hHiggsPtCut[i+1] -> SetLineColor(i+1);   
-           hHiggsPtCut[i+1] -> SetLineStyle(1);   
-           hHiggsPtCut[i+1] -> SetLineWidth(3);   
-           hHiggsPtCut[i+1] -> Draw("samehisto");   
+           hHiggsPt[i] -> SetLineColor(i);   
+           hHiggsPt[i] -> SetLineStyle(i);   
+           hHiggsPt[i] -> SetLineWidth(3);   
+	   hHiggsPt[i] -> GetXaxis()->SetRangeUser(xmin_Empty,xmax_Empty);
+	   hHiggsPt[i] -> GetYaxis()->SetRangeUser(ymin_Empty,ymax_Empty);
+           hHiggsPt[i] -> Draw("same");   
+           hHiggsPtCut[i] -> SetLineColor(i);   
+           hHiggsPtCut[i] -> SetLineStyle(1);   
+           hHiggsPtCut[i] -> SetLineWidth(3);   
+	   hHiggsPtCut[i] -> GetXaxis()->SetRangeUser(xmin_Empty,xmax_Empty);
+	   hHiggsPtCut[i] -> GetYaxis()->SetRangeUser(ymin_Empty,ymax_Empty);
+           hHiggsPtCut[i] -> Draw("samehisto");   
 	}
         Dist_pTgg -> Print("Plots/Dist_pTbinMerge.png");
-
-        //TCanvas* cQuality;
-        //cQuality = new TCanvas("");
-        //cQuality->cd();
-        //hHiggsPt->Draw("e");
-        //cQuality->SaveAs("pic_HiggsPt.png");
 
         outFile->Close();
 }//end Loop()

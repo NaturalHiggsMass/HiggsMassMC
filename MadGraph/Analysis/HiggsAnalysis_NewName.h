@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Wed Jun 12 08:27:34 2019 by ROOT version 6.12/07
+// Thu Jun 20 11:03:55 2019 by ROOT version 6.12/07
 // from TChain Delphes/
 //////////////////////////////////////////////////////////
 
-#ifndef HiggsAnalysis_h
-#define HiggsAnalysis_h
+#ifndef HiggsAnalysis_NewName_h
+#define HiggsAnalysis_NewName_h
 
 #include <TROOT.h>
 #include <TChain.h>
@@ -15,22 +15,22 @@
 #include "TClonesArray.h"
 #include "TObject.h"
 
-class HiggsAnalysis {
+class HiggsAnalysis_NewName {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
    static constexpr Int_t kMaxEvent = 1;
-   static constexpr Int_t kMaxParticle = 4605;//4346;//4231;
-   static constexpr Int_t kMaxTrack = 257;
-   static constexpr Int_t kMaxTower = 433;//349;
-   static constexpr Int_t kMaxEFlowTrack = 257;
-   static constexpr Int_t kMaxEFlowPhoton = 222;//147;
-   static constexpr Int_t kMaxEFlowNeutralHadron = 182;//173;
-   static constexpr Int_t kMaxGenJet = 16;
+   static constexpr Int_t kMaxParticle = 4329;
+   static constexpr Int_t kMaxTrack = 234;
+   static constexpr Int_t kMaxTower = 424;
+   static constexpr Int_t kMaxEFlowTrack = 234;
+   static constexpr Int_t kMaxEFlowPhoton = 206;
+   static constexpr Int_t kMaxEFlowNeutralHadron = 168;
+   static constexpr Int_t kMaxGenJet = 14;
    static constexpr Int_t kMaxGenMissingET = 1;
-   static constexpr Int_t kMaxJet = 16;
+   static constexpr Int_t kMaxJet = 13;
    static constexpr Int_t kMaxElectron = 4;
    static constexpr Int_t kMaxPhoton = 4;
    static constexpr Int_t kMaxMuon = 4;
@@ -728,8 +728,8 @@ public :
    TBranch        *b_ScalarHT_HT;   //!
    TBranch        *b_ScalarHT_size;   //!
 
-   HiggsAnalysis(TTree *tree=0);
-   virtual ~HiggsAnalysis();
+   HiggsAnalysis_NewName(TTree *tree=0);
+   virtual ~HiggsAnalysis_NewName();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
@@ -741,8 +741,8 @@ public :
 
 #endif
 
-#ifdef HiggsAnalysis_cxx
-HiggsAnalysis::HiggsAnalysis(TTree *tree) : fChain(0) 
+#ifdef HiggsAnalysis_NewName_cxx
+HiggsAnalysis_NewName::HiggsAnalysis_NewName(TTree *tree) : fChain(0) 
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
@@ -762,46 +762,15 @@ HiggsAnalysis::HiggsAnalysis(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("Delphes","");
-      // for Singal:
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
-      //chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run02_Higgs0or1Jet_PtGen_50_250_forPtReco120_200GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run02_Higgs0or1Jet_PtGen_40_250_forPtReco120_200GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run03_Higgs0or1Jet_PtGen_110_350_forPtReco200_270GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run04_Higgs0or1Jet_PtGen_150_450_forPtReco270_350GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run05_Higgs0or1Jet_PtGen_200_550_forPtReco350_450GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run06_Higgs0or1Jet_PtGen_300_650_forPtReco450_550GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run07_Higgs0or1Jet_PtGen_380_900_forPtReco550_750GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run08_Higgs0or1Jet_PtGen_580_inf_forPtReco750_infGeV.root/Delphes");
-//      // for Background:
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run01_pp2aa_01j_PtGen_0_inf_forPtReco0_80GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run02_pp2aa_01j_PtGen_40_200_forPtReco80_120GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run03_pp2aa_01j_PtGen_70_250_forPtReco120_200GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run04_pp2aa_01j_PtGen_140_350_forPtReco200_270GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run05_pp2aa_01j_PtGen_180_450_forPtReco270_350GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run06_pp2aa_01j_PtGen_250_550_forPtReco350_450GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run07_pp2aa_01j_PtGen_310_650_forPtReco450_550GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run08_pp2aa_01j_PtGen_380_900_forPtReco550_750GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run09_pp2aa_01j_PtGen_580_inf_forPtReco750_infGeV.root/Delphes");
-//
-//      //for old generation:
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run02_Higgs0or1Jet_PtGen_50_250_forPtReco120_200GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run03_Higgs0or1Jet_PtGen_130_330_forPtReco200_270GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run04_Higgs0or1Jet_PtGen_200_410_forPtReco270_350GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run05_Higgs0or1Jet_PtGen_270_510_forPtReco350_450GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run06_Higgs0or1Jet_PtGen_370_620_forPtReco450_550GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run07_Higgs0or1Jet_PtGen_450_820_forPtReco550_750GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files/run08_Higgs0or1Jet_PtGen_650_inf_forPtReco750_infGeV.root/Delphes");
-//      // for Background:
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run01_pp2aa_01j_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run02_pp2aa_01j_PtGen_50_250_forPtReco120_200GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run03_pp2aa_01j_PtGen_130_330_forPtReco200_270GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run04_pp2aa_01j_PtGen_200_410_forPtReco270_350GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run05_pp2aa_01j_PtGen_270_510_forPtReco350_450GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run06_pp2aa_01j_PtGen_370_620_forPtReco450_550GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run07_pp2aa_01j_PtGen_450_820_forPtReco550_750GeV.root/Delphes");
-//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run08_pp2aa_01j_PtGen_650_inf_forPtReco750_infGeV.root/Delphes");
-
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run01_pp2aa_01j_PtGen_0_inf_forPtReco0_80GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run02_pp2aa_01j_PtGen_40_200_forPtReco80_120GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run03_pp2aa_01j_PtGen_70_250_forPtReco120_200GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run04_pp2aa_01j_PtGen_140_350_forPtReco200_270GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run05_pp2aa_01j_PtGen_180_450_forPtReco270_350GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run06_pp2aa_01j_PtGen_250_550_forPtReco350_450GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run07_pp2aa_01j_PtGen_310_650_forPtReco450_550GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run08_pp2aa_01j_PtGen_380_900_forPtReco550_750GeV.root/Delphes");
+      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/BackGroundGG/root-files/run09_pp2aa_01j_PtGen_580_inf_forPtReco750_infGeV.root/Delphes");
       tree = chain;
 #endif // SINGLE_TREE
 
@@ -809,19 +778,19 @@ HiggsAnalysis::HiggsAnalysis(TTree *tree) : fChain(0)
    Init(tree);
 }
 
-HiggsAnalysis::~HiggsAnalysis()
+HiggsAnalysis_NewName::~HiggsAnalysis_NewName()
 {
    if (!fChain) return;
    delete fChain->GetCurrentFile();
 }
 
-Int_t HiggsAnalysis::GetEntry(Long64_t entry)
+Int_t HiggsAnalysis_NewName::GetEntry(Long64_t entry)
 {
 // Read contents of entry.
    if (!fChain) return 0;
    return fChain->GetEntry(entry);
 }
-Long64_t HiggsAnalysis::LoadTree(Long64_t entry)
+Long64_t HiggsAnalysis_NewName::LoadTree(Long64_t entry)
 {
 // Set the environment to read one entry
    if (!fChain) return -5;
@@ -834,7 +803,7 @@ Long64_t HiggsAnalysis::LoadTree(Long64_t entry)
    return centry;
 }
 
-void HiggsAnalysis::Init(TTree *tree)
+void HiggsAnalysis_NewName::Init(TTree *tree)
 {
    // The Init() function is called when the selector needs to initialize
    // a new tree or chain. Typically here the branch addresses and branch
@@ -1196,7 +1165,7 @@ void HiggsAnalysis::Init(TTree *tree)
    Notify();
 }
 
-Bool_t HiggsAnalysis::Notify()
+Bool_t HiggsAnalysis_NewName::Notify()
 {
    // The Notify() function is called when a new file is opened. This
    // can be either for a new TTree in a TChain or when when a new TTree
@@ -1207,18 +1176,18 @@ Bool_t HiggsAnalysis::Notify()
    return kTRUE;
 }
 
-void HiggsAnalysis::Show(Long64_t entry)
+void HiggsAnalysis_NewName::Show(Long64_t entry)
 {
 // Print contents of entry.
 // If entry is not specified, print current entry
    if (!fChain) return;
    fChain->Show(entry);
 }
-Int_t HiggsAnalysis::Cut(Long64_t entry)
+Int_t HiggsAnalysis_NewName::Cut(Long64_t entry)
 {
 // This function may be called from Loop.
 // returns  1 if entry is accepted.
 // returns -1 otherwise.
    return 1;
 }
-#endif // #ifdef HiggsAnalysis_cxx
+#endif // #ifdef HiggsAnalysis_NewName_cxx
