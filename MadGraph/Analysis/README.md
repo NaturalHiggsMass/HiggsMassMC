@@ -6,7 +6,6 @@
 HiggsAnalysis t
 t.GetEntry(-1); 
 t.Loop();
-hHiggsPt->Draw();
 ```
 
 ```

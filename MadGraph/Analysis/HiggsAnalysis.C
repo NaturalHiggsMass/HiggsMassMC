@@ -39,11 +39,12 @@ void HiggsAnalysis::Loop()
         TLorentzVector s(0.,0.,0.,0.);
 
 
-        //TString DataSample = "Signal";
-        TString DataSample = "BG";
+        TString DataSample = "Signal";
+        //TString DataSample = "BG";
         // initialize histograms
         int pTbin[]      = {0, 80, 120, 200, 270, 350, 450, 550, 750};// keep only for file definition
-        int pTbinCor[]   = {0, 80, 120, 200, 300, 400, 500, 600, 750};//Corrected values due to generation
+        int pTbinCor[]   = {0, 80, 120, 200, 270, 350, 450, 550, 750};// keep the same like definition
+        //int pTbinCor[]   = {0, 80, 120, 200, 300, 400, 500, 600, 750};//Corrected values due to generation
 	int pTbinCorBG[] = {0, 80, 120, 200, 270, 350, 450, 550, 750};//Corrected values due to generation
         int NpTbins = int(sizeof(pTbin)/sizeof(pTbin[0]));
         if(DataSample == "BG"){
@@ -92,14 +93,14 @@ void HiggsAnalysis::Loop()
                 bothBarrel[i]-> GetYaxis()->SetTitle(TitleY);
                 bothBarrel[i]-> Sumw2();
 
-                work = "M(#gamma#gamma), barrel (|#eta_{#gamma}| < 1.44) - endcap (1.57 < |#eta_{#gamma}| > 2.5) " + title[i];
+                work = "M(#gamma#gamma), barrel (|#eta_{#gamma}| < 1.44) - endcap (1.57 < |#eta_{#gamma}| < 2.5) " + title[i];
                 workName = "hMgg_BarrelEndcap " + title[i];
                 barrelAndEndCaps[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 barrelAndEndCaps[i]-> GetXaxis()->SetTitle(TitleX);
                 barrelAndEndCaps[i]-> GetYaxis()->SetTitle(TitleY);
                 barrelAndEndCaps[i]-> Sumw2(); 
 
-                work = "M(#gamma#gamma), both endcap (1.57 < |#eta_{#gamma}| > 2.5)" + title[i];
+                work = "M(#gamma#gamma), both endcap (1.57 < |#eta_{#gamma}| < 2.5)" + title[i];
                 workName = "hMgg_bothEndcap " + title[i];
                 bothEndCaps[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 bothEndCaps[i]-> GetXaxis()->SetTitle(TitleX);
@@ -109,7 +110,9 @@ void HiggsAnalysis::Loop()
 
                 work = "p_{T}(#gamma#gamma)" + title[i];
                 workName = "hpTgg " + title[i];
-                hHiggsPt[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 1000.);
+                //Int_t nbin_pT = 200;
+                Int_t nbin_pT = 100;
+                hHiggsPt[i] = new TH1D(workName.c_str(),work.c_str(), nbin_pT, 0., 1000.);
                 TitleX = "p_{T}(#gamma#gamma) (GeV)";
                 TitleY = Form("Events/(%3.0f GeV)", hHiggsPt[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
                 hHiggsPt[i]-> GetXaxis()->SetTitle(TitleX);
@@ -118,14 +121,14 @@ void HiggsAnalysis::Loop()
 
                 work = "p_{T}(#gamma#gamma) Cut" + title[i];
                 workName = "hpTggCut " + title[i];
-                hHiggsPtCut[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 1000.);
+                hHiggsPtCut[i] = new TH1D(workName.c_str(),work.c_str(), nbin_pT, 0., 1000.);
                 hHiggsPtCut[i]-> GetXaxis()->SetTitle(TitleX);
                 hHiggsPtCut[i]-> GetYaxis()->SetTitle(TitleY);
                 hHiggsPtCut[i]-> Sumw2();
 
                 work = "p_{T}(leading jet)" + title[i];
                 workName = "hLeadingJet_pT " + title[i];
-                hLeadingJet_pT[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 1000.);
+                hLeadingJet_pT[i] = new TH1D(workName.c_str(),work.c_str(), nbin_pT, 0., 1000.);
                 TitleX = "p_{T}(leading jet) (GeV)";
                 TitleY = Form("Events/(%3.0f GeV)", hLeadingJet_pT[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
                 hLeadingJet_pT[i]-> GetXaxis()->SetTitle(TitleX);
@@ -146,11 +149,18 @@ void HiggsAnalysis::Loop()
 
         string FileName = "";
         int FileNumber = 1;
+	//CMS 2015 config
         //for reco pT (GeV):  0-120   120-200  200-270  270-350  350-450   450-550   550-750    750-inf 
-        double XsecD[] =     {14.307, 3.9088,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 15 
-        double Xsec[]  =     {14.557, 3.9086,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 22.5 
-        double XsecU[] =     {14.582, 3.9047,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 30
-        double dXsec[] =     {0.0068, 0.0012,  0.00022, 7.4e-05, 3.1e-05, 1.1e-05,   5.8e-06,   1.4e-06}; // xsec pb: merge scale 22.5 
+                                               //updated
+        double XsecD[] =     {14.443, 4.9921,  1.1349,  0.58424, 0.28451, 0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 15 
+        double Xsec[]  =     {14.706, 4.989,  1.1349,  0.58424, 0.28451, 0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 22.5 
+        double XsecU[] =     {14.852, 4.9621,  1.1349,  0.58424, 0.2845,  0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 30
+        double dXsec[] =     {0.0068, 0.0016,  0.00033, 0.00017, 8.1e-05, 2.4e-05,   1.1e-05,   2.3e-06}; // xsec pb: merge scale 22.5 
+	// CMS old config: 
+        //double XsecD[] =     {14.307, 3.9088,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 15 
+        //double Xsec[]  =     {14.557, 3.9086,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 22.5 
+        //double XsecU[] =     {14.582, 3.9047,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 30
+        //double dXsec[] =     {0.0068, 0.0012,  0.00022, 7.4e-05, 3.1e-05, 1.1e-05,   5.8e-06,   1.4e-06}; // xsec pb: merge scale 22.5 
 
         double XsecD_BG[] =  {15.562, 2.8415,  0.25233, 0.045449, 0.0113, 0.0023344, 0.00086844, 0.00010066};
 	double Xsec_BG[]  =  {15.715, 2.8415,  0.25233, 0.045449, 0.0113, 0.0023344, 0.00086844, 0.00010066};
@@ -307,7 +317,7 @@ void HiggsAnalysis::Loop()
                 mass = s.M();
                 float pTHiggs = s.Pt();
                 hHiggsMass -> Fill (mass);
-                if ( (p1.Pt() > mass/3) && (p2.Pt() > mass/4) )
+                if ( (p1.Pt() > mass/3) && (p2.Pt() > mass/4) && JetLeading_pT > 30. ) // make cut of leaning jet and |eta_jet| < 2.4
                 {
                         check = 1;
                         if ( abs(p1.Eta()) < 1.44 && abs(p2.Eta()) < 1.44 )
@@ -356,12 +366,14 @@ void HiggsAnalysis::Loop()
 				if (pTHiggs < 1000.)hHiggsPtCut[indicatorReco] -> Fill (pTHiggs,weight_F);
                                 else hHiggsPtCut[indicatorReco] -> Fill (1000.,weight_F);
 			}
-                        if (FileNumber < (NpTbins-3) && pTHiggs < pTbinCor[FileNumber+3])
+                        //if (FileNumber < (NpTbins-3) && pTHiggs < pTbinCor[FileNumber+3])
+                        if (FileNumber < (NpTbins-2) && pTHiggs < pTbinCor[FileNumber+2])
 			{
                         	if (pTHiggs < 1000.)hHiggsPt[FileNumber] -> Fill (pTHiggs,weight_F);
 				else hHiggsPt[FileNumber] -> Fill (1000.,weight_F);
                         }
-                        if (FileNumber >= (NpTbins-3))
+                        //if (FileNumber >= (NpTbins-3))
+                        if (FileNumber >= (NpTbins-2))
 			{
                         	if (pTHiggs < 1000.)hHiggsPt[FileNumber] -> Fill (pTHiggs,weight_F);
 				else hHiggsPt[FileNumber] -> Fill (1000.,weight_F);
