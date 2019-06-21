@@ -41,8 +41,14 @@ void HiggsAnalysis::Loop()
 
         TString DataSample = "Signal";
         //TString DataSample = "BG";
+
+        double massHiggs = 125.;
+        //double massHiggs = 123.;
+        //double massHiggs = 127.;
+
         // initialize histograms
-        // for Singal
+
+        // for Signal
         int pTbin[]      = {0, 80, 120, 200, 270, 350, 450, 550, 750};// keep only for file definition
         int pTbinCor[]   = {0, 80, 120, 200, 270, 350, 450, 550, 750};// keep the same like definition
         // for Background 
@@ -158,6 +164,12 @@ void HiggsAnalysis::Loop()
         double Xsec[]  =     {14.706, 14.706, 4.989,  1.1349,  0.58424, 0.28451, 0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 22.5 
         double XsecU[] =     {14.852, 14.852, 4.9621,  1.1349,  0.58424, 0.2845,  0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 30
         double dXsec[] =     {0.0068, 0.0068, 0.0016,  0.00033, 0.00017, 8.1e-05, 2.4e-05,   1.1e-05,   2.3e-06}; // xsec pb: merge scale 22.5 
+	//CMS 2015 config Mass 123 GeV  (200 - 350 doest change yet: 125 GeV files are connecting)
+        //for reco pT (GeV):     0-120           120-200  200-270  270-350  350-450   450-550   550-750    750-inf 
+        double XsecD123[] =     {14.732, 14.732, 5.0991,  1.1349,  0.58424, 0.16721, 0.085069,  0.033143,  0.0071448}; // xsec pb: merge scale 15 
+        double Xsec123[]  =     {15.086, 15.086, 5.0973,  1.1349,  0.58424, 0.16721, 0.085069,  0.033143,  0.0071448}; // xsec pb: merge scale 22.5 
+        double XsecU123[] =     {15.045, 15.045, 5.0715,  1.1349,  0.58424, 0.16721, 0.085069,  0.033143,  0.0071448}; // xsec pb: merge scale 30
+        double dXsec123[] =     {0.0069, 0.0069, 0.0016,  0.00033, 0.00017, 4.7e-05, 2.4e-05,   9.3e-06,   2.e-06}; // xsec pb: merge scale 22.5 
 	// CMS old config: 
         //double XsecD[] =     {14.307, 3.9088,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 15 
         //double Xsec[]  =     {14.557, 3.9086,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 22.5 
@@ -182,6 +194,15 @@ void HiggsAnalysis::Loop()
                         Xsec[i] = Xsec_BG[i];
                         XsecU[i] = XsecU_BG[i];
                         dXsec[i] = dXsec_BG[i];
+                }
+        }
+        if(DataSample == "Signal" && (massHiggs >122.9 && massHiggs < 123.1)){
+                for (int i = 0; i < NLumi; i++)
+                {
+                        XsecD[i] = XsecD123[i];
+                        Xsec[i] = Xsec123[i];
+                        XsecU[i] = XsecU123[i];
+                        dXsec[i] = dXsec123[i];
                 }
         }
         int Ncheck = 0;
@@ -489,7 +510,7 @@ void HiggsAnalysis::Loop()
            hHiggsPt[1] -> SetLineWidth(3);
 	   hHiggsPt[1] -> GetXaxis()->SetRangeUser(xmin_Empty,xmax_Empty);
 	   hHiggsPt[1] -> GetYaxis()->SetRangeUser(ymin_Empty,ymax_Empty);
-           hHiggsPt[1] -> SetTitle("p_{T}(#gamma#gamma) for Signal");  
+           hHiggsPt[1] -> SetTitle(Form("p_{T}(#gamma#gamma) for Higgs m =%3.1f", massHiggs));  
            hHiggsPt[1] -> GetXaxis() -> SetTitleOffset(1.25);  
            hHiggsPt[1] -> Draw();  
            hHiggsPtCut[1] -> SetLineColor(1);    
