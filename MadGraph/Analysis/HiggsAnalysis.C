@@ -42,9 +42,9 @@ void HiggsAnalysis::Loop()
         TString DataSample = "Signal";
         //TString DataSample = "BG";
 
-        double massHiggs = 125.;
-        //double massHiggs = 123.;
-        //double massHiggs = 127.;
+        //Double_t massHiggs = 125.;
+        //Double_t massHiggs = 123.;
+        Double_t massHiggs = 127.;
 
         // initialize histograms
 
@@ -71,6 +71,7 @@ void HiggsAnalysis::Loop()
 
         TH1D * bothBarrel[NpTbins];
         TH1D * barrelAndEndCaps[NpTbins];
+        TH1D * massBBandBE[NpTbins];
         TH1D * bothEndCaps[NpTbins];
         TH1D * hHiggsPt[NpTbins];
         TH1D * hHiggsPtCut[NpTbins];
@@ -114,6 +115,12 @@ void HiggsAnalysis::Loop()
                 bothEndCaps[i]-> GetYaxis()->SetTitle(TitleY);
                 bothEndCaps[i]-> Sumw2();
 
+                work = "M(#gamma#gamma), BB and BE" + title[i];
+                workName = "hMgg_BBandBE " + title[i];
+                massBBandBE[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
+                massBBandBE[i]-> GetXaxis()->SetTitle(TitleX);
+                massBBandBE[i]-> GetYaxis()->SetTitle(TitleY);
+                massBBandBE[i]-> Sumw2();
 
                 work = "p_{T}(#gamma#gamma), " + title[i];
                 workName = "hpTgg " + title[i];
@@ -164,12 +171,18 @@ void HiggsAnalysis::Loop()
         double Xsec[]  =     {14.706, 14.706, 4.989,  1.1349,  0.58424, 0.28451, 0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 22.5 
         double XsecU[] =     {14.852, 14.852, 4.9621,  1.1349,  0.58424, 0.2845,  0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 30
         double dXsec[] =     {0.0068, 0.0068, 0.0016,  0.00033, 0.00017, 8.1e-05, 2.4e-05,   1.1e-05,   2.3e-06}; // xsec pb: merge scale 22.5 
-	//CMS 2015 config Mass 123 GeV  (200 - 350 doest change yet: 125 GeV files are connecting)
+	//CMS 2015 config Mass 123 GeV
         //for reco pT (GeV):     0-120           120-200  200-270  270-350  350-450   450-550   550-750    750-inf 
-        double XsecD123[] =     {14.732, 14.732, 5.0991,  1.1349,  0.58424, 0.16721, 0.085069,  0.033143,  0.0071448}; // xsec pb: merge scale 15 
-        double Xsec123[]  =     {15.086, 15.086, 5.0973,  1.1349,  0.58424, 0.16721, 0.085069,  0.033143,  0.0071448}; // xsec pb: merge scale 22.5 
-        double XsecU123[] =     {15.045, 15.045, 5.0715,  1.1349,  0.58424, 0.16721, 0.085069,  0.033143,  0.0071448}; // xsec pb: merge scale 30
-        double dXsec123[] =     {0.0069, 0.0069, 0.0016,  0.00033, 0.00017, 4.7e-05, 2.4e-05,   9.3e-06,   2.e-06}; // xsec pb: merge scale 22.5 
+        double XsecD123[] =     {14.732, 14.732, 5.0991,  0.94999,  0.50227, 0.16721, 0.085069,  0.033143,  0.0071448}; // xsec pb: merge scale 15 
+        double Xsec123[]  =     {15.086, 15.086, 5.0973,  0.94999,  0.50227, 0.16721, 0.085069,  0.033143,  0.0071448}; // xsec pb: merge scale 22.5 
+        double XsecU123[] =     {15.045, 15.045, 5.0715,  0.94999,  0.50227, 0.16721, 0.085069,  0.033143,  0.0071448}; // xsec pb: merge scale 30
+        double dXsec123[] =     {0.0069, 0.0069, 0.0016,  0.00027,  0.00014, 4.7e-05, 2.4e-05,   9.3e-06,   2.e-06}; // xsec pb: merge scale 22.5 
+	//CMS 2015 config Mass 127 GeV
+        //for reco pT (GeV):     0-120           120-200  200-270  270-350  350-450   450-550   550-750    750-inf 
+        double XsecD127[] =     {13.942, 13.942, 4.9134,  0.93174,  0.49542, 0.16645, 0.084656,  0.033187,  0.0072161}; // xsec pb: merge scale 15 
+        double Xsec127[]  =     {14.213, 14.213, 4.91,    0.93174,  0.49542, 0.16645, 0.084656,  0.033187,  0.0072161}; // xsec pb: merge scale 22.5 
+        double XsecU127[] =     {14.263, 14.263, 4.8809,  0.93174,  0.49542, 0.16645, 0.084656,  0.033187,  0.0072161}; // xsec pb: merge scale 30
+        double dXsec127[] =     {0.0067, 0.0067, 0.0015,  0.00027,  0.00014, 4.7e-05, 2.4e-05,   9.3e-06,   2.e-06}; // xsec pb: merge scale 22.5 
 	// CMS old config: 
         //double XsecD[] =     {14.307, 3.9088,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 15 
         //double Xsec[]  =     {14.557, 3.9086,  0.77316, 0.26312, 0.11097, 0.038815,  0.020594,  0.0050862}; // xsec pb: merge scale 22.5 
@@ -203,6 +216,15 @@ void HiggsAnalysis::Loop()
                         Xsec[i] = Xsec123[i];
                         XsecU[i] = XsecU123[i];
                         dXsec[i] = dXsec123[i];
+                }
+        }
+        if(DataSample == "Signal" && (massHiggs >126.9 && massHiggs < 127.1)){
+                for (int i = 0; i < NLumi; i++)
+                {
+                        XsecD[i] = XsecD127[i];
+                        Xsec[i] = Xsec127[i];
+                        XsecU[i] = XsecU127[i];
+                        dXsec[i] = dXsec127[i];
                 }
         }
         int Ncheck = 0;
@@ -440,6 +462,26 @@ void HiggsAnalysis::Loop()
 
         for (int i = 0; i < NpTbins; i++) // draw and fit histograms
         {
+                Double_t func_xmin = massHiggs - 7.; 
+                Double_t func_xmax = massHiggs + 7.; 
+                TF1 *FitFunc = new TF1("FitFunc","[0]*ROOT::Math::crystalball_function(x,[1],[2],[3],[4])",func_xmin,func_xmax); 
+                FitFunc->SetParameter(0, 120./pow(3.,i)); //A
+                FitFunc->SetParameter(1, -3.); //alpha
+                FitFunc->SetParameter(2, 1.5); //n
+                FitFunc->SetParameter(3, 1.5); //sigma
+                FitFunc->SetParameter(4, massHiggs); //Higgs mass
+                FitFunc->SetParName(0, "A");
+                FitFunc->SetParName(1, "alpha");
+                FitFunc->SetParName(2, "n");
+                FitFunc->SetParName(3, "sigma");
+                FitFunc->SetParName(4, "mass");
+                //FitFunc->SetParLimits(1, -10., 10.); //alpha
+                //FitFunc->SetParLimits(3, 0.8, 2.); //sigma
+                //FitFunc->SetParLimits(4, 121.,129.); //Higgs mass
+                FitFunc->FixParameter(2, 1.5); //n
+                //FitFunc->FixParameter(3, 1.3); //sigma
+                //FitFunc->FixParameter(4, 125.); //Higgs mass
+
                 first[i] = new TCanvas();
                 first[i] -> Divide(2,2);
                 if(DataSample == "Signal")gStyle->SetOptFit(1);
@@ -448,25 +490,45 @@ void HiggsAnalysis::Loop()
                 first[i] -> cd(1);
                 //first[i] -> SetLeftMargin(0.15);
                 bothBarrel[i]->Draw();
-                if(DataSample == "Signal")bothBarrel[i]->Fit("gaus","","",120,130);
+                //if(DataSample == "Signal")bothBarrel[i]->Fit("gaus","","",120,130);
+                if(DataSample == "Signal")bothBarrel[i]->Fit("FitFunc","RB");
 
                 first[i] -> cd(2);
                 barrelAndEndCaps[i]->Draw();
-                if(DataSample == "Signal")barrelAndEndCaps[i]->Fit("gaus","","",120,130);
+                //if(DataSample == "Signal")barrelAndEndCaps[i]->Fit("gaus","","",120,130);
+                FitFunc->SetParameter(0, 60./pow(3.,i)); //A
+                FitFunc->SetParameter(1, -3.); //alpha
+                FitFunc->SetParameter(3, 1.5); //sigma
+                FitFunc->SetParameter(4, massHiggs); //Higgs mass
+                if(DataSample == "Signal")barrelAndEndCaps[i]->Fit("FitFunc","RB");
 
                 first[i] -> cd(3);
                 bothEndCaps[i]->Draw();
-                if(DataSample == "Signal")bothEndCaps[i]->Fit("gaus","","",120,130);
+                //if(DataSample == "Signal")bothEndCaps[i]->Fit("gaus","","",120,130);
+                FitFunc->SetParameter(0, 12./pow(3.,i)); //A
+                FitFunc->SetParameter(1, -3.); //alpha
+                FitFunc->SetParameter(3, 1.5); //sigma
+                FitFunc->SetParameter(4, massHiggs); //Higgs mass
+                if(DataSample == "Signal")bothEndCaps[i]->Fit("FitFunc","RB");
+
+                first[i] -> cd(4);
+                massBBandBE[i]->Add(bothBarrel[i],barrelAndEndCaps[i]);
+                FitFunc->SetParameter(0, 200./pow(3.,i)); //A
+                FitFunc->SetParameter(1, -3.); //alpha
+                FitFunc->SetParameter(3, 1.5); //sigma
+                FitFunc->SetParameter(4, massHiggs); //Higgs mass
+                if(DataSample == "Signal")massBBandBE[i]->Fit("FitFunc","RB");
 
 
                 bothBarrel[i]->Write();
+                massBBandBE[i]->Write();
                 barrelAndEndCaps[i]->Write();
                 bothEndCaps[i]->Write();
                 hHiggsPt[i]->Write();
                 hHiggsPtCut[i]->Write();
                 hLeadingJet_pT[i]->Write();
                 hLeadingJet_eta[i]->Write();
-                first[i] -> Print(Form("Plots/pTbin_%d.png",i));
+                first[i] -> Print(Form("Plots/mH%3.0f_pTbin_%d.png",massHiggs,i));
         }
         gStyle->SetOptFit(0);
         gStyle->SetOptStat(0); 
@@ -535,7 +597,7 @@ void HiggsAnalysis::Loop()
 	   hHiggsPtCut[i] -> GetYaxis()->SetRangeUser(ymin_Empty,ymax_Empty);
            hHiggsPtCut[i] -> Draw("samehisto");   
 	}
-        Dist_pTgg -> Print("Plots/Dist_pTbinMerge.png");
+        Dist_pTgg -> Print(Form("Plots/mH%3.0f_Dist_pTbinMerge.png",massHiggs));
 
         outFile->Close();
 }//end Loop()
