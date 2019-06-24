@@ -39,12 +39,12 @@ void HiggsAnalysis::Loop()
         TLorentzVector s(0.,0.,0.,0.);
 
 
-        TString DataSample = "Signal";
-        //TString DataSample = "BG";
+        //TString DataSample = "Signal";
+        TString DataSample = "BG";
 
-        //Double_t massHiggs = 125.;
+        Double_t massHiggs = 125.;
         //Double_t massHiggs = 123.;
-        Double_t massHiggs = 127.;
+        //Double_t massHiggs = 127.;
 
         // initialize histograms
 
@@ -115,7 +115,7 @@ void HiggsAnalysis::Loop()
                 bothEndCaps[i]-> GetYaxis()->SetTitle(TitleY);
                 bothEndCaps[i]-> Sumw2();
 
-                work = "M(#gamma#gamma), BB and BE" + title[i];
+                work = "M(#gamma#gamma), BB and BE " + title[i];
                 workName = "hMgg_BBandBE " + title[i];
                 massBBandBE[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 massBBandBE[i]-> GetXaxis()->SetTitle(TitleX);
@@ -492,6 +492,7 @@ void HiggsAnalysis::Loop()
                 bothBarrel[i]->Draw();
                 //if(DataSample == "Signal")bothBarrel[i]->Fit("gaus","","",120,130);
                 if(DataSample == "Signal")bothBarrel[i]->Fit("FitFunc","RB");
+                if(DataSample == "BG")bothBarrel[i]->Fit("pol2","","",110,140);
 
                 first[i] -> cd(2);
                 barrelAndEndCaps[i]->Draw();
@@ -501,6 +502,7 @@ void HiggsAnalysis::Loop()
                 FitFunc->SetParameter(3, 1.5); //sigma
                 FitFunc->SetParameter(4, massHiggs); //Higgs mass
                 if(DataSample == "Signal")barrelAndEndCaps[i]->Fit("FitFunc","RB");
+                if(DataSample == "BG")barrelAndEndCaps[i]->Fit("pol2","","",110,140);
 
                 first[i] -> cd(3);
                 bothEndCaps[i]->Draw();
@@ -510,14 +512,17 @@ void HiggsAnalysis::Loop()
                 FitFunc->SetParameter(3, 1.5); //sigma
                 FitFunc->SetParameter(4, massHiggs); //Higgs mass
                 if(DataSample == "Signal")bothEndCaps[i]->Fit("FitFunc","RB");
+                if(DataSample == "BG")bothEndCaps[i]->Fit("pol2","","",110,140);
 
                 first[i] -> cd(4);
                 massBBandBE[i]->Add(bothBarrel[i],barrelAndEndCaps[i]);
+                massBBandBE[i]->Draw();
                 FitFunc->SetParameter(0, 200./pow(3.,i)); //A
                 FitFunc->SetParameter(1, -3.); //alpha
                 FitFunc->SetParameter(3, 1.5); //sigma
                 FitFunc->SetParameter(4, massHiggs); //Higgs mass
                 if(DataSample == "Signal")massBBandBE[i]->Fit("FitFunc","RB");
+                if(DataSample == "BG")massBBandBE[i]->Fit("pol2","","",110,140);
 
 
                 bothBarrel[i]->Write();
@@ -528,7 +533,8 @@ void HiggsAnalysis::Loop()
                 hHiggsPtCut[i]->Write();
                 hLeadingJet_pT[i]->Write();
                 hLeadingJet_eta[i]->Write();
-                first[i] -> Print(Form("Plots/mH%3.0f_pTbin_%d.png",massHiggs,i));
+                if(DataSample == "Signal")first[i] -> Print(Form("Plots/mH%3.0f_pTbin_%d.png",massHiggs,i));
+                if(DataSample == "BG")first[i] -> Print(Form("Plots/BG_pTbin_%d.png",i));
         }
         gStyle->SetOptFit(0);
         gStyle->SetOptStat(0); 
@@ -597,7 +603,8 @@ void HiggsAnalysis::Loop()
 	   hHiggsPtCut[i] -> GetYaxis()->SetRangeUser(ymin_Empty,ymax_Empty);
            hHiggsPtCut[i] -> Draw("samehisto");   
 	}
-        Dist_pTgg -> Print(Form("Plots/mH%3.0f_Dist_pTbinMerge.png",massHiggs));
+        if(DataSample == "Signal")Dist_pTgg -> Print(Form("Plots/mH%3.0f_Dist_pTbinMerge.png",massHiggs));
+        if(DataSample == "BG")Dist_pTgg -> Print("Plots/BG_Dist_pTbinMerge.png");
 
         outFile->Close();
 }//end Loop()
