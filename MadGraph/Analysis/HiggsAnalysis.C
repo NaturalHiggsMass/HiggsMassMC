@@ -39,8 +39,8 @@ void HiggsAnalysis::Loop()
         TLorentzVector s(0.,0.,0.,0.);
 
 
-        //TString DataSample = "Signal";
-        TString DataSample = "BG";
+        TString DataSample = "Signal";
+        //TString DataSample = "BG";
 
         Double_t massHiggs = 125.;
         //Double_t massHiggs = 123.;
@@ -124,7 +124,7 @@ void HiggsAnalysis::Loop()
         for (int i = 0; i < NpTbins; i++)
         {
 
-                work = "M(#gamma#gamma), both barrel (|#eta_{#gamma}| < 1.44)" + title[i];
+                work = "BB (|#eta_{#gamma}| < 1.44), " + title[i];
                 workName = "hMgg_bothBarrel " + title[i];
                 bothBarrel[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 TString TitleX = "M(#gamma#gamma) (GeV)";
@@ -133,21 +133,21 @@ void HiggsAnalysis::Loop()
                 bothBarrel[i]-> GetYaxis()->SetTitle(TitleY);
                 bothBarrel[i]-> Sumw2();
 
-                work = "M(#gamma#gamma), barrel (|#eta_{#gamma}| < 1.44) - endcap (1.57 < |#eta_{#gamma}| < 2.5) " + title[i];
+                work = "B (|#eta_{#gamma}| < 1.44) - E (1.57 < |#eta_{#gamma}| < 2.5), " + title[i];
                 workName = "hMgg_BarrelEndcap " + title[i];
                 barrelAndEndCaps[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 barrelAndEndCaps[i]-> GetXaxis()->SetTitle(TitleX);
                 barrelAndEndCaps[i]-> GetYaxis()->SetTitle(TitleY);
                 barrelAndEndCaps[i]-> Sumw2(); 
 
-                work = "M(#gamma#gamma), both endcap (1.57 < |#eta_{#gamma}| < 2.5)" + title[i];
+                work = "EE (1.57 < |#eta_{#gamma}| < 2.5), " + title[i];
                 workName = "hMgg_bothEndcap " + title[i];
                 bothEndCaps[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 bothEndCaps[i]-> GetXaxis()->SetTitle(TitleX);
                 bothEndCaps[i]-> GetYaxis()->SetTitle(TitleY);
                 bothEndCaps[i]-> Sumw2();
 
-                work = "M(#gamma#gamma), BB and BE " + title[i];
+                work = "BB & BE, " + title[i];
 		//workName = "hMgg_BBandBE " + title[i];
                 workName = "ORIGINAL_"+titleCard[i];
                 massBBandBE[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
@@ -155,21 +155,21 @@ void HiggsAnalysis::Loop()
                 massBBandBE[i]-> GetYaxis()->SetTitle(TitleY);
                 massBBandBE[i]-> Sumw2();
 
-                work = "M(#gamma#gamma), SIGMA1p2 " + title[i];
+                work = "#sigma 1p2 for 10 fb^{-1}, " + title[i];
                 workName = titleCard[i];
                 massSigma1p2[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 massSigma1p2[i]-> GetXaxis()->SetTitle(TitleX);
                 massSigma1p2[i]-> GetYaxis()->SetTitle(TitleY);
                 massSigma1p2[i]-> Sumw2();
 
-                work = "M(#gamma#gamma), SIGMA1p4 " + title[i];
+                work = "#sigma 1p4 for 10 fb^{-1}, " + title[i];
                 workName = titleCard_SigmaUp[i];
                 massSigma1p4[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 massSigma1p4[i]-> GetXaxis()->SetTitle(TitleX);
                 massSigma1p4[i]-> GetYaxis()->SetTitle(TitleY);
                 massSigma1p4[i]-> Sumw2();
 
-                work = "M(#gamma#gamma), SIGMA1p0 " + title[i];
+                work = "#sigma 1p0 for 10 fb^{-1}, " + title[i];
                 workName = titleCard_SigmaDo[i];
                 massSigma1p0[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 massSigma1p0[i]-> GetXaxis()->SetTitle(TitleX);
@@ -189,14 +189,14 @@ void HiggsAnalysis::Loop()
                 hHiggsPt[i]-> GetYaxis()->SetTitle(TitleY);
                 hHiggsPt[i]-> Sumw2();
 
-                work = "p_{T}(#gamma#gamma) Cut" + title[i];
+                work = "p_{T}(#gamma#gamma) Cut " + title[i];
                 workName = "hpTggCut " + title[i];
                 hHiggsPtCut[i] = new TH1D(workName.c_str(),work.c_str(), nbin_pT, 0., 1000.);
                 hHiggsPtCut[i]-> GetXaxis()->SetTitle(TitleX);
                 hHiggsPtCut[i]-> GetYaxis()->SetTitle(TitleY);
                 hHiggsPtCut[i]-> Sumw2();
 
-                work = "p_{T}(leading jet)" + title[i];
+                work = "p_{T}(leading jet) " + title[i];
                 workName = "hLeadingJet_pT " + title[i];
                 hLeadingJet_pT[i] = new TH1D(workName.c_str(),work.c_str(), nbin_pT, 0., 1000.);
                 TitleX = "p_{T}(leading jet) (GeV)";
@@ -205,7 +205,7 @@ void HiggsAnalysis::Loop()
                 hLeadingJet_pT[i]-> GetYaxis()->SetTitle(TitleY);
                 hLeadingJet_pT[i]-> Sumw2();
 
-                work = "#eta(leading jet)" + title[i];
+                work = "#eta(leading jet) " + title[i];
                 workName = "hLeadingJet_eta " + title[i];
                 hLeadingJet_eta[i] = new TH1D(workName.c_str(),work.c_str(), 200, -2.5, 2.5);
                 TitleX = "#eta(leading jet) (GeV)";
@@ -507,8 +507,9 @@ void HiggsAnalysis::Loop()
 
         } // end cyclbe by nentries
 
-        TFile *outFile = new TFile ( "SignalSummary.root", "RECREATE");
-        if(DataSample == "BG")outFile = new TFile ( "BackgroundSummary.root", "RECREATE");
+        TFile *outFile = new TFile ("Test.root", "RECREATE");
+        if(DataSample == "Signal") outFile = new TFile (Form("Signal_mH%3.0fGeV.root",massHiggs), "RECREATE");
+        if(DataSample == "BG") outFile = new TFile ( "Background.root", "RECREATE");
 	gStyle->SetCanvasDefW(2000);
 	gStyle->SetCanvasDefH(2000);
         gStyle->SetPadLeftMargin(0.13);
@@ -519,10 +520,11 @@ void HiggsAnalysis::Loop()
                 Double_t func_xmin = massHiggs - 7.; 
                 Double_t func_xmax = massHiggs + 7.; 
                 TF1 *FitFunc = new TF1("FitFunc","[0]*ROOT::Math::crystalball_function(x,[1],[2],[3],[4])",func_xmin,func_xmax); 
+                FitFunc->SetNpx(1000);
                 FitFunc->SetParameter(0, 120./pow(3.,i)); //A
                 FitFunc->SetParameter(1, -3.); //alpha
                 FitFunc->SetParameter(2, 1.5); //n
-                FitFunc->SetParameter(3, 1.5); //sigma
+                FitFunc->SetParameter(3, 1.2+i*0.1); //sigma
                 FitFunc->SetParameter(4, massHiggs); //Higgs mass
                 FitFunc->SetParName(0, "A");
                 FitFunc->SetParName(1, "alpha");
@@ -537,34 +539,47 @@ void HiggsAnalysis::Loop()
                 //FitFunc->FixParameter(4, 125.); //Higgs mass
 
                 TF1 *FitFuncBG = new TF1("FitFuncBG","[0]+[1]*x",110,120); 
+                FitFuncBG->SetNpx(1000);
                 FitFuncBG->SetParName(0, "p0");
                 FitFuncBG->SetParName(1, "p1");
 
+                TF1 *FitFuncGaus = new TF1("FitFuncGaus","[0]*exp(-0.5*((x-[1])/[2])**2)",func_xmin,func_xmax); 
+                FitFuncGaus->SetNpx(1000);
+                FitFuncGaus->SetParameter(0, 120./pow(3.,i)); //A
+                FitFuncGaus->SetParameter(1, massHiggs); //mass
+                FitFuncGaus->SetParameter(2, 1.2+i*0.1); //sigma
+                FitFuncGaus->SetParName(0, "A");
+                FitFuncGaus->SetParName(1, "mass");
+                FitFuncGaus->SetParName(2, "sigma");
+
                 first[i] = new TCanvas();
-                first[i] -> Divide(2,2);
+                if(DataSample == "BG")first[i] -> Divide(2,2);
+                if(DataSample == "Signal")first[i] -> Divide(3,2);
                 gStyle->SetOptFit(1);
                 //gStyle->SetOptStat(1); 
 
                 first[i] -> cd(1);
                 //first[i] -> SetLeftMargin(0.15);
                 bothBarrel[i]->Draw();
-                //if(DataSample == "Signal")bothBarrel[i]->Fit("gaus","","",120,130);
-                if(DataSample == "Signal")bothBarrel[i]->Fit("FitFunc","RB");
+                if(DataSample == "Signal")bothBarrel[i]->Fit("FitFuncGaus");
+                //if(DataSample == "Signal")bothBarrel[i]->Fit("FitFunc","RB");
                 if(DataSample == "BG")bothBarrel[i]->Fit("FitFuncBG","","",110,140);
 
                 first[i] -> cd(2);
                 barrelAndEndCaps[i]->Draw();
-                //if(DataSample == "Signal")barrelAndEndCaps[i]->Fit("gaus","","",120,130);
                 FitFunc->SetParameter(0, 60./pow(3.,i)); //A
                 FitFunc->SetParameter(1, -3.); //alpha
-                FitFunc->SetParameter(3, 1.5); //sigma
+                FitFunc->SetParameter(3, 1.2+i*0.1); //sigma
                 FitFunc->SetParameter(4, massHiggs); //Higgs mass
-                if(DataSample == "Signal")barrelAndEndCaps[i]->Fit("FitFunc","RB");
+                FitFuncGaus->SetParameter(0, 60./pow(3.,i)); //A
+                FitFuncGaus->SetParameter(1, massHiggs); //mass
+                FitFuncGaus->SetParameter(2, 1.2+i*0.1); //sigma
+                if(DataSample == "Signal")barrelAndEndCaps[i]->Fit("FitFuncGaus");
+                //if(DataSample == "Signal")barrelAndEndCaps[i]->Fit("FitFunc","RB");
                 if(DataSample == "BG")barrelAndEndCaps[i]->Fit("FitFuncBG","","",110,140);
 
                 //first[i] -> cd(3);
                 //bothEndCaps[i]->Draw();
-                ////if(DataSample == "Signal")bothEndCaps[i]->Fit("gaus","","",120,130);
                 //FitFunc->SetParameter(0, 12./pow(3.,i)); //A
                 //FitFunc->SetParameter(1, -3.); //alpha
                 //FitFunc->SetParameter(3, 1.5); //sigma
@@ -577,33 +592,86 @@ void HiggsAnalysis::Loop()
                 massBBandBE[i]->Draw();
                 FitFunc->SetParameter(0, 200./pow(3.,i)); //A
                 FitFunc->SetParameter(1, -3.); //alpha
-                FitFunc->SetParameter(3, 1.5); //sigma
+                FitFunc->SetParameter(3, 1.2+i*0.1); //sigma
                 FitFunc->SetParameter(4, massHiggs); //Higgs mass
-                if(DataSample == "Signal")massBBandBE[i]->Fit("FitFunc","RB");
+                FitFuncGaus->SetParameter(0, 200./pow(3.,i)); //A
+                FitFuncGaus->SetParameter(1, massHiggs); //mass
+                FitFuncGaus->SetParameter(2, 1.2+i*0.1); //sigma
+                if(DataSample == "Signal")massBBandBE[i]->Fit("FitFuncGaus");
+                //if(DataSample == "Signal")massBBandBE[i]->Fit("FitFunc","RB");
                 if(DataSample == "BG")massBBandBE[i]->Fit("FitFuncBG","","",110,140);
 
-        	Int_t nbin_mass = 60;
-        	Double_t xmin_mass = 110.;              
-        	Double_t xmax_mass = 140.; 
-        	for (int j = 1; j <= nbin_mass; j++){
-                        Double_t binWidth = (xmax_mass-xmin_mass)/nbin_mass;
-			Double_t binValue = FitFunc->Integral(xmin_mass+(j-1)*binWidth, xmin_mass+j*binWidth);
-			if(DataSample == "BG")binValue = FitFuncBG->Integral(xmin_mass+(j-1)*binWidth, xmin_mass+j*binWidth);
-                        massSigma1p2[i]->SetBinContent(j,binValue/binWidth);
-                        massSigma1p2[i]->SetBinError(j,0.01*binValue/binWidth);
+        	////Int_t nbin_mass = 60;
+        	////Double_t xmin_mass = 110.;              
+        	////Double_t xmax_mass = 140.; 
+        	//for (int j = 1; j <= nbin_mass; j++){
+                //        Double_t binWidth = (xmax_mass-xmin_mass)/nbin_mass;
+		//	Double_t binValue = FitFuncGaus->Integral(xmin_mass+(j-1)*binWidth, xmin_mass+j*binWidth);
+		//	if(DataSample == "BG")binValue = FitFuncBG->Integral(xmin_mass+(j-1)*binWidth, xmin_mass+j*binWidth);
+                //        massSigma1p0[i]->SetBinContent(j,binValue/binWidth);
+                //        massSigma1p0[i]->SetBinError(j,0.01*binValue/binWidth);
+		//}
+                if(DataSample == "Signal"){
+                        Double_t GausWidth = FitFuncGaus->GetParameter(2); // get width form fit
+                        cout << "**************** i = " << i << " gaus width = " << GausWidth << endl;
+			massSigma1p0[i]->FillRandom("FitFuncGaus",50000);
+
 		}
+                if(DataSample == "BG")massSigma1p0[i]->FillRandom("FitFuncBG",50000);
+                Double_t Integral_GEN = massSigma1p0[i]->Integral();
+                if(Integral_GEN > 0.)massSigma1p0[i]->Scale(massBBandBE[i]->Integral()/Integral_GEN);
                 first[i] -> cd(4);
-                massSigma1p2[i]->Draw();
+                massSigma1p0[i]->Draw();
                 FitFunc->SetParameter(0, 200./pow(3.,i)); //A
                 FitFunc->SetParameter(1, -3.); //alpha
                 FitFunc->SetParameter(3, 1.5); //sigma
                 FitFunc->SetParameter(4, massHiggs); //Higgs mass
-                if(DataSample == "Signal")massSigma1p2[i]->Fit("FitFunc","RB");
-                if(DataSample == "BG")massSigma1p2[i]->Fit("FitFuncBG","","",110,140);
+                FitFuncGaus->SetParameter(0, 200./pow(3.,i)); //A
+                FitFuncGaus->SetParameter(1, massHiggs); //mass
+                FitFuncGaus->SetParameter(2, 1.2+i*0.1); //sigma
+                if(DataSample == "Signal")massSigma1p0[i]->Fit("FitFuncGaus");
+                //if(DataSample == "Signal")massSigma1p0[i]->Fit("FitFunc","RB");
+                if(DataSample == "BG")massSigma1p0[i]->Fit("FitFuncBG","","",110,140);
+
+
+		if(DataSample == "Signal"){
+
+                        first[i] -> cd(5);
+                        massBBandBE[i]->Fit("FitFuncGaus"); // get fit partameter
+                        Double_t GausWidth = FitFuncGaus->GetParameter(2); // get width form fit
+                        cout << "**************** i = " << i << " gaus width = " << GausWidth << " gaus width*1.2 = " << 1.2*GausWidth << endl;
+                        FitFuncGaus->SetParameter(2,1.2*GausWidth);// Set corrected width
+                        massSigma1p2[i]->FillRandom("FitFuncGaus",50000);
+                        Double_t Integral_GEN = massSigma1p2[i]->Integral();
+                        if(Integral_GEN > 0.)massSigma1p2[i]->Scale(massBBandBE[i]->Integral()/Integral_GEN);
+                        massSigma1p2[i]->Draw();
+                        FitFuncGaus->SetParameter(0, 200./pow(3.,i)); //A
+                        FitFuncGaus->SetParameter(1, massHiggs); //mass
+                        FitFuncGaus->SetParameter(2, 1.2+i*0.1); //sigma
+                        massSigma1p2[i]->Fit("FitFuncGaus");
+
+                	first[i] -> cd(6);
+			massBBandBE[i]->Fit("FitFuncGaus"); // get fit partameter
+			GausWidth = FitFuncGaus->GetParameter(2); // get width form fit
+			cout << "**************** i = " << i << " gaus width = " << GausWidth << " gaus width*1.4 = " << 1.4*GausWidth << endl;
+			FitFuncGaus->SetParameter(2,1.4*GausWidth);// Set corrected width
+			massSigma1p4[i]->FillRandom("FitFuncGaus",50000);
+                	Integral_GEN = massSigma1p4[i]->Integral();
+                	if(Integral_GEN > 0.)massSigma1p4[i]->Scale(massBBandBE[i]->Integral()/Integral_GEN);
+                	massSigma1p4[i]->Draw();
+                	FitFuncGaus->SetParameter(0, 200./pow(3.,i)); //A
+                	FitFuncGaus->SetParameter(1, massHiggs); //mass
+                	FitFuncGaus->SetParameter(2, 1.2+i*0.1); //sigma
+                	massSigma1p4[i]->Fit("FitFuncGaus");
+
+
+		}
 
                 //bothBarrel[i]->Write();
                 massBBandBE[i]->Write();
+                massSigma1p0[i]->Write();
                 massSigma1p2[i]->Write();
+                massSigma1p4[i]->Write();
                 //barrelAndEndCaps[i]->Write();
                 //bothEndCaps[i]->Write();
                 //hHiggsPt[i]->Write();
