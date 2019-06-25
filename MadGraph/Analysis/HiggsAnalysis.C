@@ -39,8 +39,8 @@ void HiggsAnalysis::Loop()
         TLorentzVector s(0.,0.,0.,0.);
 
 
-        TString DataSample = "Signal";
-        //TString DataSample = "BG";
+        //TString DataSample = "Signal";
+        TString DataSample = "BG";
 
         Double_t massHiggs = 125.;
         //Double_t massHiggs = 123.;
@@ -69,21 +69,17 @@ void HiggsAnalysis::Loop()
         {
            if (i < (NpTbins-1) ){
 		title[i] = Form("p_{T}: %d-%d GeV", pTbinCor[i], pTbinCor[i+1]);
-		if(DataSample == "BG")titleCard[i] = Form("BACKGROUND_PT_%d_%d",pTbinCor[i], pTbinCor[i+1]);
-		if(DataSample == "Signal"){
-			titleCard[i] = Form("SIGNAL_PT_%d_%d_SIGMA1p2_Mass",pTbinCor[i], pTbinCor[i+1]);
-			titleCard_SigmaUp[i] = Form("SIGNAL_PT_%d_%d_SIGMA1p4_Mass",pTbinCor[i], pTbinCor[i+1]);
-			titleCard_SigmaDo[i] = Form("SIGNAL_PT_%d_%d_SIGMA1p0_Mass",pTbinCor[i], pTbinCor[i+1]);
-		}
+		titleCard[i] = Form("SIGNAL_PT_%d_%d_SIGMA1p2_Mass",pTbinCor[i], pTbinCor[i+1]);
+		titleCard_SigmaUp[i] = Form("SIGNAL_PT_%d_%d_SIGMA1p4_Mass",pTbinCor[i], pTbinCor[i+1]);
+		titleCard_SigmaDo[i] = Form("SIGNAL_PT_%d_%d_SIGMA1p0_Mass",pTbinCor[i], pTbinCor[i+1]);
+		if(DataSample == "BG")titleCard_SigmaDo[i] = Form("BACKGROUND_PT_%d_%d",pTbinCor[i], pTbinCor[i+1]);
 	   }	
            else {
 		title[i] = Form("p_{T}: %d-inf GeV", pTbinCor[i]);
-		if(DataSample == "BG")titleCard[i] = Form("BACKGROUND_PT_%d_INF",pTbinCor[i]);
-		if(DataSample == "Signal"){
-			titleCard[i] = Form("SIGNAL_PT_%d_INF_SIGMA1p2_MASS",pTbinCor[i]);
-			titleCard_SigmaUp[i] = Form("SIGNAL_PT_%d_INF_SIGMA1p4_MASS",pTbinCor[i]);
-			titleCard_SigmaDo[i] = Form("SIGNAL_PT_%d_INF_SIGMA1p0_MASS",pTbinCor[i]);
-		}
+		titleCard[i] = Form("SIGNAL_PT_%d_INF_SIGMA1p2_MASS",pTbinCor[i]);
+		titleCard_SigmaUp[i] = Form("SIGNAL_PT_%d_INF_SIGMA1p4_MASS",pTbinCor[i]);
+		titleCard_SigmaDo[i] = Form("SIGNAL_PT_%d_INF_SIGMA1p0_MASS",pTbinCor[i]);
+		if(DataSample == "BG")titleCard_SigmaDo[i] = Form("BACKGROUND_PT_%d_INF",pTbinCor[i]);
 	   }
 	   if(DataSample == "Signal" && (massHiggs >122.9 && massHiggs < 123.1)){
 		titleCard[i] = titleCard[i]+"Do";
@@ -150,6 +146,7 @@ void HiggsAnalysis::Loop()
                 work = "BB & BE, " + title[i];
 		//workName = "hMgg_BBandBE " + title[i];
                 workName = "ORIGINAL_"+titleCard[i];
+		if(DataSample == "BG")workName = "ORIGINAL_"+titleCard_SigmaDo[i];
                 massBBandBE[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 massBBandBE[i]-> GetXaxis()->SetTitle(TitleX);
                 massBBandBE[i]-> GetYaxis()->SetTitle(TitleY);
@@ -617,7 +614,7 @@ void HiggsAnalysis::Loop()
 			massSigma1p0[i]->FillRandom("FitFuncGaus",50000);
 
 		}
-                if(DataSample == "BG")massSigma1p0[i]->FillRandom("FitFuncBG",50000);
+                if(DataSample == "BG")massSigma1p0[i]->FillRandom("FitFuncBG",200000);
                 Double_t Integral_GEN = massSigma1p0[i]->Integral();
                 if(Integral_GEN > 0.)massSigma1p0[i]->Scale(massBBandBE[i]->Integral()/Integral_GEN);
                 first[i] -> cd(4);
@@ -670,8 +667,8 @@ void HiggsAnalysis::Loop()
                 //bothBarrel[i]->Write();
                 massBBandBE[i]->Write();
                 massSigma1p0[i]->Write();
-                massSigma1p2[i]->Write();
-                massSigma1p4[i]->Write();
+                if(DataSample == "Signal")massSigma1p2[i]->Write();
+                if(DataSample == "Signal")massSigma1p4[i]->Write();
                 //barrelAndEndCaps[i]->Write();
                 //bothEndCaps[i]->Write();
                 //hHiggsPt[i]->Write();
