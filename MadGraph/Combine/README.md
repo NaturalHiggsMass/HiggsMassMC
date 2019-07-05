@@ -38,3 +38,25 @@ useful options
 -keyword-value WORD=VALUE
 -m 125
 ```
+* [Istructions to install Combine](https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/)
+
+Recommended version `CMSSW_10_2_X` and tag is `v8.0.1`
+
+## Useful information:
+
+* [update in CERN HL-LHC YR 2019](https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNHLHE2019)
+
+N3LO QCD + NLO EV ggH xsection:
+```
+13 TeV: 48.61 pb
+14 TeV: 54.72 pb
+```
+Error ~ 7%.
+
+Madgraph and Delphes:
+```
+13 TeV: 40.65 +- 0.04 +0.05-0.21pb
+```
+
+* [Recommended predictions for the boosted-Higgs xsection (k-factors)](https://cds.cern.ch/record/2669113/files/LHCHXSWG-2019-002.pdf)
+
