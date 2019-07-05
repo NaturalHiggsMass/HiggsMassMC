@@ -157,21 +157,21 @@ void HiggsAnalysis::Loop()
                 massBBandBE[i]-> GetYaxis()->SetTitle(TitleY);
                 massBBandBE[i]-> Sumw2();
 
-                work = "#sigma 1p2 for 10 fb^{-1}, " + title[i];
+                work = "#sigma 1p2 for 300 fb^{-1}, " + title[i];
                 workName = titleCard[i];
                 massSigma1p2[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 massSigma1p2[i]-> GetXaxis()->SetTitle(TitleX);
                 massSigma1p2[i]-> GetYaxis()->SetTitle(TitleY);
                 massSigma1p2[i]-> Sumw2();
 
-                work = "#sigma 1p4 for 10 fb^{-1}, " + title[i];
+                work = "#sigma 1p4 for 300 fb^{-1}, " + title[i];
                 workName = titleCard_SigmaUp[i];
                 massSigma1p4[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 massSigma1p4[i]-> GetXaxis()->SetTitle(TitleX);
                 massSigma1p4[i]-> GetYaxis()->SetTitle(TitleY);
                 massSigma1p4[i]-> Sumw2();
 
-                work = "#sigma 1p0 for 10 fb^{-1}, " + title[i];
+                work = "#sigma 1p0 for 300 fb^{-1}, " + title[i];
                 workName = titleCard_SigmaDown[i];
                 massSigma1p0[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 massSigma1p0[i]-> GetXaxis()->SetTitle(TitleX);
