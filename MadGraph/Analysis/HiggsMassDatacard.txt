@@ -1,0 +1,22 @@
+imax 1
+jmax 1
+kmax *
+---------------
+# original shapes for 300 fb-1
+shapes * * Analysis/HiggsMass_Combine.root $BIN/$PROCESS $BIN/$PROCESS_$SYSTEMATIC
+---------------
+bin bin1
+observation -1
+------------------------------
+bin             bin1		bin1
+process         signal_sigma1p2 background
+process         0          	1
+rate            -1         	-1
+--------------------------------
+lumi     lnN    1.01       1.01
+Mass  shape     1          -
+
+all group = lumi Mass
+
+lumi_scale  rateParam * * 100
+nuisance edit freeze lumi_scale
