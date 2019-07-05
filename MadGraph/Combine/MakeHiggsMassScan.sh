@@ -12,7 +12,9 @@ do
 
     combine HiggsMassDatacard.txt -M GenerateOnly --toysFrequentist -t -1 --expectSignal 1 --saveToys --freezeNuisanceGroups=all -n Mass -m 125 --keyword-value BIN=${BIN}
 
-combine HiggsMassDatacard.txt -M MultiDimFit --algo grid --points 50 -P Mass --setParameterRanges Mass=-1,1 -t -1 --floatOtherPOIs=1 --toysFile ${TOYFILE} -n HiggsMass -m 125 --keyword-value BIN=${BIN}
+combine HiggsMassDatacard.txt -M MultiDimFit --algo grid --points 50 -P Mass --setParameterRanges Mass=-1,1 -t -1 --floatOtherPOIs=1 --toysFile ${TOYFILE} -n Mass -m 125 --keyword-value BIN=${BIN}
+
+combine HiggsMassDatacard.txt -M MultiDimFit --algo singles --cl=0.68 --points 50 -P Mass --setParameterRanges Mass=-1,1 -t -1 --floatOtherPOIs=1 --toysFile ${TOYFILE} -n MassRange -m 125 --keyword-value BIN=${BIN}
 
     echo $TOYFILE, $OUTFILE
 done

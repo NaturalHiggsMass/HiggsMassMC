@@ -18,5 +18,8 @@ Mass  shape     1          -
 
 all group = lumi Mass
 
-lumi_scale  rateParam * * 100
+lumi_scale  rateParam * * 10
 nuisance edit freeze lumi_scale
+
+kfact  rateParam * signal_sigma1p2 2.5
+nuisance edit freeze kfact
