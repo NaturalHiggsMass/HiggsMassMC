@@ -3,7 +3,7 @@ jmax 1
 kmax *
 ---------------
 # original shapes for 300 fb-1
-shapes * * Analysis/HiggsMass_Combine.root $BIN/$PROCESS $BIN/$PROCESS_$SYSTEMATIC
+shapes * * ../Analysis/HiggsMass_Combine.root $BIN/$PROCESS $BIN/$PROCESS_$SYSTEMATIC
 ---------------
 bin bin1
 observation -1
