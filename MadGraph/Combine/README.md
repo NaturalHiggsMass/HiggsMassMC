@@ -75,7 +75,7 @@ chain.MakeClass("HiggsMassResolution_NewName");
 * To run code
 ```
 .L HiggsMassResolution.C
-HiggsAnalysis t
+HiggsMassResolution t
 t.GetEntry(-1);
 t.Loop();
 ```
