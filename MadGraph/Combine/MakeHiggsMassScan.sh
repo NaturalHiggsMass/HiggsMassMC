@@ -1,7 +1,12 @@
 #!/bin/bash
 
-bin_array=(PT_0_80 PT_80_120 PT_120_200 PT_200_270 PT_270_350 PT_350_450 PT_450_550 PT_550_750 PT_750_INF)
-kfact_array=(1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2)
+# standard
+#bin_array=(PT_0_80 PT_80_120 PT_120_200 PT_200_270 PT_270_350 PT_350_450 PT_450_550 PT_550_750 PT_750_INF)
+#kfact_array=(1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2)
+
+# chain 0-120 and 550-INF bins
+bin_array=(PT_0_120 PT_120_200 PT_200_270 PT_270_350 PT_350_450 PT_450_550 PT_550_INF)
+kfact_array=(1.2 1.2 1.2 1.2 1.2 1.2 1.2)
 
 
 RES=1p2

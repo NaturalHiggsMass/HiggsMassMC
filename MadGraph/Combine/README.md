@@ -61,6 +61,12 @@ Madgraph and Delphes:
 * [Recommended predictions for the boosted-Higgs xsection (k-factors)](https://cds.cern.ch/record/2669113/files/LHCHXSWG-2019-002.pdf)
 
 
+## To run combine tool
+
+```
+source MakeHiggsMassScan.sh
+```
+
 ## To plot Higgs Mass resolution plot
 
 * Create analyzer:
