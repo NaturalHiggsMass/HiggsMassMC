@@ -21,5 +21,5 @@ all group = lumi Mass
 lumi_scale  rateParam * * 10
 nuisance edit freeze lumi_scale
 
-kfact  rateParam * signal_sigma1p2 2.5
+kfact  rateParam * signal_sigma1p2 2.5 # 2.2 kfactor * 1.13: (54.7/48.6) 13 -> 14 GeV
 nuisance edit freeze kfact
