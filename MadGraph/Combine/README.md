@@ -60,3 +60,22 @@ Madgraph and Delphes:
 
 * [Recommended predictions for the boosted-Higgs xsection (k-factors)](https://cds.cern.ch/record/2669113/files/LHCHXSWG-2019-002.pdf)
 
+
+## To plot Higgs Mass resolution plot
+
+* Create analyzer:
+```
+TChain chain("limit");
+chain.Add("higgsCombineMassRange.MultiDimFit.mH125.BINPT*root");
+chain.MakeClass("HiggsMassResolution_NewName");
+```
+
+* Check that connected files in order of pT bins, if not then put it in order
+
+* To run code
+```
+.L HiggsMassResolution.C
+HiggsAnalysis t
+t.GetEntry(-1);
+t.Loop();
+```
