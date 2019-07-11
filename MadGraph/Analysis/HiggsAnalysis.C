@@ -39,8 +39,8 @@ void HiggsAnalysis::Loop()
         TLorentzVector s(0.,0.,0.,0.);
 
 
-        TString DataSample = "Signal";
-        //TString DataSample = "BG";
+        //TString DataSample = "Signal";
+        TString DataSample = "BG";
 
         Double_t massHiggs = 125.;
         //Double_t massHiggs = 123.;

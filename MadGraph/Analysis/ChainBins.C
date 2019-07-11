@@ -3,8 +3,8 @@
 TFile *outFile = new TFile ("HiggsMass_CombineTest.root", "UPDATE");
 outFile->mkdir("PT_0_120");
 outFile->mkdir("PT_550_INF");
-//TString Name = "signal_sigma1p2";
-TString Name[] = {"original_background","background","data_obs","original_signal_MassDown", "signal_sigma1p0_MassDown", "signal_sigma1p2_MassDown", "signal_sigma1p4_MassDown", "original_signal","signal_sigma1p0","signal_sigma1p2","signal_sigma1p4","original_signal_MassUp","signal_sigma1p0_MassUp", "signal_sigma1p2_MassUp", "signal_sigma1p4_MassUp"};
+//TString Name[] = {"original_background","background","data_obs","original_signal_MassDown", "signal_sigma1p0_MassDown", "signal_sigma1p2_MassDown", "signal_sigma1p4_MassDown", "original_signal","signal_sigma1p0","signal_sigma1p2","signal_sigma1p4","original_signal_MassUp","signal_sigma1p0_MassUp", "signal_sigma1p2_MassUp", "signal_sigma1p4_MassUp"};
+TString Name[] = {"original_background","background","data_obs","original_signal_MassDown", "signal_sigma1p0_MassDown", "signal_sigma1p2_MassDown", "signal_sigma1p4_MassDown", "original_signal","signal_sigma1p0","signal_sigma1p2", "signal_sigma1p2_MggScaleUp","signal_sigma1p2_MggScaleDown","signal_sigma1p4","original_signal_MassUp","signal_sigma1p0_MassUp", "signal_sigma1p2_MassUp", "signal_sigma1p4_MassUp"};
 int Nstring = int(sizeof(Name)/sizeof(Name[0]));
 TH1D * h1;
 TH1D * h2;
