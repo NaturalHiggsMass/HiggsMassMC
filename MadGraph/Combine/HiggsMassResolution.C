@@ -102,8 +102,11 @@ void HiggsMassResolution::Loop()
    first -> cd(1);
    //gPad -> SetLogx(1);
 
+   grMassRes -> SetTitle("Higgs mass resolution as a fuction of p_{T}");
    grMassRes -> GetXaxis()->SetRangeUser(30.,800.);
    grMassRes -> GetYaxis()->SetRangeUser(0.,1.8);
+   grMassRes -> GetXaxis()->SetTitle("Higgs p_{T} [GeV/c]");
+   grMassRes -> GetYaxis()->SetTitle("Higgs mass resolution [GeV/c^{2}]");
    grMassRes -> Draw("ALP");
    first->Print("MassResolution.png");  
 }
