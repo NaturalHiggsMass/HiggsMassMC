@@ -39,8 +39,8 @@ void HiggsAnalysis::Loop()
         TLorentzVector s(0.,0.,0.,0.);
 
 
-        //TString DataSample = "Signal";
-        TString DataSample = "BG";
+        TString DataSample = "Signal";
+        //TString DataSample = "BG";
 
         Double_t massHiggs = 125.;
         //Double_t massHiggs = 123.;
@@ -102,6 +102,8 @@ void HiggsAnalysis::Loop()
         TH1D * bothEndCaps[NpTbins];
         TH1D * massBBandBE[NpTbins];
         TH1D * massSigma1p2[NpTbins];
+        TH1D * massSigma1p2_MggScaleUp[NpTbins];
+        TH1D * massSigma1p2_MggScaleDown[NpTbins];
         TH1D * massSigma1p0[NpTbins];
         TH1D * massSigma1p4[NpTbins];
         TH1D * hHiggsPt[NpTbins];
@@ -114,7 +116,8 @@ void HiggsAnalysis::Loop()
         std::string work;
         std::string workName;
 
-        Int_t nbin_mass = 60;
+        Int_t nbin_mass = 60; // Madgraph sample
+        Int_t nbin_massGen = 300;// gen Random sample in 100 MeV
 	Double_t xmin_mass = 110.;
 	Double_t xmax_mass = 140.;
 	//if(DataSample == "BG"){
@@ -159,21 +162,35 @@ void HiggsAnalysis::Loop()
 
                 work = "#sigma 1p2 for 300 fb^{-1}, " + title[i];
                 workName = titleCard[i];
-                massSigma1p2[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
+                massSigma1p2[i] = new TH1D(workName.c_str(),work.c_str(), nbin_massGen, xmin_mass, xmax_mass);
                 massSigma1p2[i]-> GetXaxis()->SetTitle(TitleX);
                 massSigma1p2[i]-> GetYaxis()->SetTitle(TitleY);
                 massSigma1p2[i]-> Sumw2();
 
+                work = "#sigma 1p2 MggScaleUp for 300 fb^{-1}, " + title[i];
+                workName = titleCard[i]+"_MggScaleUp";
+                massSigma1p2_MggScaleUp[i] = new TH1D(workName.c_str(),work.c_str(), nbin_massGen, xmin_mass, xmax_mass);
+                massSigma1p2_MggScaleUp[i]-> GetXaxis()->SetTitle(TitleX);
+                massSigma1p2_MggScaleUp[i]-> GetYaxis()->SetTitle(TitleY);
+                massSigma1p2_MggScaleUp[i]-> Sumw2();
+
+                work = "#sigma 1p2 MggScaleDown for 300 fb^{-1}, " + title[i];
+                workName = titleCard[i]+"_MggScaleDown";
+                massSigma1p2_MggScaleDown[i] = new TH1D(workName.c_str(),work.c_str(), nbin_massGen, xmin_mass, xmax_mass);
+                massSigma1p2_MggScaleDown[i]-> GetXaxis()->SetTitle(TitleX);
+                massSigma1p2_MggScaleDown[i]-> GetYaxis()->SetTitle(TitleY);
+                massSigma1p2_MggScaleDown[i]-> Sumw2();
+
                 work = "#sigma 1p4 for 300 fb^{-1}, " + title[i];
                 workName = titleCard_SigmaUp[i];
-                massSigma1p4[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
+                massSigma1p4[i] = new TH1D(workName.c_str(),work.c_str(), nbin_massGen, xmin_mass, xmax_mass);
                 massSigma1p4[i]-> GetXaxis()->SetTitle(TitleX);
                 massSigma1p4[i]-> GetYaxis()->SetTitle(TitleY);
                 massSigma1p4[i]-> Sumw2();
 
                 work = "#sigma 1p0 for 300 fb^{-1}, " + title[i];
                 workName = titleCard_SigmaDown[i];
-                massSigma1p0[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
+                massSigma1p0[i] = new TH1D(workName.c_str(),work.c_str(), nbin_massGen, xmin_mass, xmax_mass);
                 massSigma1p0[i]-> GetXaxis()->SetTitle(TitleX);
                 massSigma1p0[i]-> GetYaxis()->SetTitle(TitleY);
                 massSigma1p0[i]-> Sumw2();
@@ -648,6 +665,15 @@ void HiggsAnalysis::Loop()
                         massSigma1p2[i]->FillRandom("FitFuncGaus",50000);
                         Double_t Integral_GEN = massSigma1p2[i]->Integral();
                         if(Integral_GEN > 0.)massSigma1p2[i]->Scale(massBBandBE[i]->Integral()/Integral_GEN);
+			Double_t GausMass = FitFuncGaus->GetParameter(1); // get mass form fit
+			//start Mgg Scale variation
+                        FitFuncGaus->SetParameter(1,(GausMass+0.05));// Set corrected for mass by +50 Mev
+                        massSigma1p2_MggScaleUp[i]->FillRandom("FitFuncGaus",50000);
+                        if(Integral_GEN > 0.)massSigma1p2_MggScaleUp[i]->Scale(massBBandBE[i]->Integral()/Integral_GEN);
+                        FitFuncGaus->SetParameter(1,(GausMass-0.05));// Set corrected for mass by -50 Mev
+                        massSigma1p2_MggScaleDown[i]->FillRandom("FitFuncGaus",50000);
+                        if(Integral_GEN > 0.)massSigma1p2_MggScaleDown[i]->Scale(massBBandBE[i]->Integral()/Integral_GEN);
+			//end Mgg Scale variation
                         massSigma1p2[i]->Draw();
                         FitFuncGaus->SetParameter(0, 200./pow(3.,i)); //A
                         FitFuncGaus->SetParameter(1, massHiggs); //mass
@@ -682,6 +708,8 @@ void HiggsAnalysis::Loop()
 			massBBandBE[i]->Write("original_signal");
                 	massSigma1p0[i]->Write("signal_sigma1p0");
                 	massSigma1p2[i]->Write("signal_sigma1p2");
+                	massSigma1p2_MggScaleUp[i]->Write("signal_sigma1p2_MggScaleUp");
+                	massSigma1p2_MggScaleDown[i]->Write("signal_sigma1p2_MggScaleDown");
                 	massSigma1p2[i]->Write("data_obs");// only 1p2 and only for mH = 125.
                 	massSigma1p4[i]->Write("signal_sigma1p4");
 		}
