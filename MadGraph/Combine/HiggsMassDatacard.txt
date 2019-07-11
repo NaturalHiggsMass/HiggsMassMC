@@ -10,7 +10,7 @@ bin bin1
 observation -1
 ------------------------------
 bin             bin1		bin1
-process         signal_sigma1p2 background
+process         signal_sigma$RES background
 process         0          	1
 rate            -1         	-1
 --------------------------------
@@ -22,5 +22,8 @@ all group = lumi Mass
 lumi_scale  rateParam * * 10
 nuisance edit freeze lumi_scale
 
-kfact  rateParam * signal_sigma1p2 2.5 # 2.2 kfactor * 1.13: (54.7/48.6) 13 -> 14 GeV
+kfact  rateParam * signal_sigma$RES 1 # defined in the MakeHiggsMassSca.sh
 nuisance edit freeze kfact
+
+kfact_bkg  rateParam * background 1 # defined in the MakeHiggsMassSca.sh
+nuisance edit freeze kfact_bkg
