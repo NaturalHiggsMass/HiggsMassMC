@@ -15,13 +15,14 @@ process         0          	1
 rate            -1         	-1
 --------------------------------
 lumi            lnN    1.03       1.03   #lumi + normalization effects
-theorySignal    lnN    1.10       -
-theoryBKG       lnN    -          1.10
+#theorySignal    lnN    1.10       -
+#theoryBKG       lnN    -          1.10
 
 Mass      shape     1          -
 #MggScale  shape     1          -
 
-all group = lumi theorySignal theoryBKG Mass 
+#all group = lumi theorySignal theoryBKG Mass 
+all group = lumi Mass 
 
 lumi_scale  rateParam * * 10
 nuisance edit freeze lumi_scale
