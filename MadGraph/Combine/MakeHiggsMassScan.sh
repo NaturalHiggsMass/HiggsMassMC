@@ -17,7 +17,8 @@ kfact_array=(   1.14 1.17    1.9     1.20      1.22      1.25      1.29) #scale 
 
 RES=1p2
 
-for ibin in {0..8}
+#for ibin in {0..8}
+for ibin in {0..6}
 do
     BIN=${bin_array[${ibin}]}
     KFACT=${kfact_array[${ibin}]}
