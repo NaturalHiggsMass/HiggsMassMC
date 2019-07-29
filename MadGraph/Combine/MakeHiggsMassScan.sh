@@ -9,8 +9,10 @@ bin_array=(PT_0_120 PT_120_200 PT_200_270 PT_270_350 PT_350_450 PT_450_550 PT_55
 #kfact_array=(1.2 1.2 1.2 1.2 1.2 1.2 1.2)
 #kfact_array=(2.5 2.5 2.5 2.5 2.5 2.5 2.5)
 kfactbkg_array=(1.0 1.0 1.0 1.0 1.0 1.0 1.0) # no scale from 13 TeV to 14 TeV
+#kfactbkg_array=(2.0 2.0 2.0 2.0 2.0 2.0 2.0) # extream: 2 times more BKG no scale from 13 TeV to 14 TeV
 
 # in pb: 45000/39600 873/747 208/175 86.9/72.2 39.8/32.6 15.2/12.2 13.4/10.4
+#kfact_array=(1.0 1.0 1.0 1.0 1.0 1.0 1.0) # no scale from 13 TeV to 14 TeV
 kfact_array=(   1.14 1.17    1.9     1.20      1.22      1.25      1.29) #scale from 13 TeV to 14 TeV
 
 
