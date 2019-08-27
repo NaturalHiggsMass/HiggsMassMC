@@ -37,10 +37,12 @@ void HiggsAnalysis::Loop()
         TLorentzVector p1(0.,0.,0.,0.);
         TLorentzVector p2(0.,0.,0.,0.);
         TLorentzVector s(0.,0.,0.,0.);
+        TLorentzVector p_temp1(0.,0.,0.,0.);
+        TLorentzVector p_temp2(0.,0.,0.,0.);
 
 
-        //TString DataSample = "Signal";
-        TString DataSample = "BG";
+        TString DataSample = "Signal";
+        //TString DataSample = "BG";
 
         Double_t massHiggs = 125.;
         //Double_t massHiggs = 123.;
@@ -61,6 +63,17 @@ void HiggsAnalysis::Loop()
 		}
 	} 
         cout << "# of pT bins = " << NpTbins << endl;
+        int NHiggsGen[NpTbins];
+        int NHiggsGen_2g[NpTbins];
+        int NHiggsGen_2gCut[NpTbins];
+        int NHiggsReco[NpTbins];
+        for (int i = 0; i < NpTbins; i++)
+       	{
+		NHiggsGen[i] = 0;
+		NHiggsGen_2g[i] = 0;
+		NHiggsGen_2gCut[i] = 0;
+		NHiggsReco[i] = 0;
+	}
         std::string title[NpTbins];
         std::string titleDir[NpTbins];
         std::string titleCard[NpTbins];
@@ -110,6 +123,16 @@ void HiggsAnalysis::Loop()
         TH1D * hHiggsPtCut[NpTbins];
         TH1D * hLeadingJet_pT[NpTbins];
         TH1D * hLeadingJet_eta[NpTbins];
+        TH1D * hNFatJet_cut[NpTbins];
+        TH1D * hNFatJet_Mass2Jet[NpTbins];
+        TH1D * hNFatJet_MassLeading[NpTbins];
+        TH1D * hNFatJet_MassSubLeading[NpTbins];
+        TH1D * hNFatJet_MassRest[NpTbins];
+        TH1D * hNJet_cut[NpTbins];
+        TH1D * hNJet_Mass2Jet[NpTbins];
+        TH1D * hNJet_MassLeading[NpTbins];
+        TH1D * hNJet_MassSubLeading[NpTbins];
+        TH1D * hNJet_MassRest[NpTbins];
         TH1D * hHiggsMass;
         hHiggsMass = new TH1D("hHiggsMass","hHiggsMass", 400, 0., 150.);
 
@@ -232,6 +255,98 @@ void HiggsAnalysis::Loop()
                 hLeadingJet_eta[i]-> GetXaxis()->SetTitle(TitleX);
                 hLeadingJet_eta[i]-> GetYaxis()->SetTitle(TitleY);
                 hLeadingJet_eta[i]-> Sumw2();
+
+                work = "# Fat jets " + title[i];
+                workName = "hNFatJet_cut " + title[i];
+                hNFatJet_cut[i] = new TH1D(workName.c_str(),work.c_str(), 10, -0.5, 9.5);
+                TitleX = "# Fat jets";
+                TitleY = "Events"; // could make it only after histo creating
+                hNFatJet_cut[i]-> GetXaxis()->SetTitle(TitleX);
+                hNFatJet_cut[i]-> GetYaxis()->SetTitle(TitleY);
+                hNFatJet_cut[i]-> Sumw2();
+
+                work = "Mass of 2 FatJets, " + title[i];
+                workName = "hNFatJet_Mass2Jet " + title[i];
+                hNFatJet_Mass2Jet[i] = new TH1D(workName.c_str(),work.c_str(), 1000, 0., 1000.);
+                TitleX = "M of 2 FatJets (GeV)";
+                TitleY = Form("Events/(%1.1f GeV)", hNFatJet_Mass2Jet[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hNFatJet_Mass2Jet[i]-> GetXaxis()->SetTitle(TitleX);
+                hNFatJet_Mass2Jet[i]-> GetYaxis()->SetTitle(TitleY);
+                hNFatJet_Mass2Jet[i]-> Sumw2();
+
+                work = "Mass of Leading FatJet, " + title[i];
+                workName = "hNFatJet_MassLeading " + title[i];
+                hNFatJet_MassLeading[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
+                TitleX = "M of Leading FatJet (GeV)";
+                TitleY = Form("Events/(%1.1f GeV)", hNFatJet_MassLeading[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hNFatJet_MassLeading[i]-> GetXaxis()->SetTitle(TitleX);
+                hNFatJet_MassLeading[i]-> GetYaxis()->SetTitle(TitleY);
+                hNFatJet_MassLeading[i]-> Sumw2();
+
+                work = "Mass of SubLeading FatJet, " + title[i];
+                workName = "hNFatJet_MassSubLeading " + title[i];
+                hNFatJet_MassSubLeading[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
+                TitleX = "M of SubLeading FatJet (GeV)";
+                TitleY = Form("Events/(%1.1f GeV)", hNFatJet_MassSubLeading[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hNFatJet_MassSubLeading[i]-> GetXaxis()->SetTitle(TitleX);
+                hNFatJet_MassSubLeading[i]-> GetYaxis()->SetTitle(TitleY);
+                hNFatJet_MassSubLeading[i]-> Sumw2();
+
+                work = "Mass of Rest FatJet, " + title[i];
+                workName = "hNFatJet_MassRest " + title[i];
+                hNFatJet_MassRest[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
+                TitleX = "M of Rest FatJet (GeV)";
+                TitleY = Form("Events/(%1.1f GeV)", hNFatJet_MassRest[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hNFatJet_MassRest[i]-> GetXaxis()->SetTitle(TitleX);
+                hNFatJet_MassRest[i]-> GetYaxis()->SetTitle(TitleY);
+                hNFatJet_MassRest[i]-> Sumw2();
+
+                work = "# jets " + title[i];
+                workName = "hNJet_cut " + title[i];
+                hNJet_cut[i] = new TH1D(workName.c_str(),work.c_str(), 10, -0.5, 9.5);
+                TitleX = "# jets";
+                TitleY = "Events"; // could make it only after histo creating
+                hNJet_cut[i]-> GetXaxis()->SetTitle(TitleX);
+                hNJet_cut[i]-> GetYaxis()->SetTitle(TitleY);
+                hNJet_cut[i]-> Sumw2();
+
+                work = "Mass of 2 Jets, " + title[i];
+                workName = "hNJet_Mass2Jet " + title[i];
+                hNJet_Mass2Jet[i] = new TH1D(workName.c_str(),work.c_str(), 1000, 0., 1000.);
+                TitleX = "M of 2 Jets (GeV)";
+                TitleY = Form("Events/(%1.1f GeV)", hNJet_Mass2Jet[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hNJet_Mass2Jet[i]-> GetXaxis()->SetTitle(TitleX);
+                hNJet_Mass2Jet[i]-> GetYaxis()->SetTitle(TitleY);
+                hNJet_Mass2Jet[i]-> Sumw2();
+
+                work = "Mass of Leading Jet, " + title[i];
+                workName = "hNJet_MassLeading " + title[i];
+                hNJet_MassLeading[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
+                TitleX = "M of Leading Jet (GeV)";
+                TitleY = Form("Events/(%1.1f GeV)", hNJet_MassLeading[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hNJet_MassLeading[i]-> GetXaxis()->SetTitle(TitleX);
+                hNJet_MassLeading[i]-> GetYaxis()->SetTitle(TitleY);
+                hNJet_MassLeading[i]-> Sumw2();
+
+                work = "Mass of SubLeading Jet, " + title[i];
+                workName = "hNJet_MassSubLeading " + title[i];
+                hNJet_MassSubLeading[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
+                TitleX = "M of SubLeading Jet (GeV)";
+                TitleY = Form("Events/(%1.1f GeV)", hNJet_MassSubLeading[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hNJet_MassSubLeading[i]-> GetXaxis()->SetTitle(TitleX);
+                hNJet_MassSubLeading[i]-> GetYaxis()->SetTitle(TitleY);
+                hNJet_MassSubLeading[i]-> Sumw2();
+
+                work = "Mass of Rest Jet, " + title[i];
+                workName = "hNJet_MassRest " + title[i];
+                hNJet_MassRest[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
+                TitleX = "M of Rest Jet (GeV)";
+                TitleY = Form("Events/(%1.1f GeV)", hNJet_MassRest[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hNJet_MassRest[i]-> GetXaxis()->SetTitle(TitleX);
+                hNJet_MassRest[i]-> GetYaxis()->SetTitle(TitleY);
+                hNJet_MassRest[i]-> Sumw2();
+
+
 
         }
 
@@ -357,11 +472,13 @@ void HiggsAnalysis::Loop()
                 // find leading jet in |eta| < 2.4:
                 double JetLeading_pT = 0.;
                 double JetLeading_eta = -5.;
+		Int_t N_jet = 0;
                 if (Jet_size > 0)
                 {
                 for (int i = 0; i < Jet_size; i++)
                 {
 			if(fabs(Jet_Eta[i]) < 2.4 && Jet_PT[i] > JetLeading_pT){JetLeading_pT = Jet_PT[i]; JetLeading_eta = Jet_Eta[i];} 
+			if(fabs(Jet_Eta[i]) < 2.4 && Jet_PT[i] > 30.)N_jet++;
 
                 }
                 }
@@ -370,6 +487,161 @@ void HiggsAnalysis::Loop()
 			hLeadingJet_pT[ID_pT] -> Fill(JetLeading_pT, weight_F);
 			hLeadingJet_eta[ID_pT] -> Fill(JetLeading_eta, weight_F);
 		}
+
+                // *********   analyze Fat jets:
+                p1 = test;
+                p2 = test;
+                Int_t i_Leading = -1;
+                Int_t i_SubLeading = -1;
+                Int_t N_FatJet = 0;
+
+                if (FatJet_size > 0)
+                {
+                for (int i = 0; i < FatJet_size; i++)
+                {
+                if(fabs(FatJet_Eta[i]) < 2.4 && FatJet_PT[i] > 30.){
+			N_FatJet++;
+
+                                if (p1 == test)         // if this is the first Fat Jet in the event
+                                {
+                                        p1.SetPtEtaPhiM(FatJet_PT[i], FatJet_Eta[i], FatJet_Phi[i], FatJet_Mass[i]);
+					i_Leading = i;
+                                }
+                                else if ( (p1 != test) && (p2 == test) ) // if this is the second Fat Jet in the event p1 is with max pT
+                                {
+                                        if(p1.Pt() >= FatJet_PT[i]){p2.SetPtEtaPhiM(FatJet_PT[i], FatJet_Eta[i], FatJet_Phi[i], FatJet_Mass[i]); i_SubLeading = i;}
+                                        else
+                                        {
+                                             p2 = p1;
+                                             p1.SetPtEtaPhiM(FatJet_PT[i], FatJet_Eta[i], FatJet_Phi[i], FatJet_Mass[i]);
+					     i_SubLeading = i_Leading; i_Leading = i;
+                                        }
+                                }
+                                else if ( (p1 != test) && (p2 != test) )        // maybe another photon, trying to get max pTs
+                                {
+                                        if ( FatJet_PT[i] > p1.Pt() )
+                                        {
+                                                        p2 = p1;
+                                                        p1.SetPtEtaPhiM(FatJet_PT[i], FatJet_Eta[i], FatJet_Phi[i], FatJet_Mass[i]);
+					     		i_SubLeading = i_Leading; i_Leading = i;
+                                        }
+                                        else if ( FatJet_PT[i] > p2.Pt() )
+                                        {
+                                                p2.SetPtEtaPhiM(FatJet_PT[i], FatJet_Eta[i], FatJet_Phi[i], FatJet_Mass[i]);
+						i_SubLeading = i;
+                                        }
+                                }
+		
+                }}}
+                
+                hNFatJet_cut[ID_pT] -> Fill(N_FatJet, weight_F);
+                if((p1 != test) )hNFatJet_MassLeading[ID_pT] -> Fill(p1.M(), weight_F);
+                if((p2 != test) )hNFatJet_MassSubLeading[ID_pT] -> Fill(p2.M(), weight_F);
+		// fill Fat jet mass without leading and subleading jets:
+                if (FatJet_size > 0)
+                {
+                for (int i = 0; i < FatJet_size; i++)
+                {
+                if(fabs(FatJet_Eta[i]) < 2.4 && FatJet_PT[i] > 30.){
+
+			if (i != i_Leading && i != i_SubLeading){p_temp1.SetPtEtaPhiM(FatJet_PT[i], FatJet_Eta[i], FatJet_Phi[i], FatJet_Mass[i]); hNFatJet_MassRest[ID_pT] -> Fill(p_temp1.M(), weight_F);}
+                }}}
+                //if((p1 != test) && (p2 != test))hNFatJet_Mass2Jet[ID_pT] -> Fill((p1+p2).M(), weight_F);
+		//fill mass of any 2 FatJet:
+                if (FatJet_size > 1)
+                {
+                for (int i = 0; i < FatJet_size-1; i++)
+               	{
+               		if(fabs(FatJet_Eta[i]) < 2.4 && FatJet_PT[i] > 30.){
+				p_temp1.SetPtEtaPhiM(FatJet_PT[i], FatJet_Eta[i], FatJet_Phi[i], FatJet_Mass[i]);
+				for (int j = i+1; j < FatJet_size; j++)
+				{
+					if(fabs(FatJet_Eta[j]) < 2.4 && FatJet_PT[j] > 30.){
+						p_temp2.SetPtEtaPhiM(FatJet_PT[j], FatJet_Eta[j], FatJet_Phi[j], FatJet_Mass[j]);
+						hNFatJet_Mass2Jet[ID_pT] -> Fill((p_temp1+p_temp2).M(), weight_F);
+					}
+				}
+			}
+		}}
+                // *********   end: analyze Fat jets
+                // *********   analyze normal jets:
+                p1 = test;
+                p2 = test;
+                i_Leading = -1;
+                i_SubLeading = -1;
+                Int_t N_Jet = 0;
+
+                if (Jet_size > 0)
+                {
+                for (int i = 0; i < Jet_size; i++)
+                {
+                if(fabs(Jet_Eta[i]) < 2.4 && Jet_PT[i] > 30.){
+			N_Jet++;
+
+                                if (p1 == test)         // if this is the first  Jet in the event
+                                {
+                                        p1.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]);
+					i_Leading = i;
+                                }
+                                else if ( (p1 != test) && (p2 == test) ) // if this is the second  Jet in the event p1 is with max pT
+                                {
+                                        if(p1.Pt() >= Jet_PT[i]){p2.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]); i_SubLeading = i;}
+                                        else
+                                        {
+                                             p2 = p1;
+                                             p1.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]);
+					     i_SubLeading = i_Leading; i_Leading = i;
+                                        }
+                                }
+                                else if ( (p1 != test) && (p2 != test) )        // maybe another photon, trying to get max pTs
+                                {
+                                        if ( Jet_PT[i] > p1.Pt() )
+                                        {
+                                                        p2 = p1;
+                                                        p1.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]);
+					     		i_SubLeading = i_Leading; i_Leading = i;
+                                        }
+                                        else if ( Jet_PT[i] > p2.Pt() )
+                                        {
+                                                p2.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]);
+						i_SubLeading = i;
+                                        }
+                                }
+		
+                }}}
+                
+                hNJet_cut[ID_pT] -> Fill(N_Jet, weight_F);
+                if((p1 != test) )hNJet_MassLeading[ID_pT] -> Fill(p1.M(), weight_F);
+                if((p2 != test) )hNJet_MassSubLeading[ID_pT] -> Fill(p2.M(), weight_F);
+		// fill  jet mass without leading and subleading jets:
+                if (Jet_size > 0)
+                {
+                for (int i = 0; i < Jet_size; i++)
+                {
+                if(fabs(Jet_Eta[i]) < 2.4 && Jet_PT[i] > 30.){
+
+			if (i != i_Leading && i != i_SubLeading){p_temp1.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]); hNJet_MassRest[ID_pT] -> Fill(p_temp1.M(), weight_F);}
+                }}}
+                //if((p1 != test) && (p2 != test))hNJet_Mass2Jet[ID_pT] -> Fill((p1+p2).M(), weight_F);
+		//fill mass of any 2 Jet:
+                if (Jet_size > 1)
+                {
+                for (int i = 0; i < Jet_size-1; i++)
+               	{
+               		if(fabs(Jet_Eta[i]) < 2.4 && Jet_PT[i] > 30.){
+				p_temp1.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]);
+				for (int j = i+1; j < Jet_size; j++)
+				{
+					if(fabs(Jet_Eta[j]) < 2.4 && Jet_PT[j] > 30.){
+						p_temp2.SetPtEtaPhiM(Jet_PT[j], Jet_Eta[j], Jet_Phi[j], Jet_Mass[j]);
+						hNJet_Mass2Jet[ID_pT] -> Fill((p_temp1+p_temp2).M(), weight_F);
+					}
+				}
+			}
+		}}
+                // *********   end: analyze normal  jets
+
+
                 int indicator = -1;
                 int indicatorReco = -1;
                 int flag = 0;
@@ -379,7 +651,37 @@ void HiggsAnalysis::Loop()
                 p1 = test;
                 p2 = test;
 
-                if (Photon_size < 2) continue; //select at least 2 photons:
+                if(Particle_size > 0){
+                for ( int i = 0; i < Particle_size; i++) // now loop through all particles to find Higgs
+                {
+			//set indicator depending on Pt
+                        if ( Particle_PID[i] == 25 && Particle_Status[i] == 62) // check for Higgs and that it is final state before decay   
+                        {
+                                if (Particle_PT[i] < 0) cout << "Error: Particle_PT[" << i << "] = " << Particle_PT[i] << " Particle_Status = " << Particle_Status[i] << endl;
+                                for ( int j = 0; j < NpTbins; j++)
+                                {
+                                        if (j < (NpTbins -1)){if (Particle_PT[i] >= pTbinCor[j] && Particle_PT[i] < pTbinCor[j+1]) indicator = j;}
+                                        else {if (Particle_PT[i] >= pTbinCor[j]) indicator = j;}
+
+                                }
+				// find daugthers of Higgs:
+				Int_t i1 = Particle_D1[i];
+				Int_t i2 = Particle_D2[i];
+				// cout << " Particle_PID[i1] = " << Particle_PID[i1] << " Particle_PID[i1] = " << Particle_PID[i1] << " Higgs Particle_Status[i] = " << Particle_Status[i] << endl;
+				//if(Particle_Status[i] == 62) cout << " Particle_PID[i1] = " << Particle_PID[i1] << " Particle_PID[i1] = " << Particle_PID[i1] << endl;
+				//if (Particle_PID[i1] == 22 )cout << " Particle_PID[i1] = " << Particle_PID[i1] << " Higgs Particle_Status[i] = " << Particle_Status[i] << endl;
+                                if (abs(i2-i1) != 1) cout <<"ERROR: not 2 daughters, it is: " << abs(i2-i1)+1 << endl;
+                                if (Particle_PID[i1] !=22 || Particle_PID[i2] !=22) cout <<"ERROR: decay to not 2 photons" << endl;
+				// fine leading (i1) and subleading (i2) photons in pT
+                                if (Particle_PT[i1] < Particle_PT[i2]) { Int_t i_sub = i1; i1=i2; i2 = i_sub;}
+                        }
+                }
+                }
+                //cout << "indicator = " << indicator << endl;
+                //if (indicator < 0 )std::cout <<"ERROR: no gen Higgs found" << std::endl;
+                //if (indicator < 0)continue; // reject events without good generated Higgs
+
+                if (Photon_size < 2) continue; //select at least 2 reco photons:
                 // p1 - leading (max pT) photon, p2 - subleading
                 for (int i = 0; i < Photon_size; i++)
                 {
@@ -415,24 +717,6 @@ void HiggsAnalysis::Loop()
                 }       // End of looping through photons
 
 
-                if(Particle_size > 0){
-                for ( int i = 0; i < Particle_size; i++) // now loop through all particles to find Higgs
-                {
-                        if ( Particle_PID[i] == 25)     //set indicator depending on Pt
-                        {
-                                if (Particle_PT[i] < 0) cout << "Error: Particle_PT[" << i << "] = " << Particle_PT[i] << " Particle_Status = " << Particle_Status[i] << endl;
-                                for ( int j = 0; j < NpTbins; j++)
-                                {
-                                        if (j < (NpTbins -1)){if (Particle_PT[i] >= pTbinCor[j] && Particle_PT[i] < pTbinCor[j+1]) indicator = j;}
-                                        else {if (Particle_PT[i] >= pTbinCor[j]) indicator = j;}
-
-                                }
-                        }
-                }
-                }
-                //cout << "indicator = " << indicator << endl;
-                //if (indicator < 0 )std::cout <<"ERROR: no gen Higgs found" << std::endl;
-                //if (indicator < 0)continue; // reject events without good generated Higgs
 
                         // set indicatorReco:
                         //if (p1 == test || p2 == test) cout << "Error: one both photons are not exist -> check the code: pT1 = " << p1.Pt() << " pT2 = " << p2.Pt() << endl;   // if both photons filled
@@ -735,8 +1019,23 @@ void HiggsAnalysis::Loop()
                 //bothEndCaps[i]->Write();
                 //hHiggsPt[i]->Write();
                 //hHiggsPtCut[i]->Write();
-                //hLeadingJet_pT[i]->Write();
-                //hLeadingJet_eta[i]->Write();
+		// for efficiency caclulation only
+	                outFile->mkdir(Form("Eff_%s%3.0f_%s",DataSample.Data(),massHiggs,DirRef.Data() ));
+        	        outFile->   cd(Form("Eff_%s%3.0f_%s",DataSample.Data(),massHiggs,DirRef.Data() ));
+                	hLeadingJet_pT[i]->Write();
+             	        hLeadingJet_eta[i]->Write();
+                	hNJet_cut[i]->Write();
+                	hNFatJet_cut[i]->Write();
+                	hNFatJet_Mass2Jet[i]->Write();
+                	hNFatJet_MassLeading[i]->Write();
+                	hNFatJet_MassSubLeading[i]->Write();
+                	hNFatJet_MassRest[i]->Write();
+                	hNJet_cut[i]->Write();
+                	hNJet_Mass2Jet[i]->Write();
+                	hNJet_MassLeading[i]->Write();
+                	hNJet_MassSubLeading[i]->Write();
+                	hNJet_MassRest[i]->Write();
+                // end for efficiency calculation
                 if(DataSample == "Signal")first[i] -> Print(Form("Plots/mH%3.0f_pTbin_%d.png",massHiggs,i));
                 if(DataSample == "BG")first[i] -> Print(Form("Plots/BG_pTbin_%d.png",i));
         }
