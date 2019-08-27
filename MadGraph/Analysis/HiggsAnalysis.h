@@ -17,6 +17,9 @@
 
 class HiggsAnalysis {
 public :
+
+   int BinNumber(Int_t ID_pT, int *pTbinCor, Int_t NpTbins, Float_t pT, TString DataSample);
+
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
 
