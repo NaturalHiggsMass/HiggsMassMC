@@ -1,11 +1,5 @@
 #define HiggsAnalysis_cxx
 #include "HiggsAnalysis.h"
-#include <TH2.h>
-#include <TStyle.h>
-#include <TCanvas.h>
-#include "TGraph.h"
-#include "TGraphErrors.h"
-#include "TLegend.h"
 
 void HiggsAnalysis::Loop()
 {
@@ -152,11 +146,20 @@ void HiggsAnalysis::Loop()
         TH1D * hFatJet_MassLeading[NpTbins];
         TH1D * hFatJet_MassSubLeading[NpTbins];
         TH1D * hFatJet_MassRest[NpTbins];
+        TH1D * hFatJet_Higgs_dR_S[NpTbins];
+        TH1D * hFatJet_Higgs_dR_BS[NpTbins];
+        TH1D * hFatJet_Higgs_dR_ggGen[NpTbins];
+        TH1D * hHiggs_dR_ggReco[NpTbins];
+        TH1D * hNHiggsReco[NpTbins];
+
         TH1D * hNJet_cut[NpTbins];
         TH1D * hJet_Mass2Jet[NpTbins];
         TH1D * hJet_MassLeading[NpTbins];
         TH1D * hJet_MassSubLeading[NpTbins];
         TH1D * hJet_MassRest[NpTbins];
+        TH1D * hJet_Higgs_dR_S[NpTbins];
+        TH1D * hJet_Higgs_dR_BS[NpTbins];
+        TH1D * hJet_Higgs_dR_ggGen[NpTbins];
 
         std::string work;
         std::string workName;
@@ -241,7 +244,7 @@ void HiggsAnalysis::Loop()
                 massSigma1p0[i]-> Sumw2();
 
                 work = "p_{T}(#gamma#gamma), " + title[i];
-                workName = "hpTgg " + title[i];
+                workName = "hpTgg_" + titleDir[i];
                 //Int_t nbin_pT = 200;
                 Int_t nbin_pT = 100;
                 Double_t xmin_pT = -0.5;
@@ -254,14 +257,14 @@ void HiggsAnalysis::Loop()
                 hHiggsPt[i]-> Sumw2();
 
                 work = "p_{T}(#gamma#gamma) Cut " + title[i];
-                workName = "hpTggCut " + title[i];
+                workName = "hpTggCut_" + titleDir[i];
                 hHiggsPtCut[i] = new TH1D(workName.c_str(),work.c_str(), nbin_pT, 0., 1000.);
                 hHiggsPtCut[i]-> GetXaxis()->SetTitle(TitleX);
                 hHiggsPtCut[i]-> GetYaxis()->SetTitle(TitleY);
                 hHiggsPtCut[i]-> Sumw2();
 
                 work = "p_{T}(leading jet) " + title[i];
-                workName = "hLeadingJet_pT " + title[i];
+                workName = "hLeadingJet_pT_" + titleDir[i];
                 hLeadingJet_pT[i] = new TH1D(workName.c_str(),work.c_str(), nbin_pT, 0., 1000.);
                 TitleX = "p_{T}(leading jet) (GeV)";
                 TitleY = Form("Events/(%3.0f GeV)", hLeadingJet_pT[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -270,7 +273,7 @@ void HiggsAnalysis::Loop()
                 hLeadingJet_pT[i]-> Sumw2();
 
                 work = "#eta(leading jet) " + title[i];
-                workName = "hLeadingJet_eta " + title[i];
+                workName = "hLeadingJet_eta_" + titleDir[i];
                 hLeadingJet_eta[i] = new TH1D(workName.c_str(),work.c_str(), 200, -2.5, 2.5);
                 TitleX = "#eta(leading jet) (GeV)";
                 TitleY = Form("Events/(%3.0f GeV)", hLeadingJet_eta[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -279,7 +282,7 @@ void HiggsAnalysis::Loop()
                 hLeadingJet_eta[i]-> Sumw2();
 
                 work = "# Fat jets " + title[i];
-                workName = "hNFatJet_cut " + title[i];
+                workName = "hNFatJet_cut_" + titleDir[i];
                 hNFatJet_cut[i] = new TH1D(workName.c_str(),work.c_str(), 10, -0.5, 9.5);
                 TitleX = "# Fat jets";
                 TitleY = "Events"; // could make it only after histo creating
@@ -288,7 +291,7 @@ void HiggsAnalysis::Loop()
                 hNFatJet_cut[i]-> Sumw2();
 
                 work = "Mass of 2 FatJets, " + title[i];
-                workName = "hFatJet_Mass2Jet " + title[i];
+                workName = "hFatJet_Mass2Jet_" + titleDir[i];
                 hFatJet_Mass2Jet[i] = new TH1D(workName.c_str(),work.c_str(), 1000, 0., 1000.);
                 TitleX = "M of 2 FatJets (GeV)";
                 TitleY = Form("Events/(%1.1f GeV)", hFatJet_Mass2Jet[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -297,7 +300,7 @@ void HiggsAnalysis::Loop()
                 hFatJet_Mass2Jet[i]-> Sumw2();
 
                 work = "Mass of Leading FatJet, " + title[i];
-                workName = "hFatJet_MassLeading " + title[i];
+                workName = "hFatJet_MassLeading_" + titleDir[i];
                 hFatJet_MassLeading[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
                 TitleX = "M of Leading FatJet (GeV)";
                 TitleY = Form("Events/(%1.1f GeV)", hFatJet_MassLeading[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -306,7 +309,7 @@ void HiggsAnalysis::Loop()
                 hFatJet_MassLeading[i]-> Sumw2();
 
                 work = "Mass of SubLeading FatJet, " + title[i];
-                workName = "hFatJet_MassSubLeading " + title[i];
+                workName = "hFatJet_MassSubLeading_" + titleDir[i];
                 hFatJet_MassSubLeading[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
                 TitleX = "M of SubLeading FatJet (GeV)";
                 TitleY = Form("Events/(%1.1f GeV)", hFatJet_MassSubLeading[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -315,7 +318,7 @@ void HiggsAnalysis::Loop()
                 hFatJet_MassSubLeading[i]-> Sumw2();
 
                 work = "Mass of Rest FatJet, " + title[i];
-                workName = "hFatJet_MassRest " + title[i];
+                workName = "hFatJet_MassRest_" + titleDir[i];
                 hFatJet_MassRest[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
                 TitleX = "M of Rest FatJet (GeV)";
                 TitleY = Form("Events/(%1.1f GeV)", hFatJet_MassRest[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -323,8 +326,44 @@ void HiggsAnalysis::Loop()
                 hFatJet_MassRest[i]-> GetYaxis()->SetTitle(TitleY);
                 hFatJet_MassRest[i]-> Sumw2();
 
+                work = "#DeltaR(Fat Jet, Gen Higgs) at S, " + title[i];
+                workName = "hFatJet_Higgs_dR_S_" + titleDir[i];
+                hFatJet_Higgs_dR_S[i] = new TH1D(workName.c_str(),work.c_str(), 500, 0., 5.);
+                TitleX = "#DeltaR(#eta, #phi)";
+                TitleY = Form("Events/(%1.3f)", hFatJet_Higgs_dR_S[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hFatJet_Higgs_dR_S[i]-> GetXaxis()->SetTitle(TitleX);
+                hFatJet_Higgs_dR_S[i]-> GetYaxis()->SetTitle(TitleY);
+                hFatJet_Higgs_dR_S[i]-> Sumw2();
+
+                work = "#DeltaR(Fat Jet, Gen Higgs) at BS, " + title[i];
+                workName = "hFatJet_Higgs_dR_BS_" + titleDir[i];
+                hFatJet_Higgs_dR_BS[i] = new TH1D(workName.c_str(),work.c_str(), 100, 0., 5.);
+                TitleX = "#DeltaR(#eta, #phi)";
+                TitleY = Form("Events/(%1.2f)", hFatJet_Higgs_dR_BS[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hFatJet_Higgs_dR_BS[i]-> GetXaxis()->SetTitle(TitleX);
+                hFatJet_Higgs_dR_BS[i]-> GetYaxis()->SetTitle(TitleY);
+                hFatJet_Higgs_dR_BS[i]-> Sumw2();
+
+                work = "#DeltaR(#gamma, #gamma) for Gen Higgs, " + title[i];
+                workName = "hFatJet_Higgs_dR_ggGen_" + titleDir[i];
+                hFatJet_Higgs_dR_ggGen[i] = new TH1D(workName.c_str(),work.c_str(), 500, 0., 5.);
+                TitleX = "#DeltaR(#eta, #phi)";
+                TitleY = Form("Events/(%1.3f)", hFatJet_Higgs_dR_ggGen[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hFatJet_Higgs_dR_ggGen[i]-> GetXaxis()->SetTitle(TitleX);
+                hFatJet_Higgs_dR_ggGen[i]-> GetYaxis()->SetTitle(TitleY);
+                hFatJet_Higgs_dR_ggGen[i]-> Sumw2();
+
+                work = "# Higgs: Reco (1), Fat Jet (10), Jet (100) " + title[i];
+                workName = "hNHiggsReco_" + titleDir[i];
+                hNHiggsReco[i] = new TH1D(workName.c_str(),work.c_str(), 250, -0.5, 249.5);
+                TitleX = "# Reco Higgs per event";
+                TitleY = "Events"; // could make it only after histo creating
+                hNHiggsReco[i]-> GetXaxis()->SetTitle(TitleX);
+                hNHiggsReco[i]-> GetYaxis()->SetTitle(TitleY);
+                hNHiggsReco[i]-> Sumw2();
+
                 work = "# jets " + title[i];
-                workName = "hNJet_cut " + title[i];
+                workName = "hNJet_cut_" + titleDir[i];
                 hNJet_cut[i] = new TH1D(workName.c_str(),work.c_str(), 10, -0.5, 9.5);
                 TitleX = "# jets";
                 TitleY = "Events"; // could make it only after histo creating
@@ -333,7 +372,7 @@ void HiggsAnalysis::Loop()
                 hNJet_cut[i]-> Sumw2();
 
                 work = "Mass of 2 Jets, " + title[i];
-                workName = "hJet_Mass2Jet " + title[i];
+                workName = "hJet_Mass2Jet_" + titleDir[i];
                 hJet_Mass2Jet[i] = new TH1D(workName.c_str(),work.c_str(), 1000, 0., 1000.);
                 TitleX = "M of 2 Jets (GeV)";
                 TitleY = Form("Events/(%1.1f GeV)", hJet_Mass2Jet[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -342,7 +381,7 @@ void HiggsAnalysis::Loop()
                 hJet_Mass2Jet[i]-> Sumw2();
 
                 work = "Mass of Leading Jet, " + title[i];
-                workName = "hJet_MassLeading " + title[i];
+                workName = "hJet_MassLeading_" + titleDir[i];
                 hJet_MassLeading[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
                 TitleX = "M of Leading Jet (GeV)";
                 TitleY = Form("Events/(%1.1f GeV)", hJet_MassLeading[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -351,7 +390,7 @@ void HiggsAnalysis::Loop()
                 hJet_MassLeading[i]-> Sumw2();
 
                 work = "Mass of SubLeading Jet, " + title[i];
-                workName = "hJet_MassSubLeading " + title[i];
+                workName = "hJet_MassSubLeading_" + titleDir[i];
                 hJet_MassSubLeading[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
                 TitleX = "M of SubLeading Jet (GeV)";
                 TitleY = Form("Events/(%1.1f GeV)", hJet_MassSubLeading[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -360,7 +399,7 @@ void HiggsAnalysis::Loop()
                 hJet_MassSubLeading[i]-> Sumw2();
 
                 work = "Mass of Rest Jet, " + title[i];
-                workName = "hJet_MassRest " + title[i];
+                workName = "hJet_MassRest_" + titleDir[i];
                 hJet_MassRest[i] = new TH1D(workName.c_str(),work.c_str(), 200, 0., 200.);
                 TitleX = "M of Rest Jet (GeV)";
                 TitleY = Form("Events/(%1.1f GeV)", hJet_MassRest[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
@@ -368,19 +407,55 @@ void HiggsAnalysis::Loop()
                 hJet_MassRest[i]-> GetYaxis()->SetTitle(TitleY);
                 hJet_MassRest[i]-> Sumw2();
 
+                work = "#DeltaR(Jet, Gen Higgs) at S, " + title[i];
+                workName = "hJet_Higgs_dR_S_" + titleDir[i];
+                hJet_Higgs_dR_S[i] = new TH1D(workName.c_str(),work.c_str(), 500, 0., 5.);
+                TitleX = "#DeltaR(#eta, #phi)";
+                TitleY = Form("Events/(%1.3f)", hJet_Higgs_dR_S[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hJet_Higgs_dR_S[i]-> GetXaxis()->SetTitle(TitleX);
+                hJet_Higgs_dR_S[i]-> GetYaxis()->SetTitle(TitleY);
+                hJet_Higgs_dR_S[i]-> Sumw2();
+
+                work = "#DeltaR(Jet, Gen Higgs) at BS, " + title[i];
+                workName = "hJet_Higgs_dR_BS_" + titleDir[i];
+                hJet_Higgs_dR_BS[i] = new TH1D(workName.c_str(),work.c_str(), 100, 0., 5.);
+                TitleX = "#DeltaR(#eta, #phi)";
+                TitleY = Form("Events/(%1.2f)", hJet_Higgs_dR_BS[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hJet_Higgs_dR_BS[i]-> GetXaxis()->SetTitle(TitleX);
+                hJet_Higgs_dR_BS[i]-> GetYaxis()->SetTitle(TitleY);
+                hJet_Higgs_dR_BS[i]-> Sumw2();
+
+                work = "#DeltaR(#gamma, #gamma) for Gen Higgs, " + title[i];
+                workName = "hJet_Higgs_dR_ggGen_" + titleDir[i];
+                hJet_Higgs_dR_ggGen[i] = new TH1D(workName.c_str(),work.c_str(), 500, 0., 5.);
+                TitleX = "#DeltaR(#eta, #phi)";
+                TitleY = Form("Events/(%1.3f)", hJet_Higgs_dR_ggGen[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hJet_Higgs_dR_ggGen[i]-> GetXaxis()->SetTitle(TitleX);
+                hJet_Higgs_dR_ggGen[i]-> GetYaxis()->SetTitle(TitleY);
+                hJet_Higgs_dR_ggGen[i]-> Sumw2();
+
                 work = "Higgs Mass Gen " + title[i];
-                workName = "hHiggsMass "+title[i];
+                workName = "hHiggsMass_"+titleDir[i];
                 hHiggsMass[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 hHiggsMass[i]-> GetXaxis()->SetTitle(TitleX);
                 hHiggsMass[i]-> GetYaxis()->SetTitle(TitleY);
                 hHiggsMass[i]-> Sumw2();
 
                 work = "Higgs Mass Gen Cut " + title[i];
-                workName = "hHiggsMass_Cut "+title[i];
+                workName = "hHiggsMass_Cut_"+titleDir[i];
                 hHiggsMass_Cut[i] = new TH1D(workName.c_str(),work.c_str(), nbin_mass, xmin_mass, xmax_mass);
                 hHiggsMass_Cut[i]-> GetXaxis()->SetTitle(TitleX);
                 hHiggsMass_Cut[i]-> GetYaxis()->SetTitle(TitleY);
                 hHiggsMass_Cut[i]-> Sumw2();
+
+                work = "#DeltaR(#gamma, #gamma) for Reco Higgs, " + title[i];
+                workName = "hHiggs_dR_ggReco_" + titleDir[i];
+                hHiggs_dR_ggReco[i] = new TH1D(workName.c_str(),work.c_str(), 500, 0., 5.);
+                TitleX = "#DeltaR(#eta, #phi)(#gamma, #gamma)";
+                TitleY = Form("Events/(%1.3f)", hHiggs_dR_ggReco[0]->GetXaxis()->GetBinWidth(1)); // could make it only after histo creating
+                hHiggs_dR_ggReco[i]-> GetXaxis()->SetTitle(TitleX);
+                hHiggs_dR_ggReco[i]-> GetYaxis()->SetTitle(TitleY);
+                hHiggs_dR_ggReco[i]-> Sumw2();
 
         }
 
@@ -504,10 +579,10 @@ void HiggsAnalysis::Loop()
                 //                              pb -> fb   #fb  #events BR(H->gg)                 
         	double weight_F = Xsec[ID_pT]*1000.*300./50000.*2.27e-03;
         	if(DataSample == "BG") weight_F = Xsec[ID_pT]*1000.*300./50000.; // no Br correction
-
+	        Int_t NHiggs_RecoPerEvent = 0;
                 int indicator = -1;
-                int pTHiggsGen = -10;
-
+                Double_t pTHiggsGen = -10;
+		Int_t i_HiggsGen = -1;
                 if(Particle_size > 0){
                 for ( int i = 0; i < Particle_size; i++) // now loop through all particles to find Higgs
                 {
@@ -526,6 +601,7 @@ void HiggsAnalysis::Loop()
 				if (indicator == -1){
 					indicator = indicator_test;
 					pTHiggsGen = Particle_PT[i];
+					i_HiggsGen = i;
 				}
 				if (indicator_test > -1){
 					hHiggsMass[indicator_test] -> Fill(Particle_Mass[i], weight_F);
@@ -624,15 +700,35 @@ void HiggsAnalysis::Loop()
                 hNFatJet_cut[indicator] -> Fill(N_FatJet, weight_F);
                 if((p1 != test) ){
 			hFatJet_MassLeading[indicator] -> Fill(p1.M(), weight_F);
-			if(p1.M() > 120. && p1.M() < 140.) NHiggsReco_FatJet[indicator] = NHiggsReco_FatJet[indicator] + weight_F;
+			if(p1.M() > 120. && p1.M() < 140.){
+				NHiggsReco_FatJet[indicator] = NHiggsReco_FatJet[indicator] + weight_F;
+				NHiggs_RecoPerEvent = NHiggs_RecoPerEvent +10;
+				hFatJet_Higgs_dR_S[indicator] -> Fill(HiggsAnalysis::DeltaR(Particle_Eta[i_HiggsGen], Particle_Phi[i_HiggsGen], p1)); // Fill dR at Signal region
+				Int_t i1 = Particle_D1[i_HiggsGen];
+                                Int_t i2 = Particle_D2[i_HiggsGen];
+				hFatJet_Higgs_dR_ggGen[indicator] -> Fill(HiggsAnalysis::DeltaR_F(Particle_Eta[i1], Particle_Phi[i1], Particle_Eta[i2], Particle_Phi[i2])); // Fill dR for Higgs gg Gen
+			}
 			//subtract background:
-			if( (p1.M() > 110. && p1.M() < 120.) || (p1.M() > 140. && p1.M() < 150.)) NHiggsReco_FatJet[indicator] = NHiggsReco_FatJet[indicator] - weight_F;
+			if( (p1.M() > 110. && p1.M() < 120.) || (p1.M() > 140. && p1.M() < 150.)){
+				NHiggsReco_FatJet[indicator] = NHiggsReco_FatJet[indicator] - weight_F;
+				hFatJet_Higgs_dR_BS[indicator] -> Fill(HiggsAnalysis::DeltaR(Particle_Eta[i_HiggsGen], Particle_Phi[i_HiggsGen], p1)); // Fill dR at Side Bend region
+			}
 		}
                 if((p2 != test) ){
 			hFatJet_MassSubLeading[indicator] -> Fill(p2.M(), weight_F);
-			if(p1.M() > 120. && p1.M() < 140.) NHiggsReco_FatJet[indicator] = NHiggsReco_FatJet[indicator] + weight_F;
+			if(p2.M() > 120. && p2.M() < 140.){
+				NHiggsReco_FatJet[indicator] = NHiggsReco_FatJet[indicator] + weight_F;
+				NHiggs_RecoPerEvent = NHiggs_RecoPerEvent +10;
+				hFatJet_Higgs_dR_S[indicator] -> Fill(HiggsAnalysis::DeltaR(Particle_Eta[i_HiggsGen], Particle_Phi[i_HiggsGen], p2)); // Fill dR at Signal region
+				Int_t i1 = Particle_D1[i_HiggsGen];
+                                Int_t i2 = Particle_D2[i_HiggsGen];
+				hFatJet_Higgs_dR_ggGen[indicator] -> Fill(HiggsAnalysis::DeltaR_F(Particle_Eta[i1], Particle_Phi[i1], Particle_Eta[i2], Particle_Phi[i2])); // Fill dR for Higgs gg Gen
+			}
 			//subtract background:
-			if( (p1.M() > 110. && p1.M() < 120.) || (p1.M() > 140. && p1.M() < 150.)) NHiggsReco_FatJet[indicator] = NHiggsReco_FatJet[indicator] - weight_F;
+			if( (p2.M() > 110. && p2.M() < 120.) || (p2.M() > 140. && p2.M() < 150.)){
+				NHiggsReco_FatJet[indicator] = NHiggsReco_FatJet[indicator] - weight_F;
+				hFatJet_Higgs_dR_BS[indicator] -> Fill(HiggsAnalysis::DeltaR(Particle_Eta[i_HiggsGen], Particle_Phi[i_HiggsGen], p2)); // Fill dR at Side Bend region
+			}
 		}
 		// fill Fat jet mass without leading and subleading jets:
                 if (FatJet_size > 0)
@@ -710,15 +806,36 @@ void HiggsAnalysis::Loop()
                 hNJet_cut[indicator] -> Fill(N_Jet, weight_F);
                 if((p1 != test) ){
 			hJet_MassLeading[indicator] -> Fill(p1.M(), weight_F);
-			if(p1.M() > 120. && p1.M() < 140.) NHiggsReco_Jet[indicator] = NHiggsReco_Jet[indicator] + weight_F;
+			if(p1.M() > 120. && p1.M() < 140.){
+				NHiggsReco_Jet[indicator] = NHiggsReco_Jet[indicator] + weight_F;
+				NHiggs_RecoPerEvent = NHiggs_RecoPerEvent +100;
+                                hJet_Higgs_dR_S[indicator] -> Fill(HiggsAnalysis::DeltaR(Particle_Eta[i_HiggsGen], Particle_Phi[i_HiggsGen], p1)); // Fill dR at Signal region
+                                Int_t i1 = Particle_D1[i_HiggsGen];
+                                Int_t i2 = Particle_D2[i_HiggsGen];
+                                hJet_Higgs_dR_ggGen[indicator] -> Fill(HiggsAnalysis::DeltaR_F(Particle_Eta[i1], Particle_Phi[i1], Particle_Eta[i2], Particle_Phi[i2])); // Fill dR for Higgs gg Gen
+			}
 			//subtract background:
-			if( (p1.M() > 110. && p1.M() < 120.) || (p1.M() > 140. && p1.M() < 150.)) NHiggsReco_Jet[indicator] = NHiggsReco_Jet[indicator] - weight_F;
+			if( (p1.M() > 110. && p1.M() < 120.) || (p1.M() > 140. && p1.M() < 150.)){
+				NHiggsReco_Jet[indicator] = NHiggsReco_Jet[indicator] - weight_F;
+				hJet_Higgs_dR_BS[indicator] -> Fill(HiggsAnalysis::DeltaR(Particle_Eta[i_HiggsGen], Particle_Phi[i_HiggsGen], p1)); // Fill dR at Side Bend region
+			}
+
 		}
                 if((p2 != test) ){
 			hJet_MassSubLeading[indicator] -> Fill(p2.M(), weight_F);
-			if(p1.M() > 120. && p1.M() < 140.) NHiggsReco_Jet[indicator] = NHiggsReco_Jet[indicator] + weight_F;
+			if(p2.M() > 120. && p2.M() < 140.) {
+				NHiggsReco_Jet[indicator] = NHiggsReco_Jet[indicator] + weight_F;
+				NHiggs_RecoPerEvent = NHiggs_RecoPerEvent +100;
+                                hJet_Higgs_dR_S[indicator] -> Fill(HiggsAnalysis::DeltaR(Particle_Eta[i_HiggsGen], Particle_Phi[i_HiggsGen], p2)); // Fill dR at Signal region
+                                Int_t i1 = Particle_D1[i_HiggsGen];
+                                Int_t i2 = Particle_D2[i_HiggsGen];
+                                hJet_Higgs_dR_ggGen[indicator] -> Fill(HiggsAnalysis::DeltaR_F(Particle_Eta[i1], Particle_Phi[i1], Particle_Eta[i2], Particle_Phi[i2])); // Fill dR for Higgs gg Gen
+			}
 			//subtract background:
-			if( (p1.M() > 110. && p1.M() < 120.) || (p1.M() > 140. && p1.M() < 150.)) NHiggsReco_Jet[indicator] = NHiggsReco_Jet[indicator] - weight_F;
+			if( (p2.M() > 110. && p2.M() < 120.) || (p2.M() > 140. && p2.M() < 150.)){
+				NHiggsReco_Jet[indicator] = NHiggsReco_Jet[indicator] - weight_F;
+				hJet_Higgs_dR_BS[indicator] -> Fill(HiggsAnalysis::DeltaR(Particle_Eta[i_HiggsGen], Particle_Phi[i_HiggsGen], p2)); // Fill dR at Side Bend region
+			}
 		}
 		// fill  jet mass without leading and subleading jets:
                 if (Jet_size > 0)
@@ -834,13 +951,17 @@ void HiggsAnalysis::Loop()
                 {
                         if (flag == 1)
                         {
+				NHiggs_RecoPerEvent = NHiggs_RecoPerEvent +1; // BB + BE
 				NHiggsReco[indicatorReco] = NHiggsReco[indicatorReco] + weight_F; // BB + BE
 				bothBarrel[indicatorReco] -> Fill(mass,weight_F);
+				hHiggs_dR_ggReco[indicatorReco] -> Fill(HiggsAnalysis::DeltaR_F(p1.Eta(), p1.Phi(), p2.Eta(), p2.Phi() )); // Fill dR for Higgs gg Reco
                         }
                         else if (flag == 2)
                         {
+				NHiggs_RecoPerEvent = NHiggs_RecoPerEvent +1; // BB + BE
 				NHiggsReco[indicatorReco] = NHiggsReco[indicatorReco] + weight_F; // BB + BE
 				barrelAndEndCaps[indicatorReco] -> Fill(mass,weight_F);
+				hHiggs_dR_ggReco[indicatorReco] -> Fill(HiggsAnalysis::DeltaR_F(p1.Eta(), p1.Phi(), p2.Eta(), p2.Phi() )); // Fill dR for Higgs gg Reco
                         }
                         else if (flag == 3)
                         {
@@ -866,6 +987,8 @@ void HiggsAnalysis::Loop()
 			}
                 } //end check
 
+		hNHiggsReco[indicator] -> Fill(NHiggs_RecoPerEvent);
+
         } // end cyclbe by nentries
 
         TFile *outFile = new TFile ("Test.root", "RECREATE");
@@ -873,6 +996,7 @@ void HiggsAnalysis::Loop()
         if(DataSample == "BG") outFile = new TFile ( "Background.root", "RECREATE");
 	gStyle->SetCanvasDefW(2000);
 	gStyle->SetCanvasDefH(2000);
+        //gStyle->SetPadLeftMargin(0.25);
         gStyle->SetPadLeftMargin(0.13);
         TCanvas *first[NpTbins];
 
@@ -1080,11 +1204,16 @@ void HiggsAnalysis::Loop()
 		// for efficiency caclulation only
 	                outFile->mkdir(Form("Eff_%s%3.0f_%s",DataSample.Data(),massHiggs,DirRef.Data() ));
         	        outFile->   cd(Form("Eff_%s%3.0f_%s",DataSample.Data(),massHiggs,DirRef.Data() ));
+
                 	hNFatJet_cut[i]->Write();
                 	hFatJet_Mass2Jet[i]->Write();
                 	hFatJet_MassLeading[i]->Write();
                 	hFatJet_MassSubLeading[i]->Write();
                 	hFatJet_MassRest[i]->Write();
+			hFatJet_Higgs_dR_S[i]->Write();
+			hFatJet_Higgs_dR_BS[i]->Write();
+			hFatJet_Higgs_dR_ggGen[i]->Write();
+
                 	hNJet_cut[i]->Write();
                 	hLeadingJet_pT[i]->Write();
              	        hLeadingJet_eta[i]->Write();
@@ -1092,6 +1221,12 @@ void HiggsAnalysis::Loop()
                 	hJet_MassLeading[i]->Write();
                 	hJet_MassSubLeading[i]->Write();
                 	hJet_MassRest[i]->Write();
+			hJet_Higgs_dR_S[i]->Write();
+			hJet_Higgs_dR_BS[i]->Write();
+			hJet_Higgs_dR_ggGen[i]->Write();
+
+                	hNHiggsReco[i]->Write();
+			hHiggs_dR_ggReco[i]->Write();
                 	hHiggsMass_Cut[i]->Write();
                 	hHiggsMass[i]->Write();
                 // end for efficiency calculation
@@ -1218,7 +1353,7 @@ void HiggsAnalysis::Loop()
         gr_Eff_HiggsReco_Total->SetMarkerColor(kBlack);
 
 
-	TH2F *hEmpty = new TH2F("hEmpty","",170,0.,850.,100,0.,2.3);
+	TH2F *hEmpty = new TH2F("hEmpty","",170,0.,850.,100,0.,1.8);
 	hEmpty->GetXaxis()->SetTitle(" Higgs p_{T} (GeV)");
 	hEmpty->GetYaxis()->SetTitle("Eff");
 	hEmpty->SetStats(0);
@@ -1230,11 +1365,12 @@ void HiggsAnalysis::Loop()
 	hEmpty->Draw();
 	gr_Eff_HiggsGen_2gCut->Draw("P");
 	gr_Eff_HiggsReco->Draw("P");
-	gr_Eff_HiggsReco_FatJet->Draw("P");
 	gr_Eff_HiggsReco_Jet->Draw("P");
+	gr_Eff_HiggsReco_FatJet->Draw("P");
 	gr_Eff_HiggsReco_Total->Draw("P");
 
         TLegend* legData = new TLegend(0.15, 0.70, 0.45, 0.9, "");
+        //TLegend* legData = new TLegend(0.25, 0.70, 0.55, 0.9, "");
         legData->SetTextFont(42);
         legData->SetTextSize(0.03);
         //legData->SetFillColor(kWhite);
@@ -1269,4 +1405,26 @@ int HiggsAnalysis::BinNumber(Int_t ID_pT, int *pTbinCor, Int_t NpTbins, Float_t 
 	}
 
         return indicator_test;
+}
+Double_t HiggsAnalysis::DeltaR(Float_t eta, Float_t phi, TLorentzVector p1)
+{
+	Double_t dR = -10;
+	Double_t deta = eta - p1.Eta();
+	Double_t dphi = phi - p1.Phi();
+        if (dphi > TMath::Pi()) dphi = dphi - 2*TMath::Pi();
+        if (dphi < -TMath::Pi()) dphi = dphi + 2*TMath::Pi();
+	dR = sqrt(deta*deta + dphi*dphi);
+	return dR;
+}
+Double_t HiggsAnalysis::DeltaR_F(Float_t eta1, Float_t phi1, Float_t eta2, Float_t phi2)
+{
+        Double_t dR = -10;
+        Double_t deta = eta1 - eta2;
+        Double_t dphi = phi1 - phi2;
+        if (dphi > TMath::Pi()) dphi = dphi - 2*TMath::Pi();
+        if (dphi < -TMath::Pi()) dphi = dphi + 2*TMath::Pi();
+        dR = sqrt(deta*deta + dphi*dphi);
+        //dR = sqrt(deta*deta);
+        //dR = sqrt(dphi*dphi);
+        return dR;
 }

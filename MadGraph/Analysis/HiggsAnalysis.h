@@ -14,11 +14,25 @@
 // Header file for the classes stored in the TTree if any.
 #include "TClonesArray.h"
 #include "TObject.h"
+#include <TRef.h>
+#include <TRefArray.h>
+#include <TLorentzVector.h>
+#include <TH2.h>
+#include <TStyle.h>
+#include <TCanvas.h>
+#include "TGraph.h"
+#include "TGraphErrors.h"
+#include "TLegend.h"
+#include <TF1.h>
+#include <iostream>
+using namespace std; 
 
 class HiggsAnalysis {
 public :
 
    int BinNumber(Int_t ID_pT, int *pTbinCor, Int_t NpTbins, Float_t pT, TString DataSample);
+   Double_t DeltaR(Float_t eta, Float_t phi, TLorentzVector p1);
+   Double_t DeltaR_F(Float_t eta1, Float_t phi1, Float_t eta2, Float_t phi2);
 
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain

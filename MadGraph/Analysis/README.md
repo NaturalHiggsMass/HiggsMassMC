@@ -7,6 +7,12 @@ HiggsAnalysis t
 t.GetEntry(-1); 
 t.Loop();
 ```
+or
+
+```
+root -b RunMe.cxx++
+```
+it came from nice discussion here: `https://root-forum.cern.ch/t/compile-and-run-from-command-prompt/13799/7`
 
 ```
 .L HiggsDistribution.C
