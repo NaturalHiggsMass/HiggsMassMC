@@ -1,4 +1,5 @@
-#include "HiggsAnalysis.C"
+//#include "HiggsAnalysis.C"
+#include "HiggsAnalysis_14TeV.C"
 
 //
 // "ROOT Script" entry point (the same name as the "filename's base").
@@ -10,7 +11,8 @@
 //
 void RunMe(void)
 {
-  HiggsAnalysis m;
+  HiggsAnalysis_14TeV m;
+  //HiggsAnalysis m;
   m.Loop();
 }
 
