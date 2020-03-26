@@ -636,12 +636,19 @@ void HiggsAnalysis_14TeV::Loop()
                 double JetLeading_pT = 0.;
                 double JetLeading_eta = -5.;
 		Int_t N_jet = 0;
-                if (Jet_size > 0)
+		Float_t SJet_size = ParticleFlowJet04_size; 
+                if (SJet_size > 0)
                 {
-                for (int i = 0; i < Jet_size; i++)
+                for (int i = 0; i < SJet_size; i++)
                 {
-			if(fabs(Jet_Eta[i]) < 2.4 && Jet_PT[i] > JetLeading_pT){JetLeading_pT = Jet_PT[i]; JetLeading_eta = Jet_Eta[i];} 
-			if(fabs(Jet_Eta[i]) < 2.4 && Jet_PT[i] > 30.)N_jet++;
+		//definition of standard jets: SJet
+                Float_t SJet_PT   = ParticleFlowJet04_PT[i];
+                Float_t SJet_Eta  = ParticleFlowJet04_Eta[i];
+                Float_t SJet_Phi  = ParticleFlowJet04_Phi[i];
+                Float_t SJet_Mass = ParticleFlowJet04_Mass[i];
+
+			if(fabs(SJet_Eta) < 2.4 && SJet_PT > JetLeading_pT){JetLeading_pT = SJet_PT; JetLeading_eta = SJet_Eta;} 
+			if(fabs(SJet_Eta) < 2.4 && SJet_PT > 30.)N_jet++;
 
                 }
                 }
@@ -767,8 +774,12 @@ void HiggsAnalysis_14TeV::Loop()
 				p_temp1.SetPtEtaPhiM(FJet_PT, FJet_Eta, FJet_Phi, FJet_Mass);
 				for (int j = i+1; j < FJet_size; j++)
 				{
-					if(fabs(FJet_Eta) < 2.4 && FJet_PT > 30.){
-						p_temp2.SetPtEtaPhiM(FJet_PT, FJet_Eta, FJet_Phi, FJet_Mass);
+			                Float_t FJet_PT_J   = ParticleFlowJet08_PT[j];
+			                Float_t FJet_Eta_J  = ParticleFlowJet08_Eta[j];
+			                Float_t FJet_Phi_J  = ParticleFlowJet08_Phi[j];
+			                Float_t FJet_Mass_J = ParticleFlowJet08_Mass[j];
+					if(fabs(FJet_Eta_J) < 2.4 && FJet_PT_J > 30.){
+						p_temp2.SetPtEtaPhiM(FJet_PT_J, FJet_Eta_J, FJet_Phi_J, FJet_Mass_J);
 						hFatJet_Mass2Jet[indicator] -> Fill((p_temp1+p_temp2).M(), weight_F);
 					}
 				}
@@ -782,39 +793,44 @@ void HiggsAnalysis_14TeV::Loop()
                 i_SubLeading = -1;
                 Int_t N_Jet = 0;
 
-                if (Jet_size > 0)
+                if (SJet_size > 0)
                 {
-                for (int i = 0; i < Jet_size; i++)
+                for (int i = 0; i < SJet_size; i++)
                 {
-                if(fabs(Jet_Eta[i]) < 2.4 && Jet_PT[i] > 30.){
+                Float_t SJet_PT   = ParticleFlowJet04_PT[i];
+                Float_t SJet_Eta  = ParticleFlowJet04_Eta[i];
+                Float_t SJet_Phi  = ParticleFlowJet04_Phi[i];
+                Float_t SJet_Mass = ParticleFlowJet04_Mass[i];
+
+                if(fabs(SJet_Eta) < 2.4 && SJet_PT > 30.){
 			N_Jet++;
 
                                 if (p1 == test)         // if this is the first  Jet in the event
                                 {
-                                        p1.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]);
+                                        p1.SetPtEtaPhiM(SJet_PT, SJet_Eta, SJet_Phi, SJet_Mass);
 					i_Leading = i;
                                 }
                                 else if ( (p1 != test) && (p2 == test) ) // if this is the second  Jet in the event p1 is with max pT
                                 {
-                                        if(p1.Pt() >= Jet_PT[i]){p2.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]); i_SubLeading = i;}
+                                        if(p1.Pt() >= SJet_PT){p2.SetPtEtaPhiM(SJet_PT, SJet_Eta, SJet_Phi, SJet_Mass); i_SubLeading = i;}
                                         else
                                         {
                                              p2 = p1;
-                                             p1.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]);
+                                             p1.SetPtEtaPhiM(SJet_PT, SJet_Eta, SJet_Phi, SJet_Mass);
 					     i_SubLeading = i_Leading; i_Leading = i;
                                         }
                                 }
                                 else if ( (p1 != test) && (p2 != test) )        // maybe another photon, trying to get max pTs
                                 {
-                                        if ( Jet_PT[i] > p1.Pt() )
+                                        if ( SJet_PT > p1.Pt() )
                                         {
                                                         p2 = p1;
-                                                        p1.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]);
+                                                        p1.SetPtEtaPhiM(SJet_PT, SJet_Eta, SJet_Phi, SJet_Mass);
 					     		i_SubLeading = i_Leading; i_Leading = i;
                                         }
-                                        else if ( Jet_PT[i] > p2.Pt() )
+                                        else if ( SJet_PT > p2.Pt() )
                                         {
-                                                p2.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]);
+                                                p2.SetPtEtaPhiM(SJet_PT, SJet_Eta, SJet_Phi, SJet_Mass);
 						i_SubLeading = i;
                                         }
                                 }
@@ -856,26 +872,41 @@ void HiggsAnalysis_14TeV::Loop()
 			}
 		}
 		// fill  jet mass without leading and subleading jets:
-                if (Jet_size > 0)
+                if (SJet_size > 0)
                 {
-                for (int i = 0; i < Jet_size; i++)
+                for (int i = 0; i < SJet_size; i++)
                 {
-                if(fabs(Jet_Eta[i]) < 2.4 && Jet_PT[i] > 30.){
+                Float_t SJet_PT   = ParticleFlowJet04_PT[i];
+                Float_t SJet_Eta  = ParticleFlowJet04_Eta[i];
+                Float_t SJet_Phi  = ParticleFlowJet04_Phi[i];
+                Float_t SJet_Mass = ParticleFlowJet04_Mass[i];
 
-			if (i != i_Leading && i != i_SubLeading){p_temp1.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]); hJet_MassRest[indicator] -> Fill(p_temp1.M(), weight_F);}
+                if(fabs(SJet_Eta) < 2.4 && SJet_PT > 30.){
+
+			if (i != i_Leading && i != i_SubLeading){p_temp1.SetPtEtaPhiM(SJet_PT, SJet_Eta, SJet_Phi, SJet_Mass); hJet_MassRest[indicator] -> Fill(p_temp1.M(), weight_F);}
                 }}}
                 //if((p1 != test) && (p2 != test))hJet_Mass2Jet[indicator] -> Fill((p1+p2).M(), weight_F);
 		//fill mass of any 2 Jet:
-                if (Jet_size > 1)
+                if (SJet_size > 1)
                 {
-                for (int i = 0; i < Jet_size-1; i++)
+                for (int i = 0; i < SJet_size-1; i++)
                	{
-               		if(fabs(Jet_Eta[i]) < 2.4 && Jet_PT[i] > 30.){
-				p_temp1.SetPtEtaPhiM(Jet_PT[i], Jet_Eta[i], Jet_Phi[i], Jet_Mass[i]);
-				for (int j = i+1; j < Jet_size; j++)
+                Float_t SJet_PT   = ParticleFlowJet04_PT[i];
+                Float_t SJet_Eta  = ParticleFlowJet04_Eta[i];
+                Float_t SJet_Phi  = ParticleFlowJet04_Phi[i];
+                Float_t SJet_Mass = ParticleFlowJet04_Mass[i];
+
+               		if(fabs(SJet_Eta) < 2.4 && SJet_PT > 30.){
+				p_temp1.SetPtEtaPhiM(SJet_PT, SJet_Eta, SJet_Phi, SJet_Mass);
+				for (int j = i+1; j < SJet_size; j++)
 				{
-					if(fabs(Jet_Eta[j]) < 2.4 && Jet_PT[j] > 30.){
-						p_temp2.SetPtEtaPhiM(Jet_PT[j], Jet_Eta[j], Jet_Phi[j], Jet_Mass[j]);
+			                Float_t SJet_PT_J   = ParticleFlowJet04_PT[j];
+			                Float_t SJet_Eta_J  = ParticleFlowJet04_Eta[j];
+					Float_t SJet_Phi_J  = ParticleFlowJet04_Phi[j];
+			                Float_t SJet_Mass_J = ParticleFlowJet04_Mass[j];
+
+					if(fabs(SJet_Eta_J) < 2.4 && SJet_PT_J > 30.){
+						p_temp2.SetPtEtaPhiM(SJet_PT_J, SJet_Eta_J, SJet_Phi_J, SJet_Mass_J);
 						hJet_Mass2Jet[indicator] -> Fill((p_temp1+p_temp2).M(), weight_F);
 					}
 				}

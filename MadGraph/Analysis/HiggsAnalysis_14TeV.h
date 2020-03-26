@@ -45,10 +45,10 @@ public :
    static constexpr Int_t kMaxGenJet = 18;
    static constexpr Int_t kMaxGenMissingET = 1;
    static constexpr Int_t kMaxTrack = 246;
-   static constexpr Int_t kMaxTower = 415;
+   static constexpr Int_t kMaxTower = 450;
    static constexpr Int_t kMaxEFlowTrack = 246;
-   static constexpr Int_t kMaxEFlowPhoton = 264;
-   static constexpr Int_t kMaxEFlowNeutralHadron = 114;
+   static constexpr Int_t kMaxEFlowPhoton = 300;
+   static constexpr Int_t kMaxEFlowNeutralHadron = 130;
    static constexpr Int_t kMaxPhoton = 15;
    static constexpr Int_t kMaxElectron = 4;
    static constexpr Int_t kMaxMuon = 4;
@@ -61,9 +61,9 @@ public :
    static constexpr Int_t kMaxParticleFlowJet04 = 15;
    static constexpr Int_t kMaxParticleFlowJet08 = 12;
    static constexpr Int_t kMaxParticleFlowJet15 = 11;
-   static constexpr Int_t kMaxCaloJet02 = 17;
-   static constexpr Int_t kMaxCaloJet04 = 15;
-   static constexpr Int_t kMaxCaloJet08 = 12;
+   static constexpr Int_t kMaxCaloJet02 = 20;
+   static constexpr Int_t kMaxCaloJet04 = 20;
+   static constexpr Int_t kMaxCaloJet08 = 20;
    static constexpr Int_t kMaxCaloJet15 = 10;
    static constexpr Int_t kMaxTrackJet02 = 11;
    static constexpr Int_t kMaxTrackJet04 = 11;

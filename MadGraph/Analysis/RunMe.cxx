@@ -13,6 +13,7 @@ void RunMe(void)
 {
   HiggsAnalysis_14TeV m;
   //HiggsAnalysis m;
+  m.GetEntry(-1);
   m.Loop();
 }
 
