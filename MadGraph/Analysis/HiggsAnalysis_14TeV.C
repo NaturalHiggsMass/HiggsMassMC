@@ -462,12 +462,12 @@ void HiggsAnalysis_14TeV::Loop()
 
         string FileName = "";
         Int_t FileNumber = 1;
-	//CMS 2015 config
+	//CMS HL-LHC 14 TeV config
         //for reco pT (GeV):  0-120           120-200  200-270  270-350  350-450   450-550   550-750    750-inf 
-        double XsecD[] =     {14.443, 14.443, 4.9921,  1.1349,  0.58424, 0.28451, 0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 15 
-        double Xsec[]  =     {14.706, 14.706, 4.989,  1.1349,  0.58424, 0.28451, 0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 22.5 
-        double XsecU[] =     {14.852, 14.852, 4.9621,  1.1349,  0.58424, 0.2845,  0.084658,  0.039874,  0.0082928}; // xsec pb: merge scale 30
-        double dXsec[] =     {0.0068, 0.0068, 0.0016,  0.00033, 0.00017, 8.1e-05, 2.4e-05,   1.1e-05,   2.3e-06}; // xsec pb: merge scale 22.5 
+        double XsecD[] =     {16.148, 16.148, 5.7385,  1.3289,  0.69415, 0.34178, 0.10417,  0.049954,  0.010841}; // xsec pb: merge scale 15 
+        double Xsec[]  =     {16.466, 16.466, 5.7348,  1.3289,  0.69415, 0.34178, 0.10417,  0.049954,  0.010841}; // xsec pb: merge scale 22.5 
+        double XsecU[] =     {16.506, 16.506, 5.7   ,  1.3288,  0.69413, 0.34178, 0.10417,  0.049954,  0.010841}; // xsec pb: merge scale 30
+        double dXsec[] =     {0.0077, 0.0077, 0.0018,  0.00038, 0.0002,  9.7e-05, 2.9e-05,   1.4e-05,   3.1e-06}; // xsec pb: merge scale 22.5 
 	//CMS 2015 config Mass 123 GeV
         //for reco pT (GeV):     0-120           120-200  200-270  270-350  350-450   450-550   550-750    750-inf 
         double XsecD123[] =     {14.732, 14.732, 5.0991,  0.94999,  0.50227, 0.16721, 0.085069,  0.033143,  0.0071448}; // xsec pb: merge scale 15 
@@ -979,7 +979,8 @@ void HiggsAnalysis_14TeV::Loop()
                 mass = s.M();
                 float pTHiggs = s.Pt();
                 //hHiggsMass -> Fill (mass);
-                if ( (p1.Pt() > mass/3) && (p2.Pt() > mass/4) && JetLeading_pT > 30. ) // make cut of leaning jet and |eta_jet| < 2.4
+                //if ( (p1.Pt() > mass/3) && (p2.Pt() > mass/4) && JetLeading_pT > 30. ) // make cut of leaning jet and |eta_jet| < 2.4
+                if ( (p1.Pt() > mass/3) && (p2.Pt() > mass/4) ) // no cut of leaning jet and |eta_jet| < 2.4, becuase it kills a lot of events
                 {
                         check = 1;
                         if ( abs(p1.Eta()) < 1.44 && abs(p2.Eta()) < 1.44 )
