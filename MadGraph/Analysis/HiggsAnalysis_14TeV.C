@@ -734,7 +734,8 @@ void HiggsAnalysis_14TeV::Loop()
                 //if (indicator < 0 )std::cout <<"ERROR: no gen Higgs found" << std::endl;
 
 		// Could change # of Reco Higgs, because come Reco could come from another bins
-                if (indicator < 0)continue; // reject events without good generated Higgs 
+		// comment below if you want to have reco from neighbors bins
+                //if (indicator < 0)continue; // reject events without good generated Higgs 
 
                 // find leading jet in |eta| < 2.4:
                 double JetLeading_pT = 0.;
@@ -756,7 +757,7 @@ void HiggsAnalysis_14TeV::Loop()
 
                 }
                 }
-                if (JetLeading_pT > 0.)
+                if (JetLeading_pT > 0. && indicator > -1)
 		{
 			hLeadingJet_pT[indicator] -> Fill(JetLeading_pT, weight_F);
 			hLeadingJet_eta[indicator] -> Fill(JetLeading_eta, weight_F);
@@ -818,8 +819,8 @@ void HiggsAnalysis_14TeV::Loop()
 		
                 }}}
                 
-                hNFatJet_cut[indicator] -> Fill(N_FatJet, weight_F);
-                if((p1 != test) ){
+                if(indicator > -1)hNFatJet_cut[indicator] -> Fill(N_FatJet, weight_F);
+                if((p1 != test && indicator > -1)){
 			hFatJet_MassLeading[indicator] -> Fill(p1.M(), weight_F);
 			if(p1.M() > 120. && p1.M() < 140.){
 				NHiggsReco_FatJet[indicator] = NHiggsReco_FatJet[indicator] + weight_F;
@@ -835,7 +836,7 @@ void HiggsAnalysis_14TeV::Loop()
 				hFatJet_Higgs_dR_BS[indicator] -> Fill(HiggsAnalysis_14TeV::DeltaR(Particle_Eta[i_HiggsGen], Particle_Phi[i_HiggsGen], p1)); // Fill dR at Side Bend region
 			}
 		}
-                if((p2 != test) ){
+                if((p2 != test) && indicator > -1){
 			hFatJet_MassSubLeading[indicator] -> Fill(p2.M(), weight_F);
 			if(p2.M() > 120. && p2.M() < 140.){
 				NHiggsReco_FatJet[indicator] = NHiggsReco_FatJet[indicator] + weight_F;
@@ -852,7 +853,7 @@ void HiggsAnalysis_14TeV::Loop()
 			}
 		}
 		// fill Fat jet mass without leading and subleading jets:
-                if (FJet_size > 0)
+                if (FJet_size > 0 && indicator > -1)
                 {
                 for (int i = 0; i < FJet_size; i++)
                 {
@@ -866,7 +867,7 @@ void HiggsAnalysis_14TeV::Loop()
                 }}}
                 //if((p1 != test) && (p2 != test))hFatJet_Mass2Jet[indicator] -> Fill((p1+p2).M(), weight_F);
 		//fill mass of any 2 FatJet:
-                if (FJet_size > 1)
+                if (FJet_size > 1 && indicator > -1)
                 {
                 for (int i = 0; i < FJet_size-1; i++)
                	{
@@ -941,8 +942,8 @@ void HiggsAnalysis_14TeV::Loop()
 		
                 }}}
                 
-                hNJet_cut[indicator] -> Fill(N_Jet, weight_F);
-                if((p1 != test) ){
+                if( indicator > -1)hNJet_cut[indicator] -> Fill(N_Jet, weight_F);
+                if((p1 != test) && indicator > -1){
 			hJet_MassLeading[indicator] -> Fill(p1.M(), weight_F);
 			if(p1.M() > 120. && p1.M() < 140.){
 				NHiggsReco_Jet[indicator] = NHiggsReco_Jet[indicator] + weight_F;
@@ -959,7 +960,7 @@ void HiggsAnalysis_14TeV::Loop()
 			}
 
 		}
-                if((p2 != test) ){
+                if((p2 != test) && indicator > -1){
 			hJet_MassSubLeading[indicator] -> Fill(p2.M(), weight_F);
 			if(p2.M() > 120. && p2.M() < 140.) {
 				NHiggsReco_Jet[indicator] = NHiggsReco_Jet[indicator] + weight_F;
@@ -976,7 +977,7 @@ void HiggsAnalysis_14TeV::Loop()
 			}
 		}
 		// fill  jet mass without leading and subleading jets:
-                if (SJet_size > 0)
+                if (SJet_size > 0 && indicator > -1)
                 {
                 for (int i = 0; i < SJet_size; i++)
                 {
@@ -991,7 +992,7 @@ void HiggsAnalysis_14TeV::Loop()
                 }}}
                 //if((p1 != test) && (p2 != test))hJet_Mass2Jet[indicator] -> Fill((p1+p2).M(), weight_F);
 		//fill mass of any 2 Jet:
-                if (SJet_size > 1)
+                if (SJet_size > 1 && indicator > -1)
                 {
                 for (int i = 0; i < SJet_size-1; i++)
                	{
@@ -1188,7 +1189,7 @@ void HiggsAnalysis_14TeV::Loop()
 			}
                 } //end check
 
-		hNHiggsReco[indicator] -> Fill(NHiggs_RecoPerEvent);
+		if(indicator > -1)hNHiggsReco[indicator] -> Fill(NHiggs_RecoPerEvent); // careful here
 
         } // end cyclbe by nentries
 
