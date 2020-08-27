@@ -41,13 +41,13 @@ public :
 // Fixed size dimensions of array or collections stored in the TTree if any.
    static constexpr Int_t kMaxEvent = 1;
    static constexpr Int_t kMaxWeight = 153;
-   static constexpr Int_t kMaxParticle = 4368;
+   static constexpr Int_t kMaxParticle = 4713;//4368;
    static constexpr Int_t kMaxGenJet = 18;
    static constexpr Int_t kMaxGenMissingET = 1;
-   static constexpr Int_t kMaxTrack = 246;
-   static constexpr Int_t kMaxTower = 450;
-   static constexpr Int_t kMaxEFlowTrack = 246;
-   static constexpr Int_t kMaxEFlowPhoton = 300;
+   static constexpr Int_t kMaxTrack = 255;//246;
+   static constexpr Int_t kMaxTower = 453;//450;
+   static constexpr Int_t kMaxEFlowTrack = 255;//246;
+//   static constexpr Int_t kMaxEFlowPhoton = 300;
    static constexpr Int_t kMaxEFlowNeutralHadron = 130;
    static constexpr Int_t kMaxPhoton = 15;
    static constexpr Int_t kMaxElectron = 4;
@@ -65,9 +65,9 @@ public :
    static constexpr Int_t kMaxCaloJet04 = 20;
    static constexpr Int_t kMaxCaloJet08 = 20;
    static constexpr Int_t kMaxCaloJet15 = 10;
-   static constexpr Int_t kMaxTrackJet02 = 11;
+   static constexpr Int_t kMaxTrackJet02 = 12;//11;
    static constexpr Int_t kMaxTrackJet04 = 11;
-   static constexpr Int_t kMaxTrackJet08 = 9;
+   static constexpr Int_t kMaxTrackJet08 = 10;//9;
    static constexpr Int_t kMaxTrackJet15 = 7;
    static constexpr Int_t kMaxMissingET = 1;
    static constexpr Int_t kMaxScalarHT = 1;
@@ -267,20 +267,20 @@ public :
    TRef            EFlowTrack_Particle[kMaxEFlowTrack];
    Int_t           EFlowTrack_VertexIndex[kMaxEFlowTrack];   //[EFlowTrack_]
    Int_t           EFlowTrack_size;
-   Int_t           EFlowPhoton_;
-   UInt_t          EFlowPhoton_fUniqueID[kMaxEFlowPhoton];   //[EFlowPhoton_]
-   UInt_t          EFlowPhoton_fBits[kMaxEFlowPhoton];   //[EFlowPhoton_]
-   Float_t         EFlowPhoton_ET[kMaxEFlowPhoton];   //[EFlowPhoton_]
-   Float_t         EFlowPhoton_Eta[kMaxEFlowPhoton];   //[EFlowPhoton_]
-   Float_t         EFlowPhoton_Phi[kMaxEFlowPhoton];   //[EFlowPhoton_]
-   Float_t         EFlowPhoton_E[kMaxEFlowPhoton];   //[EFlowPhoton_]
-   Float_t         EFlowPhoton_T[kMaxEFlowPhoton];   //[EFlowPhoton_]
-   Int_t           EFlowPhoton_NTimeHits[kMaxEFlowPhoton];   //[EFlowPhoton_]
-   Float_t         EFlowPhoton_Eem[kMaxEFlowPhoton];   //[EFlowPhoton_]
-   Float_t         EFlowPhoton_Ehad[kMaxEFlowPhoton];   //[EFlowPhoton_]
-   Float_t         EFlowPhoton_Edges[kMaxEFlowPhoton][4];   //[EFlowPhoton_]
-   TRefArray       EFlowPhoton_Particles[kMaxEFlowPhoton];
-   Int_t           EFlowPhoton_size;
+//   Int_t           EFlowPhoton_;
+//   UInt_t          EFlowPhoton_fUniqueID[kMaxEFlowPhoton];   //[EFlowPhoton_]
+//   UInt_t          EFlowPhoton_fBits[kMaxEFlowPhoton];   //[EFlowPhoton_]
+//   Float_t         EFlowPhoton_ET[kMaxEFlowPhoton];   //[EFlowPhoton_]
+//   Float_t         EFlowPhoton_Eta[kMaxEFlowPhoton];   //[EFlowPhoton_]
+//   Float_t         EFlowPhoton_Phi[kMaxEFlowPhoton];   //[EFlowPhoton_]
+//   Float_t         EFlowPhoton_E[kMaxEFlowPhoton];   //[EFlowPhoton_]
+//   Float_t         EFlowPhoton_T[kMaxEFlowPhoton];   //[EFlowPhoton_]
+//   Int_t           EFlowPhoton_NTimeHits[kMaxEFlowPhoton];   //[EFlowPhoton_]
+//   Float_t         EFlowPhoton_Eem[kMaxEFlowPhoton];   //[EFlowPhoton_]
+//   Float_t         EFlowPhoton_Ehad[kMaxEFlowPhoton];   //[EFlowPhoton_]
+//   Float_t         EFlowPhoton_Edges[kMaxEFlowPhoton][4];   //[EFlowPhoton_]
+//   TRefArray       EFlowPhoton_Particles[kMaxEFlowPhoton];
+//   Int_t           EFlowPhoton_size;
    Int_t           EFlowNeutralHadron_;
    UInt_t          EFlowNeutralHadron_fUniqueID[kMaxEFlowNeutralHadron];   //[EFlowNeutralHadron_]
    UInt_t          EFlowNeutralHadron_fBits[kMaxEFlowNeutralHadron];   //[EFlowNeutralHadron_]
@@ -1327,20 +1327,20 @@ public :
    TBranch        *b_EFlowTrack_Particle;   //!
    TBranch        *b_EFlowTrack_VertexIndex;   //!
    TBranch        *b_EFlowTrack_size;   //!
-   TBranch        *b_EFlowPhoton_;   //!
-   TBranch        *b_EFlowPhoton_fUniqueID;   //!
-   TBranch        *b_EFlowPhoton_fBits;   //!
-   TBranch        *b_EFlowPhoton_ET;   //!
-   TBranch        *b_EFlowPhoton_Eta;   //!
-   TBranch        *b_EFlowPhoton_Phi;   //!
-   TBranch        *b_EFlowPhoton_E;   //!
-   TBranch        *b_EFlowPhoton_T;   //!
-   TBranch        *b_EFlowPhoton_NTimeHits;   //!
-   TBranch        *b_EFlowPhoton_Eem;   //!
-   TBranch        *b_EFlowPhoton_Ehad;   //!
-   TBranch        *b_EFlowPhoton_Edges;   //!
-   TBranch        *b_EFlowPhoton_Particles;   //!
-   TBranch        *b_EFlowPhoton_size;   //!
+//   TBranch        *b_EFlowPhoton_;   //!
+//   TBranch        *b_EFlowPhoton_fUniqueID;   //!
+//   TBranch        *b_EFlowPhoton_fBits;   //!
+//   TBranch        *b_EFlowPhoton_ET;   //!
+//   TBranch        *b_EFlowPhoton_Eta;   //!
+//   TBranch        *b_EFlowPhoton_Phi;   //!
+//   TBranch        *b_EFlowPhoton_E;   //!
+//   TBranch        *b_EFlowPhoton_T;   //!
+//   TBranch        *b_EFlowPhoton_NTimeHits;   //!
+//   TBranch        *b_EFlowPhoton_Eem;   //!
+//   TBranch        *b_EFlowPhoton_Ehad;   //!
+//   TBranch        *b_EFlowPhoton_Edges;   //!
+//   TBranch        *b_EFlowPhoton_Particles;   //!
+//   TBranch        *b_EFlowPhoton_size;   //!
    TBranch        *b_EFlowNeutralHadron_;   //!
    TBranch        *b_EFlowNeutralHadron_fUniqueID;   //!
    TBranch        *b_EFlowNeutralHadron_fBits;   //!
@@ -2226,14 +2226,23 @@ HiggsAnalysis_14TeV::HiggsAnalysis_14TeV(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("Delphes","");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run02_Higgs0or1Jet_PtGen_40_250_forPtReco120_200GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run03_Higgs0or1Jet_PtGen_110_350_forPtReco200_270GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run04_Higgs0or1Jet_PtGen_150_450_forPtReco270_350GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run05_Higgs0or1Jet_PtGen_200_550_forPtReco350_450GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run06_Higgs0or1Jet_PtGen_300_650_forPtReco450_550GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run07_Higgs0or1Jet_PtGen_380_900_forPtReco550_750GeV.root/Delphes");
-      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run08_Higgs0or1Jet_PtGen_580_inf_forPtReco750_infGeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run02_Higgs0or1Jet_PtGen_40_250_forPtReco120_200GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run03_Higgs0or1Jet_PtGen_110_350_forPtReco200_270GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run04_Higgs0or1Jet_PtGen_150_450_forPtReco270_350GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run05_Higgs0or1Jet_PtGen_200_550_forPtReco350_450GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run06_Higgs0or1Jet_PtGen_300_650_forPtReco450_550GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run07_Higgs0or1Jet_PtGen_380_900_forPtReco550_750GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run08_Higgs0or1Jet_PtGen_580_inf_forPtReco750_infGeV.root/Delphes");
+
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run02_Higgs0or1Jet_PtGen_40_250_forPtReco120_200GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run03_Higgs0or1Jet_PtGen_110_350_forPtReco200_270GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run04_Higgs0or1Jet_PtGen_150_450_forPtReco270_350GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run05_Higgs0or1Jet_PtGen_200_550_forPtReco350_450GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run06_Higgs0or1Jet_PtGen_300_650_forPtReco450_550GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run07_Higgs0or1Jet_PtGen_380_900_forPtReco550_750GeV.root/Delphes");
+//      chain->Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run08_Higgs0or1Jet_PtGen_580_inf_forPtReco750_infGeV.root/Delphes");
       tree = chain;
 #endif // SINGLE_TREE
 
@@ -2476,20 +2485,20 @@ void HiggsAnalysis_14TeV::Init(TTree *tree)
    fChain->SetBranchAddress("EFlowTrack.Particle", EFlowTrack_Particle, &b_EFlowTrack_Particle);
    fChain->SetBranchAddress("EFlowTrack.VertexIndex", EFlowTrack_VertexIndex, &b_EFlowTrack_VertexIndex);
    fChain->SetBranchAddress("EFlowTrack_size", &EFlowTrack_size, &b_EFlowTrack_size);
-   fChain->SetBranchAddress("EFlowPhoton", &EFlowPhoton_, &b_EFlowPhoton_);
-   fChain->SetBranchAddress("EFlowPhoton.fUniqueID", EFlowPhoton_fUniqueID, &b_EFlowPhoton_fUniqueID);
-   fChain->SetBranchAddress("EFlowPhoton.fBits", EFlowPhoton_fBits, &b_EFlowPhoton_fBits);
-   fChain->SetBranchAddress("EFlowPhoton.ET", EFlowPhoton_ET, &b_EFlowPhoton_ET);
-   fChain->SetBranchAddress("EFlowPhoton.Eta", EFlowPhoton_Eta, &b_EFlowPhoton_Eta);
-   fChain->SetBranchAddress("EFlowPhoton.Phi", EFlowPhoton_Phi, &b_EFlowPhoton_Phi);
-   fChain->SetBranchAddress("EFlowPhoton.E", EFlowPhoton_E, &b_EFlowPhoton_E);
-   fChain->SetBranchAddress("EFlowPhoton.T", EFlowPhoton_T, &b_EFlowPhoton_T);
-   fChain->SetBranchAddress("EFlowPhoton.NTimeHits", EFlowPhoton_NTimeHits, &b_EFlowPhoton_NTimeHits);
-   fChain->SetBranchAddress("EFlowPhoton.Eem", EFlowPhoton_Eem, &b_EFlowPhoton_Eem);
-   fChain->SetBranchAddress("EFlowPhoton.Ehad", EFlowPhoton_Ehad, &b_EFlowPhoton_Ehad);
-   fChain->SetBranchAddress("EFlowPhoton.Edges[4]", EFlowPhoton_Edges, &b_EFlowPhoton_Edges);
-   fChain->SetBranchAddress("EFlowPhoton.Particles", EFlowPhoton_Particles, &b_EFlowPhoton_Particles);
-   fChain->SetBranchAddress("EFlowPhoton_size", &EFlowPhoton_size, &b_EFlowPhoton_size);
+//   fChain->SetBranchAddress("EFlowPhoton", &EFlowPhoton_, &b_EFlowPhoton_);
+//   fChain->SetBranchAddress("EFlowPhoton.fUniqueID", EFlowPhoton_fUniqueID, &b_EFlowPhoton_fUniqueID);
+//   fChain->SetBranchAddress("EFlowPhoton.fBits", EFlowPhoton_fBits, &b_EFlowPhoton_fBits);
+//   fChain->SetBranchAddress("EFlowPhoton.ET", EFlowPhoton_ET, &b_EFlowPhoton_ET);
+ //  fChain->SetBranchAddress("EFlowPhoton.Eta", EFlowPhoton_Eta, &b_EFlowPhoton_Eta);
+//   fChain->SetBranchAddress("EFlowPhoton.Phi", EFlowPhoton_Phi, &b_EFlowPhoton_Phi);
+//   fChain->SetBranchAddress("EFlowPhoton.E", EFlowPhoton_E, &b_EFlowPhoton_E);
+//   fChain->SetBranchAddress("EFlowPhoton.T", EFlowPhoton_T, &b_EFlowPhoton_T);
+//   fChain->SetBranchAddress("EFlowPhoton.NTimeHits", EFlowPhoton_NTimeHits, &b_EFlowPhoton_NTimeHits);
+//   fChain->SetBranchAddress("EFlowPhoton.Eem", EFlowPhoton_Eem, &b_EFlowPhoton_Eem);
+//   fChain->SetBranchAddress("EFlowPhoton.Ehad", EFlowPhoton_Ehad, &b_EFlowPhoton_Ehad);
+//   fChain->SetBranchAddress("EFlowPhoton.Edges[4]", EFlowPhoton_Edges, &b_EFlowPhoton_Edges);
+//   fChain->SetBranchAddress("EFlowPhoton.Particles", EFlowPhoton_Particles, &b_EFlowPhoton_Particles);
+//   fChain->SetBranchAddress("EFlowPhoton_size", &EFlowPhoton_size, &b_EFlowPhoton_size);
    fChain->SetBranchAddress("EFlowNeutralHadron", &EFlowNeutralHadron_, &b_EFlowNeutralHadron_);
    fChain->SetBranchAddress("EFlowNeutralHadron.fUniqueID", EFlowNeutralHadron_fUniqueID, &b_EFlowNeutralHadron_fUniqueID);
    fChain->SetBranchAddress("EFlowNeutralHadron.fBits", EFlowNeutralHadron_fBits, &b_EFlowNeutralHadron_fBits);
