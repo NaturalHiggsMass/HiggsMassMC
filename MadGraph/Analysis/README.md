@@ -35,7 +35,7 @@ t.Loop();
 To create MyClass from severel files for Signal (check max size of variables each time, when you add new file!):
 ```
 TChain chain("Delphes");
-chain.Add("/eos/cms/store/user/kropiv/HiggsMass/HiggsGG/root-files-14TeV/run*.root");
+chain.Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run*.root");
 chain.MakeClass("HiggsAnalysis_NewName");
 ```
 or for Background:
