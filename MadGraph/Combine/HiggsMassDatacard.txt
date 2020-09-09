@@ -4,7 +4,8 @@ kmax *
 ---------------
 # original shapes for 300 fb-1
 #shapes * * ../Analysis/HiggsMass_Combine.root $BIN/$PROCESS $BIN/$PROCESS_$SYSTEMATIC
-shapes * * ../Analysis/HiggsMass_Combine_ChainBins.root $BIN/$PROCESS $BIN/$PROCESS_$SYSTEMATIC
+#shapes * * ../Analysis/HiggsMass_Combine_ChainBins.root $BIN/$PROCESS $BIN/$PROCESS_$SYSTEMATIC
+shapes * * ../Analysis/HiggsMass_14TeV_Combine_ChainBins.root $BIN/$PROCESS $BIN/$PROCESS_$SYSTEMATIC
 ---------------
 bin bin1
 observation -1

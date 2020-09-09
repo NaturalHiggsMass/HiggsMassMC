@@ -38,7 +38,8 @@ void HiggsMassResolution::Loop()
    Long64_t nentries = fChain->GetEntriesFast();
 
    //int pTbin[]      = {0, 80, 120, 200, 270, 350, 450, 550, 750};
-   int pTbin[]      = {0, 120, 200, 270, 350, 450, 550};
+   int pTbin[]      = {0, 120, 200, 270, 350, 450, 550, 750};
+   //int pTbin[]      = {0, 120, 200, 270, 350, 450, 550};
    int NpTbins = int(sizeof(pTbin)/sizeof(pTbin[0]));
    Double_t pTHiggs[NpTbins];
    Double_t dpTHiggs[NpTbins];
@@ -102,8 +103,9 @@ void HiggsMassResolution::Loop()
    first -> cd(1);
    //gPad -> SetLogx(1);
 
-   grMassRes -> SetTitle("Higgs mass precision as a function of p_{T}");
-   grMassRes -> GetXaxis()->SetRangeUser(30.,800.);
+   //grMassRes -> SetTitle("Higgs mass precision as a function of p_{T}");
+   grMassRes -> SetTitle("HL-LHC: 3000 fb^{-1} (14 TeV)");
+   grMassRes -> GetXaxis()->SetRangeUser(30.,850.);
    grMassRes -> GetYaxis()->SetRangeUser(0.,1.8);
    grMassRes -> GetXaxis()->SetTitle("Higgs p_{T} [GeV/c]");
    grMassRes -> GetYaxis()->SetTitle("Higgs mass precision [GeV/c^{2}]");

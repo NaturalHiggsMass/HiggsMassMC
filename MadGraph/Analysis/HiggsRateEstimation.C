@@ -20,7 +20,7 @@ for (int i = 0; i < Nstring; i++)
   Double_t Integral_bg = h2->Integral(201,300)*10.;
   h3 = (TH1D*)outFile->Get(NamePt[i]+"/data_obs");
 
-  cout << "pT bin = " << NamePt[i] << "For 3000 1/fb: #Signal = " << Integral_sig << " #Background = " << Integral_bg << " All bkg = " << h2->Integral()*10. << endl;
+  cout << "pT bin = " << NamePt[i] << " For 3000 1/fb: #Signal = " << Integral_sig << " #Background = " << Integral_bg << " All bkg = " << h2->Integral()*10. << endl;
 
   first[i] = new TCanvas();
   first[i] -> Divide(1,1);
