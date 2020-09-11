@@ -3,7 +3,7 @@
 
 TFile *outFile = new TFile ("HiggsMass_14TeV_Combine_ChainBins.root", "READ");
 TString NamePt[] = {"PT_0_120", "PT_120_200","PT_200_270","PT_270_350","PT_350_450","PT_450_550","PT_550_750", "PT_750_INF"};
-TString PtBin[]  = {" < 120",   ": 120-200", ": 200-270", ": 270-250", ": 350-450", ": 450-550", ": 550-750",  " > 750"};
+TString PtBin[]  = {" < 120",   ": 120-200", ": 200-270", ": 270-350", ": 350-450", ": 450-550", ": 550-750",  " > 750"};
 Double_t ScaleSig[] = {1.,       1.,           1.,          1.,         1.,          1.,          1.,          1.};
 //int Nstring = int(sizeof(Name)/sizeof(Name[0]));
 int Nstring = int(sizeof(NamePt)/sizeof(NamePt[0]));
