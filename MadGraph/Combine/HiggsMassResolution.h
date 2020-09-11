@@ -85,25 +85,34 @@ HiggsMassResolution::HiggsMassResolution(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("limit","");
-      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_0_120.RES1p2.root/limit");
-      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_120_200.RES1p2.root/limit");
-      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_200_270.RES1p2.root/limit");
-      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_270_350.RES1p2.root/limit");
-      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_350_450.RES1p2.root/limit");
-      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_450_550.RES1p2.root/limit");
-      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_550_750.RES1p2.root/limit");
-      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_750_INF.RES1p2.root/limit");
-      //chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_550_INF.RES1p2.root/limit");
-      // for non-chain pT bins
-      //chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_0_80.root/limit");
-      //chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_80_120.root/limit");
-      //chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_120_200.root/limit");
-      //chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_200_270.root/limit");
-      //chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_270_350.root/limit");
-      //chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_350_450.root/limit");
-      //chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_450_550.root/limit");
-      //chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_550_750.root/limit");
-      //chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/higgsCombineMassRange.MultiDimFit.mH125.BINPT_750_INF.root/limit");
+      // 1.0 sigma
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_0_120.RES1p0.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_120_200.RES1p0.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_200_270.RES1p0.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_270_350.RES1p0.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_350_450.RES1p0.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_450_550.RES1p0.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_550_750.RES1p0.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_750_INF.RES1p0.root/limit");
+      // 1.0 sigma  2bg
+      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma_2bg/higgsCombineMassRange.MultiDimFit.mH125.BINPT_0_120.RES1p0.root/limit");
+      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma_2bg/higgsCombineMassRange.MultiDimFit.mH125.BINPT_120_200.RES1p0.root/limit");
+      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma_2bg/higgsCombineMassRange.MultiDimFit.mH125.BINPT_200_270.RES1p0.root/limit");
+      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma_2bg/higgsCombineMassRange.MultiDimFit.mH125.BINPT_270_350.RES1p0.root/limit");
+      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma_2bg/higgsCombineMassRange.MultiDimFit.mH125.BINPT_350_450.RES1p0.root/limit");
+      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma_2bg/higgsCombineMassRange.MultiDimFit.mH125.BINPT_450_550.RES1p0.root/limit");
+      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma_2bg/higgsCombineMassRange.MultiDimFit.mH125.BINPT_550_750.RES1p0.root/limit");
+      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p0sigma_2bg/higgsCombineMassRange.MultiDimFit.mH125.BINPT_750_INF.RES1p0.root/limit");
+//      // 1.2 sigma
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p2sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_0_120.RES1p2.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p2sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_120_200.RES1p2.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p2sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_200_270.RES1p2.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p2sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_270_350.RES1p2.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p2sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_350_450.RES1p2.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p2sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_450_550.RES1p2.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p2sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_550_750.RES1p2.root/limit");
+//      chain->Add("/afs/cern.ch/work/k/kropiv/HiggsMass/HiggsMassMC/MadGraph/Combine/Combine3000invfb_1p2sigma/higgsCombineMassRange.MultiDimFit.mH125.BINPT_750_INF.RES1p2.root/limit");
+
       tree = chain;
 #endif // SINGLE_TREE
 

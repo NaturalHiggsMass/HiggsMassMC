@@ -67,7 +67,8 @@ void HiggsMassResolution::Loop()
         string FileNameCheck = fChain -> GetCurrentFile()->GetName();
         size_t posStart = FileNameCheck.find("BINPT_");      // position of "forPtReco" in str
         //size_t posEnd = FileNameCheck.find(".root");      // position of "GeV.root" in str
-        size_t posEnd = FileNameCheck.find(".RES1p2.root");      // position of "GeV.root" in str
+        //size_t posEnd = FileNameCheck.find(".RES1p2.root");      // position of "GeV.root" in str
+        size_t posEnd = FileNameCheck.find(".RES1p0.root");      // position of "GeV.root" in str
         string FileNameCut = FileNameCheck.substr (posStart+6,posEnd-posStart-6);
         cout << "FileNameCut = " << FileNameCut << endl;
         cout << "Mass 68% in GeV = " << Mass*2 << endl;// sigma 2 GeV: 123-125-127

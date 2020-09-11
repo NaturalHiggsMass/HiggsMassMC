@@ -5,8 +5,9 @@
 #kfact_array=(1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2)
 
 bin_array=(PT_0_120 PT_120_200 PT_200_270 PT_270_350 PT_350_450 PT_450_550 PT_550_750 PT_750_INF)
-kfactbkg_array=(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0) # no scale from 13 TeV to 14 TeV
 kfact_array=(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0) # no scale from 13 TeV to 14 TeV
+#kfactbkg_array=(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0) # no scale from 13 TeV to 14 TeV
+kfactbkg_array=(2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0) # no scale from 13 TeV to 14 TeV
 
 # chain 0-120 and 550-INF bins
 #bin_array=(PT_0_120 PT_120_200 PT_200_270 PT_270_350 PT_350_450 PT_450_550 PT_550_INF)
@@ -21,7 +22,8 @@ kfact_array=(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0) # no scale from 13 TeV to 14 TeV
 
 
 
-RES=1p2
+#RES=1p2
+RES=1p0
 
 #for ibin in {0..8}
 for ibin in {0..7}
