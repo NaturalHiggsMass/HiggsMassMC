@@ -2226,14 +2226,14 @@ HiggsAnalysis_14TeV::HiggsAnalysis_14TeV(TTree *tree) : fChain(0)
       // The following code should be used if you want this class to access a chain
       // of trees.
       TChain * chain = new TChain("Delphes","");
-//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
-//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run02_Higgs0or1Jet_PtGen_40_250_forPtReco120_200GeV.root/Delphes");
-//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run03_Higgs0or1Jet_PtGen_110_350_forPtReco200_270GeV.root/Delphes");
-//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run04_Higgs0or1Jet_PtGen_150_450_forPtReco270_350GeV.root/Delphes");
-//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run05_Higgs0or1Jet_PtGen_200_550_forPtReco350_450GeV.root/Delphes");
-//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run06_Higgs0or1Jet_PtGen_300_650_forPtReco450_550GeV.root/Delphes");
-//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run07_Higgs0or1Jet_PtGen_380_900_forPtReco550_750GeV.root/Delphes");
-//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run08_Higgs0or1Jet_PtGen_580_inf_forPtReco750_infGeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run01_Higgs0or1Jet_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run02_Higgs0or1Jet_PtGen_40_250_forPtReco120_200GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run03_Higgs0or1Jet_PtGen_110_350_forPtReco200_270GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run04_Higgs0or1Jet_PtGen_150_450_forPtReco270_350GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run05_Higgs0or1Jet_PtGen_200_550_forPtReco350_450GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run06_Higgs0or1Jet_PtGen_300_650_forPtReco450_550GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run07_Higgs0or1Jet_PtGen_380_900_forPtReco550_750GeV.root/Delphes");
+      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run08_Higgs0or1Jet_PtGen_580_inf_forPtReco750_infGeV.root/Delphes");
 
 //      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run01_Higgs0or1JetMass123_PtGen_0_inf_forPtReco0_80_120GeV.root/Delphes");
 //      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run02_Higgs0or1JetMass123_PtGen_40_250_forPtReco120_200GeV.root/Delphes");
@@ -2253,16 +2253,16 @@ HiggsAnalysis_14TeV::HiggsAnalysis_14TeV(TTree *tree) : fChain(0)
 //      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run07_Higgs0or1Jet_PtGenMass127_380_900_forPtReco550_750GeV.root/Delphes");
 //      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run08_Higgs0or1Jet_PtGenMass127_580_inf_forPtReco750_infGeV.root/Delphes");
 //
-      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run01_pp2aa_01j_PtGen_0_inf_forPtReco0_80GeV.root/Delphes");
-      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run02_pp2aa_01j_PtGen_40_200_forPtReco80_120GeV.root/Delphes");
-      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run03_pp2aa_01j_PtGen_70_250_forPtReco120_200GeV.root/Delphes");
-      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run04_pp2aa_01j_PtGen_140_350_forPtReco200_270GeV.root/Delphes");
-      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run05_pp2aa_01j_PtGen_180_450_forPtReco270_350GeV.root/Delphes");
-      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run06_pp2aa_01j_PtGen_250_550_forPtReco350_450GeV.root/Delphes");
-      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run07_pp2aa_01j_PtGen_310_650_forPtReco450_550GeV.root/Delphes");
-      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run08_pp2aa_01j_PtGen_380_900_forPtReco550_750GeV.root/Delphes");
-      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run09_pp2aa_01j_PtGen_580_inf_forPtReco750_infGeV.root/Delphes");
-
+//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run01_pp2aa_01j_PtGen_0_inf_forPtReco0_80GeV.root/Delphes");
+//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run02_pp2aa_01j_PtGen_40_200_forPtReco80_120GeV.root/Delphes");
+//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run03_pp2aa_01j_PtGen_70_250_forPtReco120_200GeV.root/Delphes");
+//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run04_pp2aa_01j_PtGen_140_350_forPtReco200_270GeV.root/Delphes");
+//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run05_pp2aa_01j_PtGen_180_450_forPtReco270_350GeV.root/Delphes");
+//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run06_pp2aa_01j_PtGen_250_550_forPtReco350_450GeV.root/Delphes");
+//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run07_pp2aa_01j_PtGen_310_650_forPtReco450_550GeV.root/Delphes");
+//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run08_pp2aa_01j_PtGen_380_900_forPtReco550_750GeV.root/Delphes");
+//      chain->Add("/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV/run09_pp2aa_01j_PtGen_580_inf_forPtReco750_infGeV.root/Delphes");
+//
      tree = chain;
 #endif // SINGLE_TREE
 

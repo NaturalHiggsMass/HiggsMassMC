@@ -179,10 +179,10 @@ void HiggsAnalysis_14TeV::Loop()
         std::string work;
         std::string workName;
 
-        Int_t nbin_mass = 60; // Madgraph sample
-        Int_t nbin_massGen = 300;// gen Random sample in 100 MeV
-	Double_t xmin_mass = 110.;
-	Double_t xmax_mass = 140.;
+        Int_t nbin_mass = 60;//100;//60; // Madgraph sample
+        Int_t nbin_massGen = 300;//500;//300;// gen Random sample in 100 MeV
+	Double_t xmin_mass = 110.;//100.;//110.;
+	Double_t xmax_mass = 140.;//150.;//140;
 	//if(DataSample == "BG"){
 	//	nbin_mass = 300; xmin_mass = 50.; xmax_mass = 200.;
 	//}

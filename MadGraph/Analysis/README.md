@@ -1,4 +1,4 @@
-# To run code
+# To run code and produce pT bin distributions:
 
 
 ```
@@ -39,7 +39,7 @@ root.exe -b
 .x ChainBins.C 
 ```
 
-# Estimate Rate of Higgs and Background for 3000 fb-1:
+# Estimate Rate of Higgs and Background for 3000 fb-1 and produce bg+signal for paper:
 
 ```
 root.exe -b 
