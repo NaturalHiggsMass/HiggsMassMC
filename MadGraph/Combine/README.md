@@ -1,3 +1,4 @@
+## To run combine you have to have `CMSSW_10_2_13` installed and run `cmsenv`
 
 The typical datacard is attached:
 
