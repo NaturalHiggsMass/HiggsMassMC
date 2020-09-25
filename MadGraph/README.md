@@ -1,3 +1,9 @@
+# Main info for 14 TeV  Analysis:
+
+* Madgraph and Delpes cards for Signal aand Background generation are at `Cards/Higgs_14TeV` directory
+* Delphes and Analysis root-file location and code description are at `Analysis/README.md` file
+* Combine tool root-files location and code decription are at `Combine/README.md` file
+
 # MadGraph
 
 ## Tasks
