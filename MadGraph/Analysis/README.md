@@ -1,4 +1,4 @@
-## Root file describtion, produced at this directory:
+# Root file describtion, produced at this directory:
 
 `HiggsAnalysis_14TeV.C` produces the following root-files:
 
@@ -22,7 +22,7 @@ All root-files above are available at CERN box directory:
 ```
 
 
-## Higgs signal and background generated in pT bins for 14 TeV:
+# Higgs signal and background generated in pT bins for 14 TeV:
 
 `/eos/user/k/kropiv/root-files/HiggsMass/root-files-14TeV`
 
@@ -61,7 +61,7 @@ root.exe -b
 .x HiggsRateEstimation_14TeV.C 
 ```
 
-#To create MyClass from severel files for Signal (check max size of variables each time, when you add new file!):
+# To create MyClass from severel files for Signal (check max size of variables each time, when you add new file!):
 
 You do it only if you generate new Delphes root-files to check if max size of each branching is not exceed, which is listed at `HiggsAnalysis_14TeV.h`
 or if you want creat new code:
