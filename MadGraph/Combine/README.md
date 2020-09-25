@@ -1,4 +1,8 @@
-## To run combine you have to have `CMSSW_10_2_13` installed and run `cmsenv`
+# Root-files, produced by Combine tool are available at CERN box:
+
+`/eos/user/k/kropiv/root-files/HiggsMass/root-Combine`
+
+## To Cun combine tool, you have to have `CMSSW_10_2_13` installed and run `cmsenv`
 
 The typical datacard is attached:
 
